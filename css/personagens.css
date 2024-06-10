@@ -32,6 +32,22 @@ nav ul li a {
     text-decoration: none;
 }
 
+ul li a {
+    color: #000;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-weight: bold;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
 section {
     padding: 2rem;
     margin: 2rem 0;
@@ -77,7 +93,6 @@ footer {
     margin-top: 1rem;
     font-size: 1.1rem;
 }
-
 
 /* Mostrar a div quando o link é clicado */
 #luffy:target,
