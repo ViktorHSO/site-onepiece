@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frutas do Diabo - One Piece Encyclopedia</title>
+    <title>Tripulações - One Piece Encyclopedia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,8 +35,8 @@
                 <ul class="nav-list">
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="personagens.html">Personagens</a></li>
-                    <li><a href="tripulacoes.html">Tripulações</a></li>
-                    <li><a href="frutas.html" class="active">Frutas</a></li>
+                    <li><a href="tripulacoes.html" class="active">Tripulações</a></li>
+                    <li><a href="frutas.html">Frutas</a></li>
                     <li><a href="espadas.html">Espadas</a></li>
                     <li><a href="faccoes.html">Facções</a></li>
                 </ul>
@@ -58,10 +58,10 @@
             </button>
             <div class="modal-content">
                 <div class="search-container">
-                    <h2>Buscar Frutas</h2>
+                    <h2>Buscar Tripulações</h2>
                     <div class="search-input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="fruit-search" placeholder="Digite o nome da fruta..." />
+                        <input type="text" id="crew-search" placeholder="Digite o nome da tripulação..." />
                     </div>
                     <div class="search-results" id="search-results"></div>
                 </div>
@@ -75,48 +75,31 @@
             <div class="container">
                 <div class="page-header-content" data-aos="fade-up">
                     <div class="page-badge">
-                        <i class="fas fa-apple-alt"></i>
+                        <i class="fas fa-flag"></i>
                         <span>Enciclopédia</span>
                     </div>
-                    <h1>Frutas do Diabo</h1>
-                    <p>Explore todas as frutas místicas do universo de One Piece, das Akuma no Mi às lendárias Zoan.</p>
+                    <h1>Tripulações de One Piece</h1>
+                    <p>Explore todas as tripulações lendárias do universo de One Piece, dos Chapéu de Palha aos Yonko.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Fruit Types Section -->
-        <section class="section section-fruit-types">
+        <!-- Yonko Section -->
+        <section class="section section-yonko">
+            <div class="section-background">
+                <div class="gradient-overlay"></div>
+            </div>
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
                     <div class="section-badge">
-                        <i class="fas fa-layer-group"></i>
-                        <span>Tipos</span>
+                        <i class="fas fa-crown"></i>
+                        <span>Os Quatro Imperadores</span>
                     </div>
-                    <h2>Tipos de Frutas</h2>
-                    <p>As três categorias principais de Frutas do Diabo</p>
+                    <h2>Os Yonko</h2>
+                    <p>Os quatro piratas mais poderosos que governam o Novo Mundo</p>
                 </div>
-                <div class="fruit-types-grid" data-aos="fade-up">
-                    <div class="fruit-type-card paramecia">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3>Paramecia</h3>
-                        <p>Concedem habilidades superhumanas que não se enquadram nas outras categorias.</p>
-                    </div>
-                    <div class="fruit-type-card zoan">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-paw"></i>
-                        </div>
-                        <h3>Zoan</h3>
-                        <p>Permitem ao usuário transformar-se em um animal ou em uma forma híbrida.</p>
-                    </div>
-                    <div class="fruit-type-card logia">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-fire"></i>
-                        </div>
-                        <h3>Logia</h3>
-                        <p>Concedem ao usuário a capacidade de transformar-se em um elemento natural.</p>
-                    </div>
+                <div class="yonko-grid" id="yonko-grid" data-aos="fade-up">
+                    <!-- Yonko will be loaded dynamically -->
                 </div>
             </div>
         </section>
@@ -129,16 +112,16 @@
                         <label>Buscar</label>
                         <div class="search-input-wrapper">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="filter-search" placeholder="Nome da fruta..." />
+                            <input type="text" id="filter-search" placeholder="Nome da tripulação..." />
                         </div>
                     </div>
                     <div class="filter-group">
-                        <label>Tipo</label>
-                        <select id="filter-type">
+                        <label>Status</label>
+                        <select id="filter-status">
                             <option value="">Todas</option>
-                            <option value="paramecia">Paramecia</option>
-                            <option value="zoan">Zoan</option>
-                            <option value="logia">Logia</option>
+                            <option value="active">Ativa</option>
+                            <option value="disbanded">Dissolvida</option>
+                            <option value="unknown">Desconhecido</option>
                         </select>
                     </div>
                     <button class="btn btn-primary" id="apply-filters">
@@ -153,19 +136,19 @@
             </div>
         </section>
 
-        <!-- Fruits Grid -->
-        <section class="section section-fruits">
+        <!-- Crews Grid -->
+        <section class="section section-crews">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
                     <div class="section-badge">
-                        <i class="fas fa-apple-alt"></i>
-                        <span>Frutas</span>
+                        <i class="fas fa-flag"></i>
+                        <span>Tripulações</span>
                     </div>
-                    <h2>Todas as Frutas</h2>
-                    <p id="fruits-count">Carregando frutas...</p>
+                    <h2>Todas as Tripulações</h2>
+                    <p id="crews-count">Carregando tripulações...</p>
                 </div>
-                <div class="fruits-grid" id="fruits-grid" data-aos="fade-up">
-                    <!-- Fruits will be loaded dynamically -->
+                <div class="crews-grid" id="crews-grid" data-aos="fade-up">
+                    <!-- Crews will be loaded dynamically -->
                 </div>
                 <div class="load-more-container" id="load-more-container">
                     <button class="btn btn-primary btn-large" id="load-more">
@@ -218,7 +201,7 @@
         </div>
     </footer>
 
-    <!-- Fruit Modal -->
+    <!-- Crew Modal -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-container">
             <button class="modal-close" aria-label="Fechar modal">
@@ -267,65 +250,6 @@
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto;
-        }
-
-        .fruit-types-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .fruit-type-card {
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            transition: all var(--transition-normal);
-        }
-
-        .fruit-type-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-lg), var(--shadow-glow);
-        }
-
-        .fruit-type-icon {
-            width: 4rem;
-            height: 4rem;
-            margin: 0 auto 1.5rem;
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .fruit-type-card.paramecia .fruit-type-icon {
-            background: linear-gradient(135deg, #ffb84d 0%, #ff844d 100%);
-            color: #0a1423;
-        }
-
-        .fruit-type-card.zoan .fruit-type-icon {
-            background: linear-gradient(135deg, #4dff88 0%, #4da6ff 100%);
-            color: #0a1423;
-        }
-
-        .fruit-type-card.logia .fruit-type-icon {
-            background: linear-gradient(135deg, #ff4d4d 0%, #ff844d 100%);
-            color: white;
-        }
-
-        .fruit-type-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .fruit-type-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
         }
 
         .section-filters {
@@ -394,9 +318,9 @@
             box-shadow: 0 0 0 3px rgba(255, 184, 77, 0.1);
         }
 
-        .fruits-grid {
+        .crews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
@@ -450,7 +374,7 @@
                 width: 100%;
             }
 
-            .fruit-types-grid {
+            .crews-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -460,82 +384,115 @@
         document.addEventListener('DOMContentLoaded', function () {
             initNavigation();
             initAOS();
-            loadFruits();
+            loadCrews();
             initFilters();
             initSearchModal();
             initModalSystem();
             updateActiveNavLink();
         });
 
-        let allFruits = [];
-        let displayedFruits = 12;
-        let filteredFruits = [];
+        let allCrews = [];
+        let displayedCrews = 12;
+        let filteredCrews = [];
 
-        async function loadFruits() {
+        async function loadCrews() {
             try {
-                allFruits = await OP_API.getFruits();
-                filteredFruits = [...allFruits];
+                allCrews = await OP_API.getCrews();
+                filteredCrews = [...allCrews];
                 
-                updateFruitCount();
-                displayFruits();
+                updateCrewCount();
+                displayCrews();
+                loadYonko();
                 
                 document.getElementById('load-more-container').style.display = 'flex';
             } catch (error) {
-                console.error('Error loading fruits:', error);
-                document.getElementById('fruits-grid').innerHTML = '<p>Erro ao carregar frutas.</p>';
+                console.error('Error loading crews:', error);
+                document.getElementById('crews-grid').innerHTML = '<p>Erro ao carregar tripulações.</p>';
             }
         }
 
-        function updateFruitCount() {
-            const countElement = document.getElementById('fruits-count');
-            countElement.textContent = `${filteredFruits.length} frutas encontradas`;
+        async function loadYonko() {
+            try {
+                const yonko = await OP_API.getYonko();
+                const yonkoGrid = document.getElementById('yonko-grid');
+                
+                if (yonko && yonko.length > 0) {
+                    yonko.forEach(crew => {
+                        const card = document.createElement('div');
+                        card.className = 'yonko-card';
+                        
+                        const image = crew.image || '../images/luffy.png';
+                        const name = crew.name || 'Unknown';
+                        const captain = crew.captain || 'Unknown';
+                        
+                        card.innerHTML = `
+                            <img src="${image}" alt="${name}" class="yonko-card-image" onerror="this.src='../images/luffy.png'">
+                            <div class="yonko-card-info">
+                                <h3 class="yonko-card-name">${name}</h3>
+                                <p class="yonko-card-title">Yonko</p>
+                                <p class="yonko-card-crew">Capitão: ${captain}</p>
+                            </div>
+                        `;
+                        
+                        card.onclick = () => openCrewModal(crew);
+                        yonkoGrid.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading Yonko:', error);
+            }
         }
 
-        function displayFruits() {
-            const grid = document.getElementById('fruits-grid');
-            const fruitsToShow = filteredFruits.slice(0, displayedFruits);
+        function updateCrewCount() {
+            const countElement = document.getElementById('crews-count');
+            countElement.textContent = `${filteredCrews.length} tripulações encontradas`;
+        }
+
+        function displayCrews() {
+            const grid = document.getElementById('crews-grid');
+            const crewsToShow = filteredCrews.slice(0, displayedCrews);
             
             grid.innerHTML = '';
             
-            fruitsToShow.forEach((fruit, index) => {
-                const card = createFruitCard(fruit);
+            crewsToShow.forEach((crew, index) => {
+                const card = createCrewCard(crew);
                 card.style.animationDelay = `${index * 50}ms`;
                 grid.appendChild(card);
             });
 
             const loadMoreBtn = document.getElementById('load-more');
-            if (displayedFruits >= filteredFruits.length) {
+            if (displayedCrews >= filteredCrews.length) {
                 loadMoreBtn.style.display = 'none';
             } else {
                 loadMoreBtn.style.display = 'inline-flex';
             }
         }
 
-        function createFruitCard(fruit) {
+        function createCrewCard(crew) {
             const card = document.createElement('div');
-            card.className = 'fruit-card';
-            card.onclick = () => openFruitModal(fruit);
+            card.className = 'crew-card';
+            card.onclick = () => openCrewModal(crew);
             
-            const name = fruit.name || 'Unknown';
-            const type = fruit.type || 'Unknown';
-            const user = fruit.user || 'Unknown';
+            const name = crew.name || 'Unknown';
+            const captain = crew.captain || 'Unknown';
+            const members = crew.total || 'Unknown';
             
             // Use ImageService for reliable image loading
-            const img = ImageService.createImageElement(fruit, 'fruit', {
-                className: 'fruit-card-image',
+            const banner = ImageService.createImageElement(crew, 'crew', {
+                className: 'crew-card-banner',
                 alt: name,
                 loading: 'lazy'
             });
             
             const info = document.createElement('div');
-            info.className = 'fruit-card-info';
+            info.className = 'crew-card-info';
             info.innerHTML = `
-                <h3 class="fruit-card-name">${name}</h3>
-                <p class="fruit-card-type">${type}</p>
-                <p class="fruit-card-user">Usuário: ${user}</p>
+                <h3 class="crew-card-name">${name}</h3>
+                <p class="crew-card-captain">Capitão: ${captain}</p>
+                <p class="crew-card-members">${members} membros</p>
             `;
             
-            card.appendChild(img);
+            card.appendChild(banner);
             card.appendChild(info);
             return card;
         }
@@ -547,44 +504,44 @@
 
             applyBtn.addEventListener('click', applyFilters);
             resetBtn.addEventListener('click', resetFilters);
-            loadMoreBtn.addEventListener('click', loadMoreFruits);
+            loadMoreBtn.addEventListener('click', loadMoreCrews);
         }
 
         function applyFilters() {
             const search = document.getElementById('filter-search').value.toLowerCase();
-            const type = document.getElementById('filter-type').value;
+            const status = document.getElementById('filter-status').value;
 
-            filteredFruits = allFruits.filter(fruit => {
-                const matchesSearch = !search || fruit.name.toLowerCase().includes(search);
-                const matchesType = !type || fruit.type.toLowerCase() === type.toLowerCase();
+            filteredCrews = allCrews.filter(crew => {
+                const matchesSearch = !search || crew.name.toLowerCase().includes(search);
+                const matchesStatus = !status || crew.status === status;
                 
-                return matchesSearch && matchesType;
+                return matchesSearch && matchesStatus;
             });
 
-            displayedFruits = 12;
-            updateFruitCount();
-            displayFruits();
+            displayedCrews = 12;
+            updateCrewCount();
+            displayCrews();
         }
 
         function resetFilters() {
             document.getElementById('filter-search').value = '';
-            document.getElementById('filter-type').value = '';
+            document.getElementById('filter-status').value = '';
             
-            filteredFruits = [...allFruits];
-            displayedFruits = 12;
-            updateFruitCount();
-            displayFruits();
+            filteredCrews = [...allCrews];
+            displayedCrews = 12;
+            updateCrewCount();
+            displayCrews();
         }
 
-        function loadMoreFruits() {
-            displayedFruits += 12;
-            displayFruits();
+        function loadMoreCrews() {
+            displayedCrews += 12;
+            displayCrews();
         }
 
         function initSearchModal() {
             const searchToggle = document.getElementById('search-toggle');
             const searchModal = document.getElementById('search-modal');
-            const searchInput = document.getElementById('fruit-search');
+            const searchInput = document.getElementById('crew-search');
             const searchResults = document.getElementById('search-results');
 
             searchToggle.addEventListener('click', () => {
@@ -609,8 +566,8 @@
                     return;
                 }
 
-                const results = allFruits.filter(f => 
-                    f.name.toLowerCase().includes(query.toLowerCase())
+                const results = allCrews.filter(c => 
+                    c.name.toLowerCase().includes(query.toLowerCase())
                 ).slice(0, 10);
 
                 displaySearchResults(results);
@@ -625,48 +582,51 @@
                 return;
             }
 
-            searchResults.innerHTML = results.map(fruit => `
-                <div class="search-result-item" onclick="openFruitModalFromSearch(${JSON.stringify(fruit).replace(/"/g, '&quot;')})">
+            searchResults.innerHTML = results.map(crew => `
+                <div class="search-result-item" onclick="openCrewModalFromSearch(${JSON.stringify(crew).replace(/"/g, '&quot;')})">
                     <div class="search-result-icon">
-                        <i class="fas fa-apple-alt" style="font-size: 2rem; color: var(--accent-primary);"></i>
+                        <i class="fas fa-flag" style="font-size: 2rem; color: var(--accent-primary);"></i>
                     </div>
                     <div class="search-result-info">
-                        <h4>${fruit.name}</h4>
-                        <p>Tipo: ${fruit.type || 'Unknown'}</p>
+                        <h4>${crew.name}</h4>
+                        <p>Capitão: ${crew.captain || 'Unknown'}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openFruitModalFromSearch(fruit) {
+        function openCrewModalFromSearch(crew) {
             document.getElementById('search-modal').classList.remove('active');
-            openFruitModal(fruit);
+            openCrewModal(crew);
         }
 
-        function openFruitModal(fruit) {
-            const name = fruit.name || 'Unknown';
-            const type = fruit.type || 'Unknown';
-            const user = fruit.user || 'Unknown';
-            const description = fruit.description || 'No description available';
+        function openCrewModal(crew) {
+            const name = crew.name || 'Unknown';
+            const captain = crew.captain || 'Unknown';
+            const members = crew.total || 'Unknown';
+            const status = crew.status || 'Unknown';
             
             const content = `
-                <div class="modal-fruit">
-                    <div class="modal-fruit-icon">
-                        <i class="fas fa-apple-alt" style="font-size: 5rem; color: var(--accent-primary);"></i>
+                <div class="modal-crew">
+                    <div class="modal-crew-icon">
+                        <i class="fas fa-flag" style="font-size: 5rem; color: var(--accent-primary);"></i>
                     </div>
-                    <div class="modal-fruit-info">
+                    <div class="modal-crew-info">
                         <h2>${name}</h2>
                         <div class="modal-details">
                             <div class="modal-detail">
-                                <span class="modal-detail-label">Tipo:</span>
-                                <span class="modal-detail-value">${type}</span>
+                                <span class="modal-detail-label">Capitão:</span>
+                                <span class="modal-detail-value">${captain}</span>
                             </div>
                             <div class="modal-detail">
-                                <span class="modal-detail-label">Usuário:</span>
-                                <span class="modal-detail-value">${user}</span>
+                                <span class="modal-detail-label">Membros:</span>
+                                <span class="modal-detail-value">${members}</span>
+                            </div>
+                            <div class="modal-detail">
+                                <span class="modal-detail-label">Status:</span>
+                                <span class="modal-detail-value">${status}</span>
                             </div>
                         </div>
-                        <p class="modal-description">${description}</p>
                     </div>
                 </div>
             `;
@@ -775,7 +735,7 @@
             
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href.includes('frutas.html')) {
+                if (href.includes('tripulacoes.html')) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');

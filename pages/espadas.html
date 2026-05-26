@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frutas do Diabo - One Piece Encyclopedia</title>
+    <title>Espadas - One Piece Encyclopedia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -36,8 +36,8 @@
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="personagens.html">Personagens</a></li>
                     <li><a href="tripulacoes.html">Tripulações</a></li>
-                    <li><a href="frutas.html" class="active">Frutas</a></li>
-                    <li><a href="espadas.html">Espadas</a></li>
+                    <li><a href="frutas.html">Frutas</a></li>
+                    <li><a href="espadas.html" class="active">Espadas</a></li>
                     <li><a href="faccoes.html">Facções</a></li>
                 </ul>
             </nav>
@@ -58,10 +58,10 @@
             </button>
             <div class="modal-content">
                 <div class="search-container">
-                    <h2>Buscar Frutas</h2>
+                    <h2>Buscar Espadas</h2>
                     <div class="search-input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="fruit-search" placeholder="Digite o nome da fruta..." />
+                        <input type="text" id="sword-search" placeholder="Digite o nome da espada..." />
                     </div>
                     <div class="search-results" id="search-results"></div>
                 </div>
@@ -75,47 +75,54 @@
             <div class="container">
                 <div class="page-header-content" data-aos="fade-up">
                     <div class="page-badge">
-                        <i class="fas fa-apple-alt"></i>
+                        <i class="fas fa-khanda"></i>
                         <span>Enciclopédia</span>
                     </div>
-                    <h1>Frutas do Diabo</h1>
-                    <p>Explore todas as frutas místicas do universo de One Piece, das Akuma no Mi às lendárias Zoan.</p>
+                    <h1>Espadas Lendárias</h1>
+                    <p>Explore todas as espadas épicas do universo de One Piece, das Meito às lendárias Saijo O Wazamono.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Fruit Types Section -->
-        <section class="section section-fruit-types">
+        <!-- Sword Grades Section -->
+        <section class="section section-sword-grades">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
                     <div class="section-badge">
                         <i class="fas fa-layer-group"></i>
-                        <span>Tipos</span>
+                        <span>Classificações</span>
                     </div>
-                    <h2>Tipos de Frutas</h2>
-                    <p>As três categorias principais de Frutas do Diabo</p>
+                    <h2>Classificações de Espadas</h2>
+                    <p>As diferentes categorias de espadas no mundo de One Piece</p>
                 </div>
-                <div class="fruit-types-grid" data-aos="fade-up">
-                    <div class="fruit-type-card paramecia">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-bolt"></i>
+                <div class="sword-grades-grid" data-aos="fade-up">
+                    <div class="sword-grade-card supreme">
+                        <div class="sword-grade-icon">
+                            <i class="fas fa-crown"></i>
                         </div>
-                        <h3>Paramecia</h3>
-                        <p>Concedem habilidades superhumanas que não se enquadram nas outras categorias.</p>
+                        <h3>Saijo O Wazamono</h3>
+                        <p>As 12 espadas supremas, as mais poderosas do mundo.</p>
                     </div>
-                    <div class="fruit-type-card zoan">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-paw"></i>
+                    <div class="sword-grade-card great">
+                        <div class="sword-grade-icon">
+                            <i class="fas fa-star"></i>
                         </div>
-                        <h3>Zoan</h3>
-                        <p>Permitem ao usuário transformar-se em um animal ou em uma forma híbrida.</p>
+                        <h3>O Wazamono</h3>
+                        <p>As 21 excelentes espadas de alto nível.</p>
                     </div>
-                    <div class="fruit-type-card logia">
-                        <div class="fruit-type-icon">
-                            <i class="fas fa-fire"></i>
+                    <div class="sword-grade-card skillful">
+                        <div class="sword-grade-icon">
+                            <i class="fas fa-medal"></i>
                         </div>
-                        <h3>Logia</h3>
-                        <p>Concedem ao usuário a capacidade de transformar-se em um elemento natural.</p>
+                        <h3>Ryo Wazamono</h3>
+                        <p>As 50 espadas habilidosas de qualidade superior.</p>
+                    </div>
+                    <div class="sword-grade-card grade">
+                        <div class="sword-grade-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Wazamono</h3>
+                        <p>Espadas de qualidade e habilidade notáveis.</p>
                     </div>
                 </div>
             </div>
@@ -129,16 +136,17 @@
                         <label>Buscar</label>
                         <div class="search-input-wrapper">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="filter-search" placeholder="Nome da fruta..." />
+                            <input type="text" id="filter-search" placeholder="Nome da espada..." />
                         </div>
                     </div>
                     <div class="filter-group">
-                        <label>Tipo</label>
-                        <select id="filter-type">
+                        <label>Classificação</label>
+                        <select id="filter-grade">
                             <option value="">Todas</option>
-                            <option value="paramecia">Paramecia</option>
-                            <option value="zoan">Zoan</option>
-                            <option value="logia">Logia</option>
+                            <option value="supreme">Saijo O Wazamono</option>
+                            <option value="great">O Wazamono</option>
+                            <option value="skillful">Ryo Wazamono</option>
+                            <option value="grade">Wazamono</option>
                         </select>
                     </div>
                     <button class="btn btn-primary" id="apply-filters">
@@ -153,19 +161,19 @@
             </div>
         </section>
 
-        <!-- Fruits Grid -->
-        <section class="section section-fruits">
+        <!-- Swords Grid -->
+        <section class="section section-swords">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
                     <div class="section-badge">
-                        <i class="fas fa-apple-alt"></i>
-                        <span>Frutas</span>
+                        <i class="fas fa-khanda"></i>
+                        <span>Espadas</span>
                     </div>
-                    <h2>Todas as Frutas</h2>
-                    <p id="fruits-count">Carregando frutas...</p>
+                    <h2>Todas as Espadas</h2>
+                    <p id="swords-count">Carregando espadas...</p>
                 </div>
-                <div class="fruits-grid" id="fruits-grid" data-aos="fade-up">
-                    <!-- Fruits will be loaded dynamically -->
+                <div class="swords-grid" id="swords-grid" data-aos="fade-up">
+                    <!-- Swords will be loaded dynamically -->
                 </div>
                 <div class="load-more-container" id="load-more-container">
                     <button class="btn btn-primary btn-large" id="load-more">
@@ -218,7 +226,7 @@
         </div>
     </footer>
 
-    <!-- Fruit Modal -->
+    <!-- Sword Modal -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-container">
             <button class="modal-close" aria-label="Fechar modal">
@@ -233,7 +241,7 @@
     <style>
         .page-header {
             padding: 8rem 0 4rem;
-            background: linear-gradient(180deg, rgba(255, 184, 77, 0.1) 0%, transparent 50%);
+            background: linear-gradient(180deg, rgba(77, 166, 255, 0.1) 0%, transparent 50%);
         }
 
         .page-header-content {
@@ -250,7 +258,7 @@
             border-radius: var(--radius-full);
             font-size: 0.8rem;
             font-weight: 600;
-            color: var(--accent-primary);
+            color: var(--accent-tertiary);
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -269,13 +277,13 @@
             margin: 0 auto;
         }
 
-        .fruit-types-grid {
+        .sword-grades-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
-        .fruit-type-card {
+        .sword-grade-card {
             background: var(--surface);
             border: 1px solid var(--surface-border);
             border-radius: var(--radius-lg);
@@ -284,13 +292,13 @@
             transition: all var(--transition-normal);
         }
 
-        .fruit-type-card:hover {
+        .sword-grade-card:hover {
             transform: translateY(-8px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: var(--accent-tertiary);
+            box-shadow: var(--shadow-lg), 0 0 40px rgba(77, 166, 255, 0.15);
         }
 
-        .fruit-type-icon {
+        .sword-grade-icon {
             width: 4rem;
             height: 4rem;
             margin: 0 auto 1.5rem;
@@ -301,28 +309,33 @@
             font-size: 1.5rem;
         }
 
-        .fruit-type-card.paramecia .fruit-type-icon {
-            background: linear-gradient(135deg, #ffb84d 0%, #ff844d 100%);
+        .sword-grade-card.supreme .sword-grade-icon {
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
             color: #0a1423;
         }
 
-        .fruit-type-card.zoan .fruit-type-icon {
+        .sword-grade-card.great .sword-grade-icon {
+            background: linear-gradient(135deg, #4da6ff 0%, #7a4dff 100%);
+            color: white;
+        }
+
+        .sword-grade-card.skillful .sword-grade-icon {
             background: linear-gradient(135deg, #4dff88 0%, #4da6ff 100%);
             color: #0a1423;
         }
 
-        .fruit-type-card.logia .fruit-type-icon {
+        .sword-grade-card.grade .sword-grade-icon {
             background: linear-gradient(135deg, #ff4d4d 0%, #ff844d 100%);
             color: white;
         }
 
-        .fruit-type-card h3 {
-            font-size: 1.25rem;
+        .sword-grade-card h3 {
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 0.75rem;
         }
 
-        .fruit-type-card p {
+        .sword-grade-card p {
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.6;
@@ -390,13 +403,13 @@
         .search-input-wrapper input:focus,
         .filter-group select:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(255, 184, 77, 0.1);
+            border-color: var(--accent-tertiary);
+            box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
         }
 
-        .fruits-grid {
+        .swords-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
         }
 
@@ -450,7 +463,7 @@
                 width: 100%;
             }
 
-            .fruit-types-grid {
+            .sword-grades-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -460,79 +473,79 @@
         document.addEventListener('DOMContentLoaded', function () {
             initNavigation();
             initAOS();
-            loadFruits();
+            loadSwords();
             initFilters();
             initSearchModal();
             initModalSystem();
             updateActiveNavLink();
         });
 
-        let allFruits = [];
-        let displayedFruits = 12;
-        let filteredFruits = [];
+        let allSwords = [];
+        let displayedSwords = 12;
+        let filteredSwords = [];
 
-        async function loadFruits() {
+        async function loadSwords() {
             try {
-                allFruits = await OP_API.getFruits();
-                filteredFruits = [...allFruits];
+                allSwords = await OP_API.getSwords();
+                filteredSwords = [...allSwords];
                 
-                updateFruitCount();
-                displayFruits();
+                updateSwordCount();
+                displaySwords();
                 
                 document.getElementById('load-more-container').style.display = 'flex';
             } catch (error) {
-                console.error('Error loading fruits:', error);
-                document.getElementById('fruits-grid').innerHTML = '<p>Erro ao carregar frutas.</p>';
+                console.error('Error loading swords:', error);
+                document.getElementById('swords-grid').innerHTML = '<p>Erro ao carregar espadas.</p>';
             }
         }
 
-        function updateFruitCount() {
-            const countElement = document.getElementById('fruits-count');
-            countElement.textContent = `${filteredFruits.length} frutas encontradas`;
+        function updateSwordCount() {
+            const countElement = document.getElementById('swords-count');
+            countElement.textContent = `${filteredSwords.length} espadas encontradas`;
         }
 
-        function displayFruits() {
-            const grid = document.getElementById('fruits-grid');
-            const fruitsToShow = filteredFruits.slice(0, displayedFruits);
+        function displaySwords() {
+            const grid = document.getElementById('swords-grid');
+            const swordsToShow = filteredSwords.slice(0, displayedSwords);
             
             grid.innerHTML = '';
             
-            fruitsToShow.forEach((fruit, index) => {
-                const card = createFruitCard(fruit);
+            swordsToShow.forEach((sword, index) => {
+                const card = createSwordCard(sword);
                 card.style.animationDelay = `${index * 50}ms`;
                 grid.appendChild(card);
             });
 
             const loadMoreBtn = document.getElementById('load-more');
-            if (displayedFruits >= filteredFruits.length) {
+            if (displayedSwords >= filteredSwords.length) {
                 loadMoreBtn.style.display = 'none';
             } else {
                 loadMoreBtn.style.display = 'inline-flex';
             }
         }
 
-        function createFruitCard(fruit) {
+        function createSwordCard(sword) {
             const card = document.createElement('div');
-            card.className = 'fruit-card';
-            card.onclick = () => openFruitModal(fruit);
+            card.className = 'sword-card';
+            card.onclick = () => openSwordModal(sword);
             
-            const name = fruit.name || 'Unknown';
-            const type = fruit.type || 'Unknown';
-            const user = fruit.user || 'Unknown';
+            const name = sword.name || 'Unknown';
+            const grade = sword.grade || 'Unknown';
+            const user = sword.owner || 'Unknown';
             
             // Use ImageService for reliable image loading
-            const img = ImageService.createImageElement(fruit, 'fruit', {
-                className: 'fruit-card-image',
+            const img = ImageService.createImageElement(sword, 'sword', {
+                className: 'sword-card-image',
                 alt: name,
                 loading: 'lazy'
             });
             
             const info = document.createElement('div');
-            info.className = 'fruit-card-info';
+            info.className = 'sword-card-info';
             info.innerHTML = `
-                <h3 class="fruit-card-name">${name}</h3>
-                <p class="fruit-card-type">${type}</p>
-                <p class="fruit-card-user">Usuário: ${user}</p>
+                <h3 class="sword-card-name">${name}</h3>
+                <p class="sword-card-grade">${grade}</p>
+                <p class="sword-card-user">Usuário: ${user}</p>
             `;
             
             card.appendChild(img);
@@ -547,44 +560,44 @@
 
             applyBtn.addEventListener('click', applyFilters);
             resetBtn.addEventListener('click', resetFilters);
-            loadMoreBtn.addEventListener('click', loadMoreFruits);
+            loadMoreBtn.addEventListener('click', loadMoreSwords);
         }
 
         function applyFilters() {
             const search = document.getElementById('filter-search').value.toLowerCase();
-            const type = document.getElementById('filter-type').value;
+            const grade = document.getElementById('filter-grade').value;
 
-            filteredFruits = allFruits.filter(fruit => {
-                const matchesSearch = !search || fruit.name.toLowerCase().includes(search);
-                const matchesType = !type || fruit.type.toLowerCase() === type.toLowerCase();
+            filteredSwords = allSwords.filter(sword => {
+                const matchesSearch = !search || sword.name.toLowerCase().includes(search);
+                const matchesGrade = !grade || sword.grade.toLowerCase().includes(grade.toLowerCase());
                 
-                return matchesSearch && matchesType;
+                return matchesSearch && matchesGrade;
             });
 
-            displayedFruits = 12;
-            updateFruitCount();
-            displayFruits();
+            displayedSwords = 12;
+            updateSwordCount();
+            displaySwords();
         }
 
         function resetFilters() {
             document.getElementById('filter-search').value = '';
-            document.getElementById('filter-type').value = '';
+            document.getElementById('filter-grade').value = '';
             
-            filteredFruits = [...allFruits];
-            displayedFruits = 12;
-            updateFruitCount();
-            displayFruits();
+            filteredSwords = [...allSwords];
+            displayedSwords = 12;
+            updateSwordCount();
+            displaySwords();
         }
 
-        function loadMoreFruits() {
-            displayedFruits += 12;
-            displayFruits();
+        function loadMoreSwords() {
+            displayedSwords += 12;
+            displaySwords();
         }
 
         function initSearchModal() {
             const searchToggle = document.getElementById('search-toggle');
             const searchModal = document.getElementById('search-modal');
-            const searchInput = document.getElementById('fruit-search');
+            const searchInput = document.getElementById('sword-search');
             const searchResults = document.getElementById('search-results');
 
             searchToggle.addEventListener('click', () => {
@@ -609,8 +622,8 @@
                     return;
                 }
 
-                const results = allFruits.filter(f => 
-                    f.name.toLowerCase().includes(query.toLowerCase())
+                const results = allSwords.filter(s => 
+                    s.name.toLowerCase().includes(query.toLowerCase())
                 ).slice(0, 10);
 
                 displaySearchResults(results);
@@ -625,41 +638,41 @@
                 return;
             }
 
-            searchResults.innerHTML = results.map(fruit => `
-                <div class="search-result-item" onclick="openFruitModalFromSearch(${JSON.stringify(fruit).replace(/"/g, '&quot;')})">
+            searchResults.innerHTML = results.map(sword => `
+                <div class="search-result-item" onclick="openSwordModalFromSearch(${JSON.stringify(sword).replace(/"/g, '&quot;')})">
                     <div class="search-result-icon">
-                        <i class="fas fa-apple-alt" style="font-size: 2rem; color: var(--accent-primary);"></i>
+                        <i class="fas fa-khanda" style="font-size: 2rem; color: var(--accent-tertiary);"></i>
                     </div>
                     <div class="search-result-info">
-                        <h4>${fruit.name}</h4>
-                        <p>Tipo: ${fruit.type || 'Unknown'}</p>
+                        <h4>${sword.name}</h4>
+                        <p>Classificação: ${sword.grade || 'Unknown'}</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openFruitModalFromSearch(fruit) {
+        function openSwordModalFromSearch(sword) {
             document.getElementById('search-modal').classList.remove('active');
-            openFruitModal(fruit);
+            openSwordModal(sword);
         }
 
-        function openFruitModal(fruit) {
-            const name = fruit.name || 'Unknown';
-            const type = fruit.type || 'Unknown';
-            const user = fruit.user || 'Unknown';
-            const description = fruit.description || 'No description available';
+        function openSwordModal(sword) {
+            const name = sword.name || 'Unknown';
+            const grade = sword.grade || 'Unknown';
+            const user = sword.owner || 'Unknown';
+            const description = sword.description || 'No description available';
             
             const content = `
-                <div class="modal-fruit">
-                    <div class="modal-fruit-icon">
-                        <i class="fas fa-apple-alt" style="font-size: 5rem; color: var(--accent-primary);"></i>
+                <div class="modal-sword">
+                    <div class="modal-sword-icon">
+                        <i class="fas fa-khanda" style="font-size: 5rem; color: var(--accent-tertiary);"></i>
                     </div>
-                    <div class="modal-fruit-info">
+                    <div class="modal-sword-info">
                         <h2>${name}</h2>
                         <div class="modal-details">
                             <div class="modal-detail">
-                                <span class="modal-detail-label">Tipo:</span>
-                                <span class="modal-detail-value">${type}</span>
+                                <span class="modal-detail-label">Classificação:</span>
+                                <span class="modal-detail-value">${grade}</span>
                             </div>
                             <div class="modal-detail">
                                 <span class="modal-detail-label">Usuário:</span>
@@ -775,7 +788,7 @@
             
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href.includes('frutas.html')) {
+                if (href.includes('espadas.html')) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');

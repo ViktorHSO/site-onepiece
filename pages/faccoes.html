@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facções - One Piece Encyclopedia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="../js/api.js" defer></script>
+    <script src="../js/imageMappings.js" defer></script>
+    <script src="../js/imageService.js" defer></script>
+    <script src="../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-glow"></div>
+        <div class="container header-inner">
+            <a class="brand" href="../index.html">
+                <i class="fas fa-skull-crossbones"></i>
+                <span>ONE PIECE</span>
+            </a>
+            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" aria-label="Menu principal">
+                <ul class="nav-list">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="personagens.html">Personagens</a></li>
+                    <li><a href="tripulacoes.html">Tripulações</a></li>
+                    <li><a href="frutas.html">Frutas</a></li>
+                    <li><a href="espadas.html">Espadas</a></li>
+                    <li><a href="faccoes.html" class="active">Facções</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a class="btn btn-primary" href="../index.html">Voltar</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content" data-aos="fade-up">
+                    <div class="page-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Enciclopédia</span>
+                    </div>
+                    <h1>Facções do Mundo</h1>
+                    <p>Explore as grandes facções que moldam o mundo de One Piece, da Marinha aos Revolucionários.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marine Section -->
+        <section class="section section-marine" id="marinha">
+            <div class="section-background">
+                <div class="gradient-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge marine">
+                        <i class="fas fa-anchor"></i>
+                        <span>Força Militar</span>
+                    </div>
+                    <h2>Marinha</h2>
+                    <p>A força militar do Governo Mundial, dedicada a manter a paz e a justiça nos mares.</p>
+                </div>
+                <div class="faction-details" data-aos="fade-up">
+                    <div class="faction-description">
+                        <p>A Marinha é a principal força militar do Governo Mundial, responsável por manter a ordem e a justiça nos mares. Composto por marinheiros, almirantes e outras autoridades, a Marinha combate piratas e outras ameaças à paz mundial.</p>
+                        <div class="faction-roles">
+                            <div class="role-card">
+                                <i class="fas fa-crown"></i>
+                                <h4>Almirante de Frota</h4>
+                                <p>O líder supremo da Marinha</p>
+                            </div>
+                            <div class="role-card">
+                                <i class="fas fa-star"></i>
+                                <h4>Almirantes</h4>
+                                <p>Os três comandantes supremos</p>
+                            </div>
+                            <div class="role-card">
+                                <i class="fas fa-user-shield"></i>
+                                <h4>Vice-Almirantes</h4>
+                                <p>Oficiais de alto comando</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Revolutionary Section -->
+        <section class="section section-revolutionary" id="revolucionarios">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge revolutionary">
+                        <i class="fas fa-fist-raised"></i>
+                        <span>Exército Rebelde</span>
+                    </div>
+                    <h2>Revolucionários</h2>
+                    <p>O exército rebelde que luta contra o Governo Mundial e a tirania dos Dragões Celestiais.</p>
+                </div>
+                <div class="faction-details" data-aos="fade-up">
+                    <div class="faction-description">
+                        <p>Os Revolucionários são um exército rebelde liderado por Monkey D. Dragon, com o objetivo de derrubar o Governo Mundial e libertar o mundo da opressão dos Dragões Celestiais. Eles operam secretamente em todo o mundo, reunindo aliados e recursos para sua causa.</p>
+                        <div class="faction-roles">
+                            <div class="role-card revolutionary">
+                                <i class="fas fa-crown"></i>
+                                <h4>Líder</h4>
+                                <p>Monkey D. Dragon</p>
+                            </div>
+                            <div class="role-card revolutionary">
+                                <i class="fas fa-fire"></i>
+                                <h4>Segundo em Comando</h4>
+                                <p>Sabo</p>
+                            </div>
+                            <div class="role-card revolutionary">
+                                <i class="fas fa-users"></i>
+                                <h4>Comandantes</h4>
+                                <p>Líderes regionais</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pirates Section -->
+        <section class="section section-pirates" id="piratas">
+            <div class="section-background">
+                <div class="gradient-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge pirates">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <span>Rebeldes dos Mares</span>
+                    </div>
+                    <h2>Piratas</h2>
+                    <p>As tripulações que navegam pelo Grande Mundo em busca do One Piece e da liberdade.</p>
+                </div>
+                <div class="faction-details" data-aos="fade-up">
+                    <div class="faction-description">
+                        <p>Os piratas são os rebeldes dos mares, navegando livremente em busca de tesouros, aventuras e o lendário One Piece. Desde os Yonko, que governam o Novo Mundo, até as tripulações iniciantes no East Blue, os piratas representam a liberdade e a ambição no mundo de One Piece.</p>
+                        <div class="faction-roles">
+                            <div class="role-card pirates">
+                                <i class="fas fa-crown"></i>
+                                <h4>Yonko</h4>
+                                <p>Os quatro imperadores</p>
+                            </div>
+                            <div class="role-card pirates">
+                                <i class="fas fa-skull"></i>
+                                <h4>Shichibukai</h4>
+                                <p>Os sete guerreiros do mar</p>
+                            </div>
+                            <div class="role-card pirates">
+                                <i class="fas fa-flag"></i>
+                                < <h4>Supernovas</h4>
+                                <p>Os piratas da pior geração</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shichibukai Section -->
+        <section class="section section-shichibukai" id="shichibukai">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge shichibukai">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Guerreiros do Mar</span>
+                    </div>
+                    <h2>Shichibukai</h2>
+                    <p>Os sete piratas aliados ao Governo Mundial com poderes extraordinários.</p>
+                </div>
+                <div class="faction-details" data-aos="fade-up">
+                    <div class="faction-description">
+                        <p>Os Shichibukai (Sete Guerreiros do Mar) eram piratas poderosos que se aliavam ao Governo Mundial em troca de imunidade. Eles mantinham suas tripulações e territórios enquanto serviam como força de dissuasão contra outros piratas. O sistema foi abolido após o Nível Especial 6 de Impel Down.</p>
+                        <div class="faction-roles">
+                            <div class="role-card shichibukai">
+                                <i class="fas fa-user"></i>
+                                <h4>Membros</h4>
+                                <p>Piratas renomados</p>
+                            </div>
+                            <div class="role-card shichibukai">
+                                <i class="fas fa-handshake"></i>
+                                <h4>Aliados</h4>
+                                <p>Governo Mundial</p>
+                            </div>
+                            <div class="role-card shichibukai">
+                                <i class="fas fa-gavel"></i>
+                                <h4>Status</h4>
+                                <p>Sistema abolido</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yonko Section -->
+        <section class="section section-yonko-factions">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>Imperadores</span>
+                    </div>
+                    <h2>Os Quatro Imperadores</h2>
+                    <p>Os piratas mais poderosos que governam o Novo Mundo</p>
+                </div>
+                <div class="yonko-grid" id="yonko-grid" data-aos="fade-up">
+                    <!-- Yonko will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-background">
+            <div class="footer-gradient"></div>
+        </div>
+        <div class="container footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <span>ONE PIECE</span>
+                    </div>
+                    <p>Enciclopédia visual premium do universo de One Piece.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navegação</h4>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="personagens.html">Personagens</a></li>
+                            <li><a href="tripulacoes.html">Tripulações</a></li>
+                            <li><a href="frutas.html">Frutas</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Categorias</h4>
+                        <ul>
+                            <li><a href="espadas.html">Espadas</a></li>
+                            <li><a href="faccoes.html">Facções</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>© 2026 One Piece Encyclopedia. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(180deg, rgba(255, 184, 77, 0.1) 0%, transparent 50%);
+        }
+
+        .page-header-content {
+            text-align: center;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-marine,
+        .section-pirates {
+            background: linear-gradient(180deg, rgba(77, 166, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .section-revolutionary,
+        .section-shichibukai {
+            background: linear-gradient(180deg, rgba(255, 77, 77, 0.05) 0%, transparent 50%);
+        }
+
+        .section-badge.marine {
+            color: #4da6ff;
+        }
+
+        .section-badge.revolutionary {
+            color: #ff4d4d;
+        }
+
+        .section-badge.pirates {
+            color: var(--accent-primary);
+        }
+
+        .section-badge.shichibukai {
+            color: #9b59b6;
+        }
+
+        .faction-details {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+        }
+
+        .faction-description {
+            text-align: center;
+        }
+
+        .faction-description > p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .faction-roles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .role-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--surface-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all var(--transition-normal);
+        }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .role-card i {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .role-card.revolutionary i {
+            color: #ff4d4d;
+        }
+
+        .role-card.pirates i {
+            color: var(--accent-primary);
+        }
+
+        .role-card.shichibukai i {
+            color: #9b59b6;
+        }
+
+        .role-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .yonko-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .faction-roles {
+                grid-template-columns: 1fr;
+            }
+
+            .yonko-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            initNavigation();
+            initAOS();
+            loadYonko();
+            updateActiveNavLink();
+        });
+
+        async function loadYonko() {
+            try {
+                const yonko = await OP_API.getYonko();
+                const yonkoGrid = document.getElementById('yonko-grid');
+                
+                if (yonko && yonko.length > 0) {
+                    yonko.forEach(crew => {
+                        const card = document.createElement('div');
+                        card.className = 'yonko-card';
+                        
+                        const image = crew.image || '../images/luffy.png';
+                        const name = crew.name || 'Unknown';
+                        const captain = crew.captain || 'Unknown';
+                        
+                        card.innerHTML = `
+                            <img src="${image}" alt="${name}" class="yonko-card-image" onerror="this.src='../images/luffy.png'">
+                            <div class="yonko-card-info">
+                                <h3 class="yonko-card-name">${name}</h3>
+                                <p class="yonko-card-title">Yonko</p>
+                                <p class="yonko-card-crew">Capitão: ${captain}</p>
+                            </div>
+                        `;
+                        
+                        yonkoGrid.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading Yonko:', error);
+            }
+        }
+
+        function initNavigation() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-list a');
+
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function () {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', String(!expanded));
+                    navMenu.classList.toggle('open');
+                    
+                    const spans = this.querySelectorAll('span');
+                    if (navMenu.classList.contains('open')) {
+                        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        spans[1].style.opacity = '0';
+                        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                    } else {
+                        spans[0].style.transform = '';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = '';
+                    }
+                });
+            }
+
+            navLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (navMenu && navMenu.classList.contains('open')) {
+                        navMenu.classList.remove('open');
+                        if (navToggle) {
+                            navToggle.setAttribute('aria-expanded', 'false');
+                            const spans = navToggle.querySelectorAll('span');
+                            spans[0].style.transform = '';
+                            spans[1].style.opacity = '1';
+                            spans[2].style.transform = '';
+                        }
+                    }
+                });
+            });
+        }
+
+        function initAOS() {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-out-cubic',
+                    once: true,
+                    offset: 50
+                });
+            }
+        }
+
+        function updateActiveNavLink() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-list a');
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href.includes('faccoes.html')) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

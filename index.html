@@ -3,29 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>One Piece</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/scripts.js"></script>
+    <title>One Piece Encyclopedia - Premium Visual Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/imageMappings.js" defer></script>
+    <script src="js/imageService.js" defer></script>
+    <script src="js/main.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>One Piece</h1>
-        <nav>
-            <ul>
-                <li><a href="pages/inicio.html">Início</a></li>
-                <li><a href="pages/sinopse.html">Sinopse</a></li>
-                <li><a href="pages/personagens.html">Personagens</a></li>
-                <li><a href="pages/episodios.html">Episódios</a></li>
-                <li><a href="pages/frutas.html">Frutas</a></li>
-            </ul>
-        </nav>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-anchor"></i>
+            </div>
+            <div class="loading-text">ONE PIECE</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="loading-subtitle">Carregando o Grande Mundo...</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <div class="header-glow"></div>
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <i class="fas fa-skull-crossbones"></i>
+                <span>ONE PIECE</span>
+            </a>
+            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-menu" aria-label="Menu principal">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="pages/personagens.html">Personagens</a></li>
+                    <li><a href="pages/tripulacoes.html">Tripulações</a></li>
+                    <li><a href="pages/frutas.html">Frutas</a></li>
+                    <li><a href="pages/espadas.html">Espadas</a></li>
+                    <li><a href="pages/faccoes.html">Facções</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="search-toggle" aria-label="Buscar">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a class="btn btn-primary" href="pages/personagens.html">Explorar</a>
+            </div>
+        </div>
     </header>
-    <section>
-        <h2>Bem-vindo ao Site de Fãs de One Piece</h2>
-        <p>Explore o mundo de One Piece e descubra tudo sobre esta incrível série.</p>
-    </section>
-    <footer>
-        <p>&copy; 2024 One Piece Fan Site. Todos os direitos reservados.</p>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background">
+                <div class="hero-gradient"></div>
+                <div class="hero-particles"></div>
+            </div>
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge" data-aos="fade-down">
+                        <i class="fas fa-compass"></i>
+                        <span>Enciclopédia Visual Premium</span>
+                    </div>
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                        Explore o Universo de <span class="highlight">One Piece</span>
+                    </h1>
+                    <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+                        Uma experiência cinematográfica completa com personagens icônicos, tripulações lendárias, 
+                        frutas do diabo místicas e espadas épicas. Navegue pelo Grande Mundo como nunca antes.
+                    </p>
+                    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+                        <a class="btn btn-primary btn-large" href="pages/personagens.html">
+                            <i class="fas fa-users"></i>
+                            Personagens
+                        </a>
+                        <a class="btn btn-secondary btn-large" href="pages/tripulacoes.html">
+                            <i class="fas fa-flag"></i>
+                            Tripulações
+                        </a>
+                    </div>
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat-characters">0</div>
+                            <div class="stat-label">Personagens</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat-crews">0</div>
+                            <div class="stat-label">Tripulações</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat-fruits">0</div>
+                            <div class="stat-label">Frutas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="stat-swords">0</div>
+                            <div class="stat-label">Espadas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
+                    <div class="hero-card-3d">
+                        <div class="card-glow"></div>
+                        <img src="images/luffy.png" alt="Luffy" class="hero-image" />
+                        <div class="hero-card-info">
+                            <div class="character-name">Monkey D. Luffy</div>
+                            <div class="character-title">Capitão dos Piratas do Chapéu de Palha</div>
+                            <div class="character-reward">
+                                <i class="fas fa-coins"></i>
+                                <span>3.000.000.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-scroll">
+                <div class="scroll-indicator">
+                    <span>Scroll para explorar</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Characters Carousel -->
+        <section class="section section-featured">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-star"></i>
+                        <span>Destaque</span>
+                    </div>
+                    <h2>Personagens Populares</h2>
+                    <p>Os piratas mais procurados e heróis lendários do Grande Mundo</p>
+                </div>
+                <div class="swiper featured-swiper" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper" id="featured-characters">
+                        <!-- Characters will be loaded dynamically -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-navigation">
+                        <button class="swiper-button-prev"><i class="fas fa-chevron-left"></i></button>
+                        <button class="swiper-button-next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Yonko Section -->
+        <section class="section section-yonko">
+            <div class="section-background">
+                <div class="gradient-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-crown"></i>
+                        <span>Os Quatro Imperadores</span>
+                    </div>
+                    <h2>Os Yonko</h2>
+                    <p>Os quatro piratas mais poderosos que governam o Novo Mundo</p>
+                </div>
+                <div class="yonko-grid" id="yonko-grid">
+                    <!-- Yonko will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Factions Section -->
+        <section class="section section-factions">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Facções</span>
+                    </div>
+                    <h2>Grandes Facções</h2>
+                    <p>Marinha, Revolucionários e as forças que moldam o mundo</p>
+                </div>
+                <div class="factions-grid">
+                    <div class="faction-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faction-icon marine">
+                            <i class="fas fa-anchor"></i>
+                        </div>
+                        <h3>Marinha</h3>
+                        <p>A força militar do Governo Mundial, dedicada a manter a paz e a justiça</p>
+                        <a href="pages/faccoes.html#marinha" class="btn-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="faction-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faction-icon revolutionary">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <h3>Revolucionários</h3>
+                        <p>Exército rebelde que luta contra o Governo Mundial e a tirania</p>
+                        <a href="pages/faccoes.html#revolucionarios" class="btn-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="faction-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="faction-icon pirates">
+                            <i class="fas fa-skull-crossbones"></i>
+                        </div>
+                        <h3>Piratas</h3>
+                        <p>As tripulações que navegam pelo Grande Mundo em busca do One Piece</p>
+                        <a href="pages/faccoes.html#piratas" class="btn-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="faction-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="faction-icon shichibukai">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Shichibukai</h3>
+                        <p>Os sete piratas aliados ao Governo Mundial com poderes extraordinários</p>
+                        <a href="pages/faccoes.html#shichibukai" class="btn-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Devil Fruits Section -->
+        <section class="section section-fruits">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-apple-alt"></i>
+                        <span>Poderes Místicos</span>
+                    </div>
+                    <h2>Frutas do Diabo</h2>
+                    <p>As frutas místicas que concedem poderes extraordinários</p>
+                </div>
+                <div class="fruits-carousel">
+                    <div class="swiper fruits-swiper" data-aos="fade-up" data-aos-delay="100">
+                        <div class="swiper-wrapper" id="fruits-carousel">
+                            <!-- Fruits will be loaded dynamically -->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-navigation">
+                            <button class="swiper-button-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="swiper-button-next"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legendary Swords Section -->
+        <section class="section section-swords">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-khanda"></i>
+                        <span>Armas Lendárias</span>
+                    </div>
+                    <h2>Espadas Épicas</h2>
+                    <p>As espadas mais poderosas e lendárias do mundo de One Piece</p>
+                </div>
+                <div class="swords-grid" id="swords-grid">
+                    <!-- Swords will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Crews Section -->
+        <section class="section section-crews">
+            <div class="section-background">
+                <div class="gradient-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="section-badge">
+                        <i class="fas fa-flag"></i>
+                        <span>Tripulações</span>
+                    </div>
+                    <h2>Tripulações Lendárias</h2>
+                    <p>As tripulações mais famosas e poderosas dos mares</p>
+                </div>
+                <div class="crews-carousel">
+                    <div class="swiper crews-swiper" data-aos="fade-up" data-aos-delay="100">
+                        <div class="swiper-wrapper" id="crews-carousel">
+                            <!-- Crews will be loaded dynamically -->
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-navigation">
+                            <button class="swiper-button-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="swiper-button-next"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="section section-cta">
+            <div class="container">
+                <div class="cta-content" data-aos="zoom-in">
+                    <div class="cta-badge">
+                        <i class="fas fa-compass"></i>
+                        <span>Comece sua jornada</span>
+                    </div>
+                    <h2>Explore o Universo Completo de One Piece</h2>
+                    <p>Milhares de personagens, tripulações, frutas do diabo e muito mais esperam por você.</p>
+                    <div class="cta-actions">
+                        <a class="btn btn-primary btn-large" href="pages/personagens.html">
+                            <i class="fas fa-users"></i>
+                            Ver Todos os Personagens
+                        </a>
+                        <a class="btn btn-secondary btn-large" href="pages/tripulacoes.html">
+                            <i class="fas fa-flag"></i>
+                            Explorar Tripulações
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-background">
+            <div class="footer-gradient"></div>
+        </div>
+        <div class="container footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <span>ONE PIECE</span>
+                    </div>
+                    <p>Enciclopédia visual premium do universo de One Piece. Criado com ❤️ para fãs.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navegação</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="pages/personagens.html">Personagens</a></li>
+                            <li><a href="pages/tripulacoes.html">Tripulações</a></li>
+                            <li><a href="pages/frutas.html">Frutas</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Categorias</h4>
+                        <ul>
+                            <li><a href="pages/espadas.html">Espadas</a></li>
+                            <li><a href="pages/faccoes.html">Facções</a></li>
+                            <li><a href="pages/yonko.html">Yonko</a></li>
+                            <li><a href="pages/arcos.html">Arcos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Recursos</h4>
+                        <ul>
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#">API</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>© 2026 One Piece Encyclopedia. Todos os direitos reservados.</p>
+                    <p>Projeto fã não oficial. One Piece é propriedade de Eiichiro Oda e Toei Animation.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- Modal Template -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" aria-label="Fechar modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content" id="modal-content">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
