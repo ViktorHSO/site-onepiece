@@ -1,789 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tripulações - One Piece Encyclopedia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="../js/api.js" defer></script>
-    <script src="../js/imageMappings.js" defer></script>
-    <script src="../js/imageService.js" defer></script>
-    <script src="../js/main.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tripulações · Diário da Grand Line</title>
+  <meta name="description" content="Tripulações piratas de One Piece, com capitão, membros e recompensa total.">
+  <meta name="titulo-en" content="Crews · Diário da Grand Line">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.api-onepiece.com https://s4.anilist.co; connect-src https://api.api-onepiece.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../assets/img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/idioma.js" defer></script>
+  <script src="../assets/js/fotos.js" defer></script>
+  <script src="../assets/js/fotos-anilist.js" defer></script>
+  <script src="../assets/js/descricoes-pt.js" defer></script>
+  <script src="../assets/js/api.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/pages/tripulacoes.js" defer></script>
 </head>
-<body>
-    <!-- Header -->
-    <header class="site-header">
-        <div class="header-glow"></div>
-        <div class="container header-inner">
-            <a class="brand" href="../index.html">
-                <i class="fas fa-skull-crossbones"></i>
-                <span>ONE PIECE</span>
-            </a>
-            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <nav class="nav-menu" aria-label="Menu principal">
-                <ul class="nav-list">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="personagens.html">Personagens</a></li>
-                    <li><a href="tripulacoes.html" class="active">Tripulações</a></li>
-                    <li><a href="frutas.html">Frutas</a></li>
-                    <li><a href="espadas.html">Espadas</a></li>
-                    <li><a href="faccoes.html">Facções</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <button class="search-toggle" aria-label="Buscar" id="search-toggle">
-                    <i class="fas fa-search"></i>
-                </button>
-                <a class="btn btn-primary" href="../index.html">Voltar</a>
-            </div>
-        </div>
-    </header>
+<body data-raiz="..">
+  <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>
 
-    <!-- Search Modal -->
-    <div class="modal-overlay" id="search-modal">
-        <div class="modal-container">
-            <button class="modal-close" aria-label="Fechar">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-content">
-                <div class="search-container">
-                    <h2>Buscar Tripulações</h2>
-                    <div class="search-input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="crew-search" placeholder="Digite o nome da tripulação..." />
-                    </div>
-                    <div class="search-results" id="search-results"></div>
-                </div>
-            </div>
+  <header class="topo">
+    <div class="envelope topo__linha">
+      <a class="marca" href="../index.html">Diário da Grand Line</a>
+      <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu" data-i18n="menu">Menu</button>
+      <nav id="menu" aria-label="Principal" data-i18n-aria="nav.rotulo">
+        <ul>
+          <li><a href="../index.html" data-i18n="nav.inicio">Início</a></li>
+          <li><a href="personagens.html" data-i18n="nav.personagens">Personagens</a></li>
+          <li><a href="tripulacoes.html" aria-current="page" data-i18n="nav.tripulacoes">Tripulações</a></li>
+          <li><a href="frutas.html" data-i18n="nav.frutas">Frutas</a></li>
+          <li><a href="espadas.html" data-i18n="nav.espadas">Espadas</a></li>
+          <li><a href="faccoes.html" data-i18n="nav.faccoes">Facções</a></li>
+          <li><a href="cartaz.html" data-i18n="nav.cartaz">Seu cartaz</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <div class="envelope">
+      <header class="titulo-pagina">
+        <h1 data-i18n="trip.titulo">Tripulações</h1>
+        <p data-i18n="trip.texto">Os bandos piratas da API. O capitão e a lista de membros são montados a partir dos personagens. A coroa marca quem já teve um Imperador no comando.</p>
+      </header>
+
+      <form class="filtros" role="search">
+        <div class="campo">
+          <label for="f-nome" data-i18n="f.nome">Nome</label>
+          <input id="f-nome" type="search" placeholder="Ex.: Barba Branca" data-i18n-placeholder="trip.exemplo" autocomplete="off">
         </div>
+        <div class="campo">
+          <label for="f-status" data-i18n="f.situacao">Situação</label>
+          <select id="f-status">
+            <option value="" data-i18n="f.todas">Todas</option>
+            <option value="ativa" data-i18n="f.ativa">Ativa</option>
+            <option value="inativa" data-i18n="f.inativa">Inativa</option>
+            <option value="dissolvida" data-i18n="f.dissolvida">Dissolvida</option>
+            <option value="desconhecido" data-i18n="f.desconhecido">Desconhecido</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="f-ordem" data-i18n="f.ordem">Ordenar por</label>
+          <select id="f-ordem">
+            <option value="api" data-i18n="f.ordemApi">Ordem de aparição</option>
+            <option value="recompensa" data-i18n="f.ordemRecompensaTotal">Maior recompensa total</option>
+            <option value="membros" data-i18n="f.ordemMembros">Mais membros</option>
+            <option value="nome" data-i18n="f.ordemNome">Nome, de A a Z</option>
+          </select>
+        </div>
+      </form>
+
+      <p class="contagem" id="contagem" aria-live="polite"></p>
+      <div class="tabela-envelope" id="lista"></div>
     </div>
 
-    <main>
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content" data-aos="fade-up">
-                    <div class="page-badge">
-                        <i class="fas fa-flag"></i>
-                        <span>Enciclopédia</span>
-                    </div>
-                    <h1>Tripulações de One Piece</h1>
-                    <p>Explore todas as tripulações lendárias do universo de One Piece, dos Chapéu de Palha aos Yonko.</p>
-                </div>
-            </div>
-        </section>
+  </main>
 
-        <!-- Yonko Section -->
-        <section class="section section-yonko">
-            <div class="section-background">
-                <div class="gradient-overlay"></div>
-            </div>
-            <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <div class="section-badge">
-                        <i class="fas fa-crown"></i>
-                        <span>Os Quatro Imperadores</span>
-                    </div>
-                    <h2>Os Yonko</h2>
-                    <p>Os quatro piratas mais poderosos que governam o Novo Mundo</p>
-                </div>
-                <div class="yonko-grid" id="yonko-grid" data-aos="fade-up">
-                    <!-- Yonko will be loaded dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Filters -->
-        <section class="section section-filters">
-            <div class="container">
-                <div class="filters-container" data-aos="fade-up">
-                    <div class="filter-group">
-                        <label>Buscar</label>
-                        <div class="search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="filter-search" placeholder="Nome da tripulação..." />
-                        </div>
-                    </div>
-                    <div class="filter-group">
-                        <label>Status</label>
-                        <select id="filter-status">
-                            <option value="">Todas</option>
-                            <option value="active">Ativa</option>
-                            <option value="disbanded">Dissolvida</option>
-                            <option value="unknown">Desconhecido</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" id="apply-filters">
-                        <i class="fas fa-filter"></i>
-                        Filtrar
-                    </button>
-                    <button class="btn btn-secondary" id="reset-filters">
-                        <i class="fas fa-undo"></i>
-                        Resetar
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Crews Grid -->
-        <section class="section section-crews">
-            <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <div class="section-badge">
-                        <i class="fas fa-flag"></i>
-                        <span>Tripulações</span>
-                    </div>
-                    <h2>Todas as Tripulações</h2>
-                    <p id="crews-count">Carregando tripulações...</p>
-                </div>
-                <div class="crews-grid" id="crews-grid" data-aos="fade-up">
-                    <!-- Crews will be loaded dynamically -->
-                </div>
-                <div class="load-more-container" id="load-more-container">
-                    <button class="btn btn-primary btn-large" id="load-more">
-                        <i class="fas fa-plus"></i>
-                        Carregar Mais
-                    </button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-background">
-            <div class="footer-gradient"></div>
-        </div>
-        <div class="container footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="brand">
-                        <i class="fas fa-skull-crossbones"></i>
-                        <span>ONE PIECE</span>
-                    </div>
-                    <p>Enciclopédia visual premium do universo de One Piece.</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Navegação</h4>
-                        <ul>
-                            <li><a href="../index.html">Home</a></li>
-                            <li><a href="personagens.html">Personagens</a></li>
-                            <li><a href="tripulacoes.html">Tripulações</a></li>
-                            <li><a href="frutas.html">Frutas</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Categorias</h4>
-                        <ul>
-                            <li><a href="espadas.html">Espadas</a></li>
-                            <li><a href="faccoes.html">Facções</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    <p>© 2026 One Piece Encyclopedia. Todos os direitos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Crew Modal -->
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal-container">
-            <button class="modal-close" aria-label="Fechar modal">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-content" id="modal-content">
-                <!-- Dynamic content -->
-            </div>
-        </div>
+  <footer class="rodape">
+    <div class="envelope">
+      <p data-i18n="rodape.autor">Feito por Victor Hugo Sousa Oliveira, Sistemas de Informação, UNIRIOS.</p>
+      <p data-i18n="rodape.dados">Dados da <a href="https://api-onepiece.com/">API One Piece</a>. One Piece pertence a Eiichiro Oda, Shueisha e Toei Animation. Este é um projeto de fã, sem fins lucrativos.</p>
+      <p data-i18n="rodape.fotos">Fotos dos personagens: <a href="https://anilist.co/anime/21/ONE-PIECE/characters">AniList</a>.</p>
+      <p><a href="https://github.com/ViktorHSO/site-onepiece" data-i18n="rodape.codigo">Código no GitHub</a>, <span id="ano"></span>.</p>
     </div>
-
-    <style>
-        .page-header {
-            padding: 8rem 0 4rem;
-            background: linear-gradient(180deg, rgba(255, 184, 77, 0.1) 0%, transparent 50%);
-        }
-
-        .page-header-content {
-            text-align: center;
-        }
-
-        .page-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .page-header h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .section-filters {
-            padding: 2rem 0;
-        }
-
-        .filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: flex-end;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-        }
-
-        .filter-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .search-input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input-wrapper i {
-            position: absolute;
-            left: 1rem;
-            color: var(--text-muted);
-        }
-
-        .search-input-wrapper input,
-        .filter-group select {
-            width: 100%;
-            padding: 0.875rem 1rem 0.875rem 2.5rem;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--surface-border);
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            transition: all var(--transition-fast);
-        }
-
-        .filter-group select {
-            padding-left: 1rem;
-            cursor: pointer;
-        }
-
-        .search-input-wrapper input:focus,
-        .filter-group select:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(255, 184, 77, 0.1);
-        }
-
-        .crews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .load-more-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-
-        .search-container {
-            text-align: center;
-        }
-
-        .search-container h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-        }
-
-        .search-container .search-input-wrapper {
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
-
-        .search-container .search-input-wrapper input {
-            padding: 1rem 1rem 1rem 3rem;
-            font-size: 1rem;
-        }
-
-        .search-container .search-input-wrapper i {
-            left: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .search-results {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        @media (max-width: 768px) {
-            .filters-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-group {
-                min-width: 100%;
-            }
-
-            .filters-container .btn {
-                width: 100%;
-            }
-
-            .crews-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            initNavigation();
-            initAOS();
-            loadCrews();
-            initFilters();
-            initSearchModal();
-            initModalSystem();
-            updateActiveNavLink();
-        });
-
-        let allCrews = [];
-        let displayedCrews = 12;
-        let filteredCrews = [];
-
-        async function loadCrews() {
-            try {
-                allCrews = await OP_API.getCrews();
-                filteredCrews = [...allCrews];
-                
-                updateCrewCount();
-                displayCrews();
-                loadYonko();
-                
-                document.getElementById('load-more-container').style.display = 'flex';
-            } catch (error) {
-                console.error('Error loading crews:', error);
-                document.getElementById('crews-grid').innerHTML = '<p>Erro ao carregar tripulações.</p>';
-            }
-        }
-
-        async function loadYonko() {
-            try {
-                const yonko = await OP_API.getYonko();
-                const yonkoGrid = document.getElementById('yonko-grid');
-                
-                if (yonko && yonko.length > 0) {
-                    yonko.forEach(crew => {
-                        const card = document.createElement('div');
-                        card.className = 'yonko-card';
-                        
-                        const image = crew.image || '../images/luffy.png';
-                        const name = crew.name || 'Unknown';
-                        const captain = crew.captain || 'Unknown';
-                        
-                        card.innerHTML = `
-                            <img src="${image}" alt="${name}" class="yonko-card-image" onerror="this.src='../images/luffy.png'">
-                            <div class="yonko-card-info">
-                                <h3 class="yonko-card-name">${name}</h3>
-                                <p class="yonko-card-title">Yonko</p>
-                                <p class="yonko-card-crew">Capitão: ${captain}</p>
-                            </div>
-                        `;
-                        
-                        card.onclick = () => openCrewModal(crew);
-                        yonkoGrid.appendChild(card);
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading Yonko:', error);
-            }
-        }
-
-        function updateCrewCount() {
-            const countElement = document.getElementById('crews-count');
-            countElement.textContent = `${filteredCrews.length} tripulações encontradas`;
-        }
-
-        function displayCrews() {
-            const grid = document.getElementById('crews-grid');
-            const crewsToShow = filteredCrews.slice(0, displayedCrews);
-            
-            grid.innerHTML = '';
-            
-            crewsToShow.forEach((crew, index) => {
-                const card = createCrewCard(crew);
-                card.style.animationDelay = `${index * 50}ms`;
-                grid.appendChild(card);
-            });
-
-            const loadMoreBtn = document.getElementById('load-more');
-            if (displayedCrews >= filteredCrews.length) {
-                loadMoreBtn.style.display = 'none';
-            } else {
-                loadMoreBtn.style.display = 'inline-flex';
-            }
-        }
-
-        function createCrewCard(crew) {
-            const card = document.createElement('div');
-            card.className = 'crew-card';
-            card.onclick = () => openCrewModal(crew);
-            
-            const name = crew.name || 'Unknown';
-            const captain = crew.captain || 'Unknown';
-            const members = crew.total || 'Unknown';
-            
-            // Use ImageService for reliable image loading
-            const banner = ImageService.createImageElement(crew, 'crew', {
-                className: 'crew-card-banner',
-                alt: name,
-                loading: 'lazy'
-            });
-            
-            const info = document.createElement('div');
-            info.className = 'crew-card-info';
-            info.innerHTML = `
-                <h3 class="crew-card-name">${name}</h3>
-                <p class="crew-card-captain">Capitão: ${captain}</p>
-                <p class="crew-card-members">${members} membros</p>
-            `;
-            
-            card.appendChild(banner);
-            card.appendChild(info);
-            return card;
-        }
-
-        function initFilters() {
-            const applyBtn = document.getElementById('apply-filters');
-            const resetBtn = document.getElementById('reset-filters');
-            const loadMoreBtn = document.getElementById('load-more');
-
-            applyBtn.addEventListener('click', applyFilters);
-            resetBtn.addEventListener('click', resetFilters);
-            loadMoreBtn.addEventListener('click', loadMoreCrews);
-        }
-
-        function applyFilters() {
-            const search = document.getElementById('filter-search').value.toLowerCase();
-            const status = document.getElementById('filter-status').value;
-
-            filteredCrews = allCrews.filter(crew => {
-                const matchesSearch = !search || crew.name.toLowerCase().includes(search);
-                const matchesStatus = !status || crew.status === status;
-                
-                return matchesSearch && matchesStatus;
-            });
-
-            displayedCrews = 12;
-            updateCrewCount();
-            displayCrews();
-        }
-
-        function resetFilters() {
-            document.getElementById('filter-search').value = '';
-            document.getElementById('filter-status').value = '';
-            
-            filteredCrews = [...allCrews];
-            displayedCrews = 12;
-            updateCrewCount();
-            displayCrews();
-        }
-
-        function loadMoreCrews() {
-            displayedCrews += 12;
-            displayCrews();
-        }
-
-        function initSearchModal() {
-            const searchToggle = document.getElementById('search-toggle');
-            const searchModal = document.getElementById('search-modal');
-            const searchInput = document.getElementById('crew-search');
-            const searchResults = document.getElementById('search-results');
-
-            searchToggle.addEventListener('click', () => {
-                searchModal.classList.add('active');
-                searchInput.focus();
-            });
-
-            searchModal.querySelector('.modal-close').addEventListener('click', () => {
-                searchModal.classList.remove('active');
-            });
-
-            searchModal.addEventListener('click', (e) => {
-                if (e.target === searchModal) {
-                    searchModal.classList.remove('active');
-                }
-            });
-
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value;
-                if (query.length < 2) {
-                    searchResults.innerHTML = '';
-                    return;
-                }
-
-                const results = allCrews.filter(c => 
-                    c.name.toLowerCase().includes(query.toLowerCase())
-                ).slice(0, 10);
-
-                displaySearchResults(results);
-            });
-        }
-
-        function displaySearchResults(results) {
-            const searchResults = document.getElementById('search-results');
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<p>Nenhum resultado encontrado.</p>';
-                return;
-            }
-
-            searchResults.innerHTML = results.map(crew => `
-                <div class="search-result-item" onclick="openCrewModalFromSearch(${JSON.stringify(crew).replace(/"/g, '&quot;')})">
-                    <div class="search-result-icon">
-                        <i class="fas fa-flag" style="font-size: 2rem; color: var(--accent-primary);"></i>
-                    </div>
-                    <div class="search-result-info">
-                        <h4>${crew.name}</h4>
-                        <p>Capitão: ${crew.captain || 'Unknown'}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openCrewModalFromSearch(crew) {
-            document.getElementById('search-modal').classList.remove('active');
-            openCrewModal(crew);
-        }
-
-        function openCrewModal(crew) {
-            const name = crew.name || 'Unknown';
-            const captain = crew.captain || 'Unknown';
-            const members = crew.total || 'Unknown';
-            const status = crew.status || 'Unknown';
-            
-            const content = `
-                <div class="modal-crew">
-                    <div class="modal-crew-icon">
-                        <i class="fas fa-flag" style="font-size: 5rem; color: var(--accent-primary);"></i>
-                    </div>
-                    <div class="modal-crew-info">
-                        <h2>${name}</h2>
-                        <div class="modal-details">
-                            <div class="modal-detail">
-                                <span class="modal-detail-label">Capitão:</span>
-                                <span class="modal-detail-value">${captain}</span>
-                            </div>
-                            <div class="modal-detail">
-                                <span class="modal-detail-label">Membros:</span>
-                                <span class="modal-detail-value">${members}</span>
-                            </div>
-                            <div class="modal-detail">
-                                <span class="modal-detail-label">Status:</span>
-                                <span class="modal-detail-value">${status}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            openModal(content);
-        }
-
-        function openModal(content) {
-            const modalOverlay = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            
-            if (modalOverlay && modalContent) {
-                modalContent.innerHTML = content;
-                modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeModal() {
-            const modalOverlay = document.getElementById('modal-overlay');
-            
-            if (modalOverlay) {
-                modalOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function initModalSystem() {
-            const modalClose = document.querySelector('.modal-close');
-            
-            if (modalClose) {
-                modalClose.addEventListener('click', closeModal);
-            }
-            
-            const modalOverlay = document.getElementById('modal-overlay');
-            if (modalOverlay) {
-                modalOverlay.addEventListener('click', (e) => {
-                    if (e.target === modalOverlay) {
-                        closeModal();
-                    }
-                });
-            }
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                    document.getElementById('search-modal').classList.remove('active');
-                }
-            });
-        }
-
-        function initNavigation() {
-            const navToggle = document.querySelector('.nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            const navLinks = document.querySelectorAll('.nav-list a');
-
-            if (navToggle && navMenu) {
-                navToggle.addEventListener('click', function () {
-                    const expanded = this.getAttribute('aria-expanded') === 'true';
-                    this.setAttribute('aria-expanded', String(!expanded));
-                    navMenu.classList.toggle('open');
-                    
-                    const spans = this.querySelectorAll('span');
-                    if (navMenu.classList.contains('open')) {
-                        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                        spans[1].style.opacity = '0';
-                        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-                    } else {
-                        spans[0].style.transform = '';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = '';
-                    }
-                });
-            }
-
-            navLinks.forEach((link) => {
-                link.addEventListener('click', () => {
-                    if (navMenu && navMenu.classList.contains('open')) {
-                        navMenu.classList.remove('open');
-                        if (navToggle) {
-                            navToggle.setAttribute('aria-expanded', 'false');
-                            const spans = navToggle.querySelectorAll('span');
-                            spans[0].style.transform = '';
-                            spans[1].style.opacity = '1';
-                            spans[2].style.transform = '';
-                        }
-                    }
-                });
-            });
-        }
-
-        function initAOS() {
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-out-cubic',
-                    once: true,
-                    offset: 50
-                });
-            }
-        }
-
-        function updateActiveNavLink() {
-            const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-list a');
-            
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href.includes('tripulacoes.html')) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-
-        // Add search result styles
-        const searchStyles = document.createElement('style');
-        searchStyles.textContent = `
-            .search-result-item {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                padding: 1rem;
-                background: var(--surface-light);
-                border-radius: var(--radius-md);
-                cursor: pointer;
-                transition: all var(--transition-fast);
-            }
-
-            .search-result-item:hover {
-                background: var(--surface);
-                transform: translateX(5px);
-            }
-
-            .search-result-icon {
-                width: 50px;
-                height: 50px;
-                border-radius: var(--radius-md);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: var(--surface);
-            }
-
-            .search-result-info h4 {
-                font-size: 1rem;
-                font-weight: 600;
-                margin-bottom: 0.25rem;
-            }
-
-            .search-result-info p {
-                font-size: 0.85rem;
-                color: var(--text-muted);
-            }
-        `;
-        document.head.appendChild(searchStyles);
-    </script>
+  </footer>
 </body>
 </html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seu cartaz · Diário da Grand Line</title>
+  <meta name="description" content="Faça o seu próprio cartaz de procurado de One Piece.">
+  <meta name="titulo-en" content="Your poster · Diário da Grand Line">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.api-onepiece.com https://s4.anilist.co; connect-src https://api.api-onepiece.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" href="../assets/img/icone.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/idioma.js" defer></script>
+  <script src="../assets/js/fotos.js" defer></script>
+  <script src="../assets/js/fotos-anilist.js" defer></script>
+  <script src="../assets/js/descricoes-pt.js" defer></script>
+  <script src="../assets/js/api.js" defer></script>
+  <script src="../assets/js/ui.js" defer></script>
+  <script src="../assets/js/pages/cartaz.js" defer></script>
+</head>
+<body data-raiz="..">
+  <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="envelope topo__linha">
+      <a class="marca" href="../index.html">Diário da Grand Line</a>
+      <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu" data-i18n="menu">Menu</button>
+      <nav id="menu" aria-label="Principal" data-i18n-aria="nav.rotulo">
+        <ul>
+          <li><a href="../index.html" data-i18n="nav.inicio">Início</a></li>
+          <li><a href="personagens.html" data-i18n="nav.personagens">Personagens</a></li>
+          <li><a href="tripulacoes.html" data-i18n="nav.tripulacoes">Tripulações</a></li>
+          <li><a href="frutas.html" data-i18n="nav.frutas">Frutas</a></li>
+          <li><a href="espadas.html" data-i18n="nav.espadas">Espadas</a></li>
+          <li><a href="faccoes.html" data-i18n="nav.faccoes">Facções</a></li>
+          <li><a href="cartaz.html" aria-current="page" data-i18n="nav.cartaz">Seu cartaz</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <div class="envelope">
+      <header class="titulo-pagina">
+        <h1 data-i18n="cartaz.titulo">Faça seu cartaz</h1>
+        <p data-i18n="cartaz.texto">Escreva o nome, escolha a recompensa e uma foto. Quando gostar, baixe a imagem. A foto fica só no seu navegador, nada é enviado para lugar nenhum.</p>
+      </header>
+
+      <div class="oficina">
+        <form class="oficina__form" id="form-cartaz">
+          <div class="campo">
+            <label for="c-nome" data-i18n="cartaz.nome">Nome no cartaz</label>
+            <input id="c-nome" maxlength="28" value="Victor Hugo" autocomplete="name">
+          </div>
+          <div class="campo">
+            <label for="c-valor" data-i18n="cartaz.valor">Recompensa em berries</label>
+            <input id="c-valor" inputmode="numeric" value="1.500.000.000">
+          </div>
+          <div class="campo">
+            <label for="c-foto" data-i18n="cartaz.foto">Foto</label>
+            <input id="c-foto" type="file" accept="image/*">
+          </div>
+          <div class="campo">
+            <label for="c-modelo" data-i18n="cartaz.modelo">Tipo de cartaz</label>
+            <select id="c-modelo">
+              <option value="procurado" data-i18n="cartaz.m.procurado">Procurado, vivo ou morto</option>
+              <option value="marinha" data-i18n="cartaz.m.marinha">Ficha da Marinha</option>
+              <option value="governo" data-i18n="cartaz.m.governo">Dossiê sigiloso</option>
+            </select>
+          </div>
+          <p class="oficina__dica" data-i18n="cartaz.dica">Dica: fotos com o rosto no centro ficam melhores. A foto é cortada no formato 4 por 3.</p>
+          <p><button class="botao" type="button" id="baixar" data-i18n="cartaz.baixar">Baixar como imagem</button></p>
+        </form>
+        <div class="oficina__previa" id="previa" aria-live="polite"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="envelope">
+      <p data-i18n="rodape.autor">Feito por Victor Hugo Sousa Oliveira, Sistemas de Informação, UNIRIOS.</p>
+      <p data-i18n="rodape.dados">Dados da <a href="https://api-onepiece.com/">API One Piece</a>. One Piece pertence a Eiichiro Oda, Shueisha e Toei Animation. Este é um projeto de fã, sem fins lucrativos.</p>
+      <p data-i18n="rodape.fotos">Fotos dos personagens: <a href="https://anilist.co/anime/21/ONE-PIECE/characters">AniList</a>.</p>
+      <p><a href="https://github.com/ViktorHSO/site-onepiece" data-i18n="rodape.codigo">Código no GitHub</a>, <span id="ano"></span>.</p>
+    </div>
+  </footer>
+</body>
+</html>
