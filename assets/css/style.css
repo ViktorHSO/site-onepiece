@@ -132,6 +132,7 @@ p { margin: 0 0 1em; max-width: var(--texto); }
 }
 
 .marca {
+  white-space: nowrap;
   font-family: var(--fonte-cartaz);
   font-size: 1.35rem;
   color: var(--papel);
@@ -163,6 +164,7 @@ p { margin: 0 0 1em; max-width: var(--texto); }
 #menu a {
   position: relative;
   display: block;
+  white-space: nowrap;
   padding: 0.4rem 0.75rem;
   color: var(--espuma);
   text-decoration: none;
@@ -186,7 +188,8 @@ p { margin: 0 0 1em; max-width: var(--texto); }
 #menu a[aria-current='page'] { color: var(--palha); }
 #menu a[aria-current='page']::after { transform: scaleX(1); }
 
-@media (max-width: 52rem) {
+/* sete links + marca + idioma não cabem numa linha abaixo de ~1090px: vira menu */
+@media (max-width: 68rem) {
   .menu-botao { display: block; }
   #menu {
     display: none;
@@ -201,6 +204,7 @@ p { margin: 0 0 1em; max-width: var(--texto); }
   #menu.aberto { display: block; }
   #menu ul { flex-direction: column; padding: 0.5rem 1.25rem 1rem; }
   #menu a { padding: 0.7rem 0.5rem; }
+  #menu a::after { left: 0.5rem; right: auto; width: 2rem; bottom: 0.35rem; }
 }
 
 /* ---------- Seções ---------- */
@@ -392,6 +396,13 @@ button.colagem__esq:hover, button.colagem__dir:hover { filter: none; z-index: 3;
 .cena__descer svg { width: 1.2rem; height: 1.2rem; }
 .cena__descer:hover { background: rgba(234, 241, 244, 0.1); color: #fff; }
 @keyframes boiar { 50% { transform: translateY(6px); } }
+
+/* telas médias: cartazes menores para os três aparecerem */
+@media (min-width: 52.01rem) and (max-width: 68rem) {
+  .colagem { height: 25rem; max-width: 22rem; }
+  .colagem .cartaz { width: 12rem; }
+  .colagem__frente { width: 13rem !important; margin-left: -6.5rem; }
+}
 
 @media (max-width: 52rem) {
   .abertura { grid-template-columns: 1fr; gap: 1rem; padding-block: 2rem 13rem; }
@@ -1028,7 +1039,8 @@ tbody tr:hover { background: var(--mar-fundo); }
 .parada:nth-child(odd) .parada__caps, .parada:nth-child(odd) .parada__texto { margin-left: auto; }
 .parada__texto { font-size: 1rem; color: #5a4328; margin-bottom: 0; }
 
-@media (max-width: 44rem) {
+/* abaixo de ~960px a carta vira uma coluna só: em zigue-zague o texto ficava espremido */
+@media (max-width: 60rem) {
   .parada, .parada:nth-child(even) { width: 100%; flex-direction: row; text-align: left; margin: 0; gap: 1rem; }
   .parada:not(:first-child) { margin-top: 1.25rem; }
   .parada__medalha, .parada:nth-child(odd) .parada__medalha, .parada:nth-child(even) .parada__medalha { width: 5.25rem; height: 5.25rem; margin: 0; }
@@ -1037,6 +1049,9 @@ tbody tr:hover { background: var(--mar-fundo); }
   .parada__numero { width: 1.7rem; height: 1.7rem; font-size: 0.72rem; }
   .parada__nome { font-size: 1.15rem; }
   .carta__rosa { display: none; }
+}
+@media (min-width: 44.01rem) and (max-width: 60rem) {
+  .parada__medalha, .parada:nth-child(odd) .parada__medalha, .parada:nth-child(even) .parada__medalha { width: 6.5rem; height: 6.5rem; }
 }
 
 /* ---------- Convite para o cartaz ---------- */
@@ -1120,7 +1135,7 @@ tbody tr:hover { background: var(--mar-fundo); }
 }
 .idioma button[aria-pressed='true'] { background: var(--palha); color: var(--tinta); }
 .idioma button:hover:not([aria-pressed='true']) { color: var(--espuma); }
-@media (min-width: 52.01rem) { .idioma { order: 3; margin-left: 1rem; } #menu { margin-left: auto; } }
+@media (min-width: 68.01rem) { .idioma { order: 3; margin-left: 1rem; } #menu { margin-left: auto; } }
 
 
 /* =====================================================================
