@@ -10,7 +10,9 @@ Uma enciclopédia de One Piece feita por fã: personagens, tripulações, Frutas
 
 - **Personagens:** os 786 personagens da API em cartazes de procurado, com busca, filtro por tripulação e situação e ordenação por recompensa. Cada cartaz abre uma ficha com idade, altura, fruta e recompensa.
 - **Quem vale mais:** as dez maiores recompensas, com barras para comparar.
-- **A rota do bando:** as sagas na ordem, de East Blue até Elbaf.
+- **Abertura em camadas:** um pôr do sol desenhado em SVG (céu, Red Line, ilhas, navio e três faixas de mar) com parallax no scroll e no mouse.
+- **Jornal Econômico Mundial:** manchetes passando logo abaixo da abertura, e os números da API contando ao aparecer.
+- **A rota do bando:** uma carta náutica com as sagas na ordem, de East Blue até Elbaf. O caminho é desenhado e um navio segue a rota conforme a página rola.
 - **Tripulações:** tabela com capitão, número de membros, recompensa somada e a lista de quem faz parte.
 - **Frutas do Diabo:** as 213 frutas por tipo, com descrição em português e quem comeu cada uma.
 - **Espadas:** as espadas famosas separadas por grau (Saijo O Wazamono, O Wazamono, Ryo Wazamono).
@@ -35,6 +37,7 @@ pages/                         personagens, tripulações, frutas, espadas, fac�
 assets/css/style.css           todo o visual
 assets/js/api.js               busca os dados na API e deixa tudo num formato simples
 assets/js/ui.js                peças usadas em todas as páginas: menu, cartaz, janela de detalhes
+assets/js/efeitos.js           movimento: parallax, barra de progresso, revelar ao rolar, carta náutica, voltar ao topo
 assets/js/idioma.js            troca de idioma e todas as frases do site
 assets/js/descricoes-pt.js     descrições das frutas e espadas em português
 assets/js/fotos.js             personagens com foto na pasta assets/img/personagens
@@ -45,6 +48,10 @@ docs/                          imagens deste README
 ```
 
 Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não sobrescrever as funções da outra.
+
+### Movimento e acessibilidade
+
+Todo o movimento fica em `assets/js/efeitos.js` e roda num único `requestAnimationFrame` por quadro. Quem liga "reduzir movimento" no sistema vê o site parado, com todo o conteúdo já visível. Os desenhos são SVG feitos para o site, sem imagens externas, então a política de segurança (CSP) continua a mesma.
 
 ### Fotos de personagens
 
