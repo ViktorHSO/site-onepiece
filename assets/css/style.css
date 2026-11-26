@@ -140,6 +140,8 @@ p { margin: 0 0 1em; max-width: var(--texto); }
   line-height: 1.1;
 }
 .marca:hover { color: #fff; }
+/* celular estreito: o nome pode quebrar em duas linhas para o botão Menu caber */
+@media (max-width: 30rem) { .marca { white-space: normal; font-size: 1.2rem; } }
 
 .menu-botao {
   display: none;
@@ -267,16 +269,36 @@ main { padding-bottom: 4rem; }
 .gaivotas path:nth-child(3) { animation-delay: -1.6s; }
 @keyframes voar { 50% { transform: translateY(-6px) scaleY(0.7); } }
 
-.onda { animation: mar 14s linear infinite; }
-.onda--1 { animation-duration: 22s; --passo: -240px; }
-.onda--2 { animation-duration: 16s; --passo: -360px; }
-.onda--3 { animation-duration: 11s; --passo: -480px; }
+.onda { animation: mar 24s linear infinite; }
+.onda--1 { animation-duration: 40s; --passo: -480px; }
+.onda--2 { animation-duration: 30s; --passo: -720px; }
+.onda--3 { animation-duration: 22s; --passo: -960px; }
 @keyframes mar { to { transform: translateX(var(--passo)); } }
 
 .reflexo rect { transform-box: fill-box; transform-origin: center; animation: brilhar 3s ease-in-out infinite; }
 .reflexo rect:nth-child(2) { animation-delay: -1s; }
 .reflexo rect:nth-child(3) { animation-delay: -2s; }
 @keyframes brilhar { 50% { transform: scaleX(0.6); opacity: 0.2; } }
+
+.brilhos rect { opacity: 0; animation: cintilar 4s ease-in-out infinite; }
+.brilhos .b1 { animation-delay: 1s; }
+.brilhos .b2 { animation-delay: 2s; }
+.brilhos .b3 { animation-delay: 3s; }
+@keyframes cintilar { 40%, 60% { opacity: 0.55; } }
+
+.fiapos { animation: deriva 50s ease-in-out infinite alternate; }
+.veleiro { animation: deriva 80s linear infinite alternate; }
+
+.esteira path { stroke-dasharray: 18 10; animation: esteira 1.6s linear infinite; }
+.esteira path + path { animation-duration: 2.2s; }
+@keyframes esteira { to { stroke-dashoffset: 28; } }
+.borrifo { transform-box: fill-box; transform-origin: 30% 100%; animation: borrifo 5s ease-in-out infinite; }
+@keyframes borrifo { 0%, 100% { transform: scale(0.85); opacity: 0.5; } 50% { transform: scale(1.1) translateY(-3px); opacity: 0.9; } }
+.lanterna { animation: chama 2.6s ease-in-out infinite; }
+@keyframes chama { 50% { opacity: 0.55; } }
+.flamula { transform-box: fill-box; transform-origin: left center; animation: tremular 1.1s ease-in-out infinite; }
+.barril { animation: barril 4s ease-in-out infinite; }
+@keyframes barril { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(6px) rotate(7deg); } }
 
 .navio { transform-box: fill-box; transform-origin: 50% 90%; animation: balanco 5s ease-in-out infinite; }
 @keyframes balanco {

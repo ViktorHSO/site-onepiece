@@ -151,7 +151,8 @@ window.OP = window.OP || {};
     const barco = document.getElementById('carta-barco');
     const navio = barco.querySelector('.carta__navio');
     const corpo = barco.querySelector('.carta__navio-corpo');
-    let paradas = [], pontos = [], comprimento = 0, marcos = [];
+    let paradas = [], pontos = [], comprimento = 0, marcos = [], tabela = [];
+    let atual = 0, alvo = 0, andando = false, ultimoX = 1;
 
     // Liga o centro de cada medalha com curvas em S
     function medir() {
@@ -178,39 +179,73 @@ window.OP = window.OP || {};
       feito.setAttribute('d', d);
       comprimento = feito.getTotalLength();
       feito.style.strokeDasharray = comprimento;
-      // em que ponto do caminho fica cada parada (para marcar as visitadas)
-      marcos = pontos.map(([x, y]) => {
-        let melhor = 0, dist = Infinity;
-        for (let l = 0; l <= comprimento; l += 8) {
-          const pt = feito.getPointAtLength(l);
-          const dd = (pt.x - x) ** 2 + (pt.y - y) ** 2;
-          if (dd < dist) { dist = dd; melhor = l; }
-        }
-        return melhor;
-      });
+      // Tabela altura -> distância no caminho. O caminho sempre desce, então
+      // dá para achar o ponto que está na altura da tela, em qualquer layout.
+      tabela = [];
+      for (let l = 0; l <= comprimento; l += 3) tabela.push([feito.getPointAtLength(l).y, l]);
+      tabela.push([feito.getPointAtLength(comprimento).y, comprimento]);
+      marcos = pontos.map(([, y]) => distanciaNaAltura(y));
+      atual = alvo = distanciaNaAltura(alturaAlvo());
+      desenhar(atual);
       agendar();
     }
 
-    let ultimoX = null;
-    function seguir() {
-      if (!comprimento) return;
-      const r = carta.getBoundingClientRect();
-      const meioTela = window.innerHeight * 0.55;
-      const p = calmo.matches ? 1 : Math.min(1, Math.max(0, (meioTela - r.top) / r.height));
-      const l = comprimento * p;
+    function distanciaNaAltura(y) {
+      if (!tabela.length) return 0;
+      if (y <= tabela[0][0]) return 0;
+      if (y >= tabela[tabela.length - 1][0]) return comprimento;
+      let lo = 0, hi = tabela.length - 1;
+      while (hi - lo > 1) {
+        const m = (lo + hi) >> 1;
+        if (tabela[m][0] < y) lo = m; else hi = m;
+      }
+      const [y0, l0] = tabela[lo], [y1, l1] = tabela[hi];
+      return y1 === y0 ? l0 : l0 + ((y - y0) / (y1 - y0)) * (l1 - l0);
+    }
+
+    // a "linha de leitura" fica um pouco acima do meio da tela
+    function alturaAlvo() {
+      if (calmo.matches) return Infinity;
+      const altura = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      return altura * 0.55 - carta.getBoundingClientRect().top;
+    }
+
+    function desenhar(l) {
       feito.style.strokeDashoffset = comprimento - l;
       const pt = feito.getPointAtLength(l);
       const frente = feito.getPointAtLength(Math.min(comprimento, l + 4));
-      const virar = frente.x < pt.x - 0.2 ? -1 : frente.x > pt.x + 0.2 ? 1 : (ultimoX ?? 1);
-      ultimoX = virar;
+      if (frente.x < pt.x - 0.2) ultimoX = -1;
+      else if (frente.x > pt.x + 0.2) ultimoX = 1;
       navio.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})`);
-      corpo.setAttribute('transform', `scale(${virar} 1)`);
+      corpo.setAttribute('transform', `scale(${ultimoX} 1)`);
       paradas.forEach((el, i) => el.classList.toggle('parada--visitada', l >= marcos[i] - 2));
+    }
+
+    // No celular o scroll chega aos trancos; o navio desliza até o alvo em vez de pular
+    function deslizar() {
+      const dif = alvo - atual;
+      atual = Math.abs(dif) < 0.5 ? alvo : atual + dif * 0.2;
+      desenhar(atual);
+      if (atual !== alvo) requestAnimationFrame(deslizar);
+      else andando = false;
+    }
+
+    function seguir() {
+      if (!comprimento) return;
+      alvo = Math.max(0, Math.min(comprimento, distanciaNaAltura(alturaAlvo())));
+      if (calmo.matches) { atual = alvo; desenhar(atual); return; }
+      if (!andando && alvo !== atual) { andando = true; requestAnimationFrame(deslizar); }
     }
 
     tarefas.add(seguir);
     document.addEventListener('op:rota', medir);
-    window.addEventListener('resize', () => { clearTimeout(medir.t); medir.t = setTimeout(medir, 150); });
+    // a barra de endereço do celular muda a altura da tela: remede só quando a largura muda
+    let largura = window.innerWidth;
+    window.addEventListener('resize', () => {
+      clearTimeout(medir.t);
+      medir.t = setTimeout(() => { if (window.innerWidth !== largura) { largura = window.innerWidth; medir(); } else agendar(); }, 150);
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(() => { clearTimeout(medir.r); medir.r = setTimeout(medir, 120); }).observe(carta);
     if (document.fonts) document.fonts.ready.then(medir);
     medir();
   }
