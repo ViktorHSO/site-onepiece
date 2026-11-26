@@ -52,7 +52,7 @@ Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não s
 
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=3` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=5` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 

@@ -40,9 +40,14 @@ window.OP = window.OP || {};
     topo.appendChild(barra);
     const linha = barra.firstElementChild;
     const navio = barra.lastElementChild;
+    let max = 1;
+    const medirPagina = () => { max = document.documentElement.scrollHeight - window.innerHeight; };
+    medirPagina();
+    if ('ResizeObserver' in window) new ResizeObserver(medirPagina).observe(document.body);
+    window.addEventListener('resize', medirPagina);
+    let rolado = null;
     tarefas.add((y) => {
-      topo.classList.toggle('topo--rolado', y > 8);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if ((y > 8) !== rolado) { rolado = y > 8; topo.classList.toggle('topo--rolado', rolado); }
       const p = max > 0 ? Math.min(1, y / max) : 0;
       linha.style.transform = `scaleX(${p})`;
       navio.style.left = `calc(${(p * 100).toFixed(2)}% + ${(8 - p * 16).toFixed(1)}px)`;
@@ -54,11 +59,35 @@ window.OP = window.OP || {};
   const cena = document.getElementById('cena');
   if (cena) {
     const camadas = [...cena.querySelectorAll('[data-paralaxe], [data-mouse]')];
-    let mx = 0, my = 0, alvoX = 0, alvoY = 0, girando = false;
+    let mx = 0, my = 0, alvoX = 0, alvoY = 0, girando = false, altura = cena.offsetHeight;
 
+    // Escala do cenário: a mesma conta do preserveAspectRatio="xMidYMax slice",
+    // para as ondas e os raios (que são <svg> à parte) ficarem alinhados com o resto.
+    const molde = cena.querySelector('.camada');
+    function escalar() {
+      altura = cena.offsetHeight;
+      if (!molde) return;
+      const e = Math.max(molde.offsetWidth / 1440, molde.offsetHeight / 800);
+      cena.style.setProperty('--e', e.toFixed(4));
+    }
+    escalar();
+    if ('ResizeObserver' in window) new ResizeObserver(escalar).observe(cena);
+    else window.addEventListener('resize', escalar);
+
+    // Fora da tela as animações param (economiza bateria e deixa o resto da página leve)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => cena.classList.toggle('cena--parada', !e.isIntersecting)).observe(cena);
+      const jornal = document.querySelector('.jornal');
+      if (jornal) new IntersectionObserver(([e]) => jornal.classList.toggle('jornal--parado', !e.isIntersecting)).observe(jornal);
+    }
+
+    let fora = false;
     function aplicar(y) {
-      const altura = cena.offsetHeight;
-      if (y > altura) return; // cenário fora da tela: não gasta nada
+      if (y > altura) { // cenário fora da tela: não gasta nada
+        if (!fora) { fora = true; cena.style.setProperty('--sumir', '1'); }
+        return;
+      }
+      fora = false;
       camadas.forEach((el) => {
         const v = parseFloat(el.dataset.paralaxe || 0);
         const m = parseFloat(el.dataset.mouse || 0);
@@ -151,7 +180,8 @@ window.OP = window.OP || {};
     const barco = document.getElementById('carta-barco');
     const navio = barco.querySelector('.carta__navio');
     const corpo = barco.querySelector('.carta__navio-corpo');
-    let paradas = [], pontos = [], comprimento = 0, marcos = [];
+    let paradas = [], pontos = [], comprimento = 0, marcos = [], tabela = [];
+    let atual = 0, alvo = 0, andando = false, ultimoX = 1, visitadas = -1;
 
     // Liga o centro de cada medalha com curvas em S
     function medir() {
@@ -178,39 +208,79 @@ window.OP = window.OP || {};
       feito.setAttribute('d', d);
       comprimento = feito.getTotalLength();
       feito.style.strokeDasharray = comprimento;
-      // em que ponto do caminho fica cada parada (para marcar as visitadas)
-      marcos = pontos.map(([x, y]) => {
-        let melhor = 0, dist = Infinity;
-        for (let l = 0; l <= comprimento; l += 8) {
-          const pt = feito.getPointAtLength(l);
-          const dd = (pt.x - x) ** 2 + (pt.y - y) ** 2;
-          if (dd < dist) { dist = dd; melhor = l; }
-        }
-        return melhor;
-      });
+      // Tabela altura -> distância no caminho. O caminho sempre desce, então
+      // dá para achar o ponto que está na altura da tela, em qualquer layout.
+      tabela = [];
+      for (let l = 0; l <= comprimento; l += 3) tabela.push([feito.getPointAtLength(l).y, l]);
+      tabela.push([feito.getPointAtLength(comprimento).y, comprimento]);
+      marcos = pontos.map(([, y]) => distanciaNaAltura(y));
+      visitadas = -1;
+      atual = alvo = distanciaNaAltura(alturaAlvo());
+      desenhar(atual);
       agendar();
     }
 
-    let ultimoX = null;
-    function seguir() {
-      if (!comprimento) return;
-      const r = carta.getBoundingClientRect();
-      const meioTela = window.innerHeight * 0.55;
-      const p = calmo.matches ? 1 : Math.min(1, Math.max(0, (meioTela - r.top) / r.height));
-      const l = comprimento * p;
+    function distanciaNaAltura(y) {
+      if (!tabela.length) return 0;
+      if (y <= tabela[0][0]) return 0;
+      if (y >= tabela[tabela.length - 1][0]) return comprimento;
+      let lo = 0, hi = tabela.length - 1;
+      while (hi - lo > 1) {
+        const m = (lo + hi) >> 1;
+        if (tabela[m][0] < y) lo = m; else hi = m;
+      }
+      const [y0, l0] = tabela[lo], [y1, l1] = tabela[hi];
+      return y1 === y0 ? l0 : l0 + ((y - y0) / (y1 - y0)) * (l1 - l0);
+    }
+
+    // a "linha de leitura" fica um pouco acima do meio da tela
+    function alturaAlvo() {
+      if (calmo.matches) return Infinity;
+      const altura = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      return altura * 0.55 - carta.getBoundingClientRect().top;
+    }
+
+    function desenhar(l) {
       feito.style.strokeDashoffset = comprimento - l;
       const pt = feito.getPointAtLength(l);
       const frente = feito.getPointAtLength(Math.min(comprimento, l + 4));
-      const virar = frente.x < pt.x - 0.2 ? -1 : frente.x > pt.x + 0.2 ? 1 : (ultimoX ?? 1);
-      ultimoX = virar;
+      if (frente.x < pt.x - 0.2) ultimoX = -1;
+      else if (frente.x > pt.x + 0.2) ultimoX = 1;
       navio.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})`);
-      corpo.setAttribute('transform', `scale(${virar} 1)`);
-      paradas.forEach((el, i) => el.classList.toggle('parada--visitada', l >= marcos[i] - 2));
+      corpo.setAttribute('transform', `scale(${ultimoX} 1)`);
+      const n = marcos.filter((m) => l >= m - 2).length;
+      if (n !== visitadas) { visitadas = n; paradas.forEach((el, i) => el.classList.toggle('parada--visitada', i < n)); }
+    }
+
+    // No celular o scroll chega aos trancos; o navio desliza até o alvo em vez de pular
+    function deslizar() {
+      const dif = alvo - atual;
+      atual = Math.abs(dif) < 0.5 ? alvo : atual + dif * 0.2;
+      desenhar(atual);
+      if (atual !== alvo) requestAnimationFrame(deslizar);
+      else andando = false;
+    }
+
+    let cartaVisivel = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { cartaVisivel = e.isIntersecting; if (cartaVisivel) agendar(); }, { rootMargin: '200px 0px' }).observe(carta);
+    }
+    function seguir() {
+      if (!comprimento || !cartaVisivel) return;
+      alvo = Math.max(0, Math.min(comprimento, distanciaNaAltura(alturaAlvo())));
+      if (calmo.matches) { atual = alvo; desenhar(atual); return; }
+      if (!andando && alvo !== atual) { andando = true; requestAnimationFrame(deslizar); }
     }
 
     tarefas.add(seguir);
     document.addEventListener('op:rota', medir);
-    window.addEventListener('resize', () => { clearTimeout(medir.t); medir.t = setTimeout(medir, 150); });
+    // a barra de endereço do celular muda a altura da tela: remede só quando a largura muda
+    let largura = window.innerWidth;
+    window.addEventListener('resize', () => {
+      clearTimeout(medir.t);
+      medir.t = setTimeout(() => { if (window.innerWidth !== largura) { largura = window.innerWidth; medir(); } else agendar(); }, 150);
+    });
+    if ('ResizeObserver' in window) new ResizeObserver(() => { clearTimeout(medir.r); medir.r = setTimeout(medir, 120); }).observe(carta);
     if (document.fonts) document.fonts.ready.then(medir);
     medir();
   }
