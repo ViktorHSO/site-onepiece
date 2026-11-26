@@ -85,9 +85,9 @@ p { margin: 0 0 1em; max-width: var(--texto); }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(15, 44, 64, 0.72);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  background: rgba(15, 44, 64, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(169, 193, 207, 0.12);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -140,6 +140,7 @@ p { margin: 0 0 1em; max-width: var(--texto); }
   line-height: 1.1;
 }
 .marca:hover { color: #fff; }
+@media (max-width: 52rem), (pointer: coarse) { .topo { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(12, 36, 53, 0.96); } }
 /* celular estreito: o nome pode quebrar em duas linhas para o botão Menu caber */
 @media (max-width: 30rem) { .marca { white-space: normal; font-size: 1.2rem; } }
 
@@ -249,19 +250,67 @@ main { padding-bottom: 4rem; }
   width: 106%;
   height: 104%;
   will-change: transform;
+  contain: strict;
 }
+.camada__arte { position: absolute; inset: 0; width: 100%; height: 100%; }
+.camada__arte--defs { width: 0; height: 0; }
 
-.estrelas circle { animation: piscar 4s ease-in-out infinite; }
-.estrelas circle:nth-child(3n) { animation-delay: 1.3s; }
-.estrelas circle:nth-child(3n + 1) { animation-delay: 2.6s; }
-@keyframes piscar { 50% { opacity: 0.25; } }
+/* Cada peça animada é um <svg> recortado só na faixa onde tem desenho e
+   posicionado com a mesma conta do preserveAspectRatio="xMidYMax slice"
+   (--e = escala, calculada pelo efeitos.js). Assim o navegador só move ou
+   esmaece uma camada pequena na placa de vídeo, sem redesenhar o SVG. */
+.peca {
+  position: absolute;
+  left: calc(50% + (var(--px) - 720) * var(--e, 1) * 1px);
+  bottom: calc((800 - var(--py) - var(--ph)) * var(--e, 1) * 1px);
+  width: calc(var(--pw) * var(--e, 1) * 1px);
+  height: calc(var(--ph) * var(--e, 1) * 1px);
+  overflow: visible;
+}
+/* posição de cada peça no cenário, em unidades do desenho de 1440x800 (x, y, largura, altura) */
+.peca--estrelas { --px: 0; --py: 0; --pw: 1440; --ph: 320; }
+.peca--nuvens { --px: 0; --py: 150; --pw: 1440; --ph: 430; }
+.peca--raios { --px: -280; --py: -400; --pw: 2000; --ph: 1000; }
+.peca--brilhos1 { --px: 0; --py: 610; --pw: 1440; --ph: 100; }
+.peca--brilhos2 { --px: 0; --py: 670; --pw: 1440; --ph: 80; }
+.peca--navio { --px: 420; --py: 440; --pw: 440; --ph: 250; }
+.peca--onda1 { --px: 0; --py: 596; --pw: 2880; --ph: 204; }
+.peca--onda2 { --px: 0; --py: 648; --pw: 2880; --ph: 152; }
+.peca--onda3 { --px: 0; --py: 716; --pw: 2880; --ph: 84; }
 
-.sol__raios { transform-origin: 720px 600px; animation: girar 90s linear infinite; }
+.onda-faixa { animation: mar 30s linear infinite; will-change: transform; }
+.onda-faixa--1 { --passo: -480; animation-duration: 40s; }
+.onda-faixa--2 { --passo: -720; animation-duration: 30s; }
+.onda-faixa--3 { --passo: -960; animation-duration: 22s; }
+@keyframes mar { to { transform: translate3d(calc(var(--passo) * var(--e, 1) * 1px), 0, 0); } }
+
+.raios-faixa { animation: respirar 7s ease-in-out infinite alternate; will-change: opacity; }
+@keyframes respirar { from { opacity: 0.55; } to { opacity: 1; } }
+
+/* peças que piscam inteiras (estrelas e brilhos do mar) */
+.piscar { animation: piscar 5s ease-in-out infinite; will-change: opacity; }
+.piscar--2 { animation-delay: -2.5s; }
+.piscar--3 { animation-delay: -1.2s; animation-duration: 4s; }
+@keyframes piscar { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+/* as nuvens derivam todas juntas, devagar */
+.derivar { animation: derivar 60s ease-in-out infinite alternate; will-change: transform; }
+@keyframes derivar { to { transform: translate3d(calc(70px * var(--e, 1)), 0, 0); } }
+
+/* o navio balança inteiro; o eixo fica na linha d'água dele */
+.navio-faixa {
+  transform-origin: calc(212px * var(--e, 1)) calc(187px * var(--e, 1));
+  animation: balanco 5s ease-in-out infinite;
+  will-change: transform;
+}
+.abertura { will-change: opacity; }
+
+/* abertura fora da tela: tudo para */
+.cena--parada *, .jornal--parado * { animation-play-state: paused !important; }
+
+
 @keyframes girar { to { transform: rotate(360deg); } }
 
-.nuvens--longe > g { animation: deriva 46s ease-in-out infinite alternate; }
-.nuvens--longe > g:nth-child(2) { animation-duration: 60s; animation-direction: alternate-reverse; }
-.nuvem { animation: deriva 34s ease-in-out infinite alternate; }
 @keyframes deriva { to { transform: translateX(60px); } }
 
 .gaivotas path { animation: voar 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
@@ -269,24 +318,13 @@ main { padding-bottom: 4rem; }
 .gaivotas path:nth-child(3) { animation-delay: -1.6s; }
 @keyframes voar { 50% { transform: translateY(-6px) scaleY(0.7); } }
 
-.onda { animation: mar 24s linear infinite; }
-.onda--1 { animation-duration: 40s; --passo: -480px; }
-.onda--2 { animation-duration: 30s; --passo: -720px; }
-.onda--3 { animation-duration: 22s; --passo: -960px; }
-@keyframes mar { to { transform: translateX(var(--passo)); } }
 
 .reflexo rect { transform-box: fill-box; transform-origin: center; animation: brilhar 3s ease-in-out infinite; }
 .reflexo rect:nth-child(2) { animation-delay: -1s; }
 .reflexo rect:nth-child(3) { animation-delay: -2s; }
 @keyframes brilhar { 50% { transform: scaleX(0.6); opacity: 0.2; } }
 
-.brilhos rect { opacity: 0; animation: cintilar 4s ease-in-out infinite; }
-.brilhos .b1 { animation-delay: 1s; }
-.brilhos .b2 { animation-delay: 2s; }
-.brilhos .b3 { animation-delay: 3s; }
-@keyframes cintilar { 40%, 60% { opacity: 0.55; } }
 
-.fiapos { animation: deriva 50s ease-in-out infinite alternate; }
 .veleiro { animation: deriva 80s linear infinite alternate; }
 
 .esteira path { stroke-dasharray: 18 10; animation: esteira 1.6s linear infinite; }
@@ -300,10 +338,9 @@ main { padding-bottom: 4rem; }
 .barril { animation: barril 4s ease-in-out infinite; }
 @keyframes barril { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(6px) rotate(7deg); } }
 
-.navio { transform-box: fill-box; transform-origin: 50% 90%; animation: balanco 5s ease-in-out infinite; }
 @keyframes balanco {
-  0%, 100% { transform: translateY(0) rotate(-1.6deg); }
-  50% { transform: translateY(7px) rotate(1.8deg); }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1.2deg); }
+  50% { transform: translate3d(0, calc(6px * var(--e, 1)), 0) rotate(1.4deg); }
 }
 .bandeira { transform-box: fill-box; transform-origin: left center; animation: tremular 1.6s ease-in-out infinite; }
 @keyframes tremular { 50% { transform: skewY(-6deg) scaleX(0.92); } }
@@ -393,7 +430,8 @@ main { padding-bottom: 4rem; }
 }
 .colagem .cartaz { box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 30px 50px -18px rgba(0, 0, 0, 0.8); }
 .colagem__esq, .colagem__dir { filter: brightness(0.82); }
-button.colagem__esq:hover, button.colagem__dir:hover { filter: none; z-index: 3; }
+.colagem .colagem__esq:hover, .colagem .colagem__dir:hover,
+.colagem .colagem__esq:focus-visible, .colagem .colagem__dir:focus-visible { filter: none; z-index: 5; }
 
 @keyframes pregar {
   from { transform: translateY(-2.5rem) rotate(-6deg); opacity: 0; }
@@ -1171,8 +1209,7 @@ body::after {
   inset: 0;
   z-index: 200;
   pointer-events: none;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -1390,7 +1427,8 @@ button.cartaz:hover .cartaz__foto img { filter: sepia(0); transform: scale(1.05)
   opacity: 0.12;
 }
 .faixa__ondas { position: absolute; left: 0; bottom: -1px; width: 100%; height: 4rem; }
-.faixa__onda { animation: mar 12s linear infinite; --passo: -360px; }
+.faixa__onda { animation: mar-faixa 12s linear infinite; --passo: -360px; }
+@keyframes mar-faixa { to { transform: translateX(var(--passo)); } }
 .faixa__onda--1 { fill: rgba(35, 80, 111, 0.6); animation-duration: 18s; }
 .faixa__onda--2 { fill: var(--mar); --passo: -480px; }
 

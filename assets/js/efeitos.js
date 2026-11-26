@@ -40,9 +40,14 @@ window.OP = window.OP || {};
     topo.appendChild(barra);
     const linha = barra.firstElementChild;
     const navio = barra.lastElementChild;
+    let max = 1;
+    const medirPagina = () => { max = document.documentElement.scrollHeight - window.innerHeight; };
+    medirPagina();
+    if ('ResizeObserver' in window) new ResizeObserver(medirPagina).observe(document.body);
+    window.addEventListener('resize', medirPagina);
+    let rolado = null;
     tarefas.add((y) => {
-      topo.classList.toggle('topo--rolado', y > 8);
-      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if ((y > 8) !== rolado) { rolado = y > 8; topo.classList.toggle('topo--rolado', rolado); }
       const p = max > 0 ? Math.min(1, y / max) : 0;
       linha.style.transform = `scaleX(${p})`;
       navio.style.left = `calc(${(p * 100).toFixed(2)}% + ${(8 - p * 16).toFixed(1)}px)`;
@@ -54,11 +59,35 @@ window.OP = window.OP || {};
   const cena = document.getElementById('cena');
   if (cena) {
     const camadas = [...cena.querySelectorAll('[data-paralaxe], [data-mouse]')];
-    let mx = 0, my = 0, alvoX = 0, alvoY = 0, girando = false;
+    let mx = 0, my = 0, alvoX = 0, alvoY = 0, girando = false, altura = cena.offsetHeight;
 
+    // Escala do cenário: a mesma conta do preserveAspectRatio="xMidYMax slice",
+    // para as ondas e os raios (que são <svg> à parte) ficarem alinhados com o resto.
+    const molde = cena.querySelector('.camada');
+    function escalar() {
+      altura = cena.offsetHeight;
+      if (!molde) return;
+      const e = Math.max(molde.offsetWidth / 1440, molde.offsetHeight / 800);
+      cena.style.setProperty('--e', e.toFixed(4));
+    }
+    escalar();
+    if ('ResizeObserver' in window) new ResizeObserver(escalar).observe(cena);
+    else window.addEventListener('resize', escalar);
+
+    // Fora da tela as animações param (economiza bateria e deixa o resto da página leve)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => cena.classList.toggle('cena--parada', !e.isIntersecting)).observe(cena);
+      const jornal = document.querySelector('.jornal');
+      if (jornal) new IntersectionObserver(([e]) => jornal.classList.toggle('jornal--parado', !e.isIntersecting)).observe(jornal);
+    }
+
+    let fora = false;
     function aplicar(y) {
-      const altura = cena.offsetHeight;
-      if (y > altura) return; // cenário fora da tela: não gasta nada
+      if (y > altura) { // cenário fora da tela: não gasta nada
+        if (!fora) { fora = true; cena.style.setProperty('--sumir', '1'); }
+        return;
+      }
+      fora = false;
       camadas.forEach((el) => {
         const v = parseFloat(el.dataset.paralaxe || 0);
         const m = parseFloat(el.dataset.mouse || 0);
@@ -152,7 +181,7 @@ window.OP = window.OP || {};
     const navio = barco.querySelector('.carta__navio');
     const corpo = barco.querySelector('.carta__navio-corpo');
     let paradas = [], pontos = [], comprimento = 0, marcos = [], tabela = [];
-    let atual = 0, alvo = 0, andando = false, ultimoX = 1;
+    let atual = 0, alvo = 0, andando = false, ultimoX = 1, visitadas = -1;
 
     // Liga o centro de cada medalha com curvas em S
     function medir() {
@@ -185,6 +214,7 @@ window.OP = window.OP || {};
       for (let l = 0; l <= comprimento; l += 3) tabela.push([feito.getPointAtLength(l).y, l]);
       tabela.push([feito.getPointAtLength(comprimento).y, comprimento]);
       marcos = pontos.map(([, y]) => distanciaNaAltura(y));
+      visitadas = -1;
       atual = alvo = distanciaNaAltura(alturaAlvo());
       desenhar(atual);
       agendar();
@@ -218,7 +248,8 @@ window.OP = window.OP || {};
       else if (frente.x > pt.x + 0.2) ultimoX = 1;
       navio.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)})`);
       corpo.setAttribute('transform', `scale(${ultimoX} 1)`);
-      paradas.forEach((el, i) => el.classList.toggle('parada--visitada', l >= marcos[i] - 2));
+      const n = marcos.filter((m) => l >= m - 2).length;
+      if (n !== visitadas) { visitadas = n; paradas.forEach((el, i) => el.classList.toggle('parada--visitada', i < n)); }
     }
 
     // No celular o scroll chega aos trancos; o navio desliza até o alvo em vez de pular
@@ -230,8 +261,12 @@ window.OP = window.OP || {};
       else andando = false;
     }
 
+    let cartaVisivel = true;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([e]) => { cartaVisivel = e.isIntersecting; if (cartaVisivel) agendar(); }, { rootMargin: '200px 0px' }).observe(carta);
+    }
     function seguir() {
-      if (!comprimento) return;
+      if (!comprimento || !cartaVisivel) return;
       alvo = Math.max(0, Math.min(comprimento, distanciaNaAltura(alturaAlvo())));
       if (calmo.matches) { atual = alvo; desenhar(atual); return; }
       if (!andando && alvo !== atual) { andando = true; requestAnimationFrame(deslizar); }
