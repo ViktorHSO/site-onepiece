@@ -50,6 +50,10 @@ docs/                          imagens deste README
 
 Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não sobrescrever as funções da outra.
 
+### Cache do navegador
+
+Os arquivos de CSS e JS são carregados com `?v=3` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+
 ### Movimento e acessibilidade
 
 Todo o movimento fica em `assets/js/efeitos.js` e roda num único `requestAnimationFrame` por quadro. Quem liga "reduzir movimento" no sistema vê o site parado, com todo o conteúdo já visível. Os desenhos são SVG feitos para o site, sem imagens externas, então a política de segurança (CSP) continua a mesma.
