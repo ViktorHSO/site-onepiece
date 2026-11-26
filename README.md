@@ -4,7 +4,7 @@ Uma enciclopédia de One Piece feita por fã: personagens, tripulações, Frutas
 
 **[Abrir o site](https://viktorhso.github.io/site-onepiece/)**
 
-![Página inicial do site, com o título "Procura-se" e cartazes de procurado do Luffy, Zoro e Sanji](docs/inicio.jpg)
+![Página inicial: pôr do sol em SVG com a Red Line, um navio no mar e os cartazes de procurado do Luffy, Zoro e Sanji](docs/inicio.jpg)
 
 ## O que tem no site
 
@@ -22,8 +22,9 @@ Uma enciclopédia de One Piece feita por fã: personagens, tripulações, Frutas
 
 | | |
 |---|---|
-| ![Ranking das maiores recompensas](docs/ranking.jpg) | ![Cartazes da Marinha na página de facções](docs/faccoes.jpg) |
-| ![Página para criar o próprio cartaz](docs/cartaz.jpg) | |
+| ![A rota do bando como carta náutica, com o caminho vermelho e o navio seguindo o scroll](docs/rota.jpg) | ![Página para criar o próprio cartaz](docs/cartaz.jpg) |
+
+<p align="center"><img src="docs/celular.jpg" alt="A abertura no celular" width="260"></p>
 
 ## Como rodar
 
