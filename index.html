@@ -19,6 +19,7 @@
   <script src="./assets/js/descricoes-pt.js" defer></script>
   <script src="./assets/js/api.js" defer></script>
   <script src="./assets/js/ui.js" defer></script>
+  <script src="./assets/js/efeitos.js" defer></script>
   <script src="./assets/js/pages/inicio.js" defer></script>
 </head>
 <body data-raiz=".">
@@ -43,18 +44,116 @@
   </header>
 
   <main id="conteudo">
-    <section class="abertura-mar">
+    <section class="cena" id="cena">
+      <!-- Cenário em camadas: cada camada anda numa velocidade (data-paralaxe) e segue o mouse (data-mouse) -->
+      <div class="cena__fundo" aria-hidden="true">
+        <svg class="camada" data-paralaxe="0.08" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <radialGradient id="g-brilho" cx="720" cy="600" r="560" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ffd27a" stop-opacity=".55"/>
+              <stop offset=".35" stop-color="#e08a3c" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#e08a3c" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="g-sol" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff1c4"/>
+              <stop offset="1" stop-color="#f0a93b"/>
+            </linearGradient>
+          </defs>
+          <g class="estrelas" fill="#eaf1f4">
+            <circle cx="90" cy="70" r="1.4"/><circle cx="260" cy="140" r="1"/><circle cx="410" cy="60" r="1.6"/>
+            <circle cx="620" cy="110" r="1"/><circle cx="780" cy="40" r="1.3"/><circle cx="940" cy="130" r="1"/>
+            <circle cx="1110" cy="70" r="1.5"/><circle cx="1290" cy="120" r="1"/><circle cx="1380" cy="50" r="1.2"/>
+            <circle cx="180" cy="230" r="1"/><circle cx="1210" cy="220" r="1"/><circle cx="700" cy="200" r=".9"/>
+          </g>
+          <rect width="1440" height="800" fill="url(#g-brilho)"/>
+          <g class="sol__raios" fill="#ffd27a" opacity=".055"><path d="M720 600 L-178 534 L-170 465 Z"/><path d="M720 600 L-140 336 L-117 270 Z"/><path d="M720 600 L-60 151 L-23 92 Z"/><path d="M720 600 L60 -11 L109 -60 Z"/><path d="M720 600 L212 -143 L271 -180 Z"/><path d="M720 600 L390 -237 L456 -260 Z"/><path d="M720 600 L585 -290 L654 -298 Z"/><path d="M720 600 L786 -298 L855 -290 Z"/><path d="M720 600 L984 -260 L1050 -237 Z"/><path d="M720 600 L1169 -180 L1228 -143 Z"/><path d="M720 600 L1331 -60 L1380 -11 Z"/><path d="M720 600 L1463 92 L1500 151 Z"/><path d="M720 600 L1557 270 L1580 336 Z"/><path d="M720 600 L1610 465 L1618 534 Z"/></g>
+          <circle cx="720" cy="600" r="104" fill="url(#g-sol)"/>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.16" data-mouse="8" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <g class="nuvens nuvens--longe" fill="#a9c1cf" opacity=".16">
+            <g><circle cx="140" cy="300" r="38"/><circle cx="190" cy="282" r="50"/><circle cx="250" cy="300" r="36"/><rect x="110" y="300" width="170" height="30" rx="15"/></g>
+            <g><circle cx="980" cy="230" r="30"/><circle cx="1030" cy="212" r="44"/><circle cx="1085" cy="232" r="30"/><rect x="955" y="232" width="155" height="26" rx="13"/></g>
+            <g><circle cx="1290" cy="360" r="26"/><circle cx="1330" cy="345" r="36"/><circle cx="1375" cy="362" r="24"/><rect x="1270" y="362" width="130" height="22" rx="11"/></g>
+          </g>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.22" data-mouse="14" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="g-redline" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#9c3a2c"/>
+              <stop offset="1" stop-color="#3d1a1c"/>
+            </linearGradient>
+          </defs>
+          <!-- Red Line: o paredão vermelho que corta o mundo -->
+          <path d="M840 612 L852 470 L870 452 L884 430 L905 424 L930 404 L962 410 L990 396 L1030 400 L1060 386 L1100 392 L1140 378 L1190 386 L1230 372 L1280 380 L1330 368 L1380 376 L1440 366 V612 Z" fill="url(#g-redline)"/>
+          <g stroke="#2a1214" stroke-opacity=".35" stroke-width="3">
+            <path d="M900 440 V612 M960 420 V612 M1035 410 V612 M1120 395 V612 M1210 390 V612 M1300 380 V612 M1400 376 V612"/>
+          </g>
+          <path d="M852 470 L870 452 L884 430 L905 424 L930 404 L962 410 L990 396 L1030 400 L1060 386 L1100 392 L1140 378 L1190 386 L1230 372 L1280 380 L1330 368 L1380 376 L1440 366" fill="none" stroke="#f0c24b" stroke-opacity=".35" stroke-width="2"/>
+          <!-- ilhas distantes -->
+          <g fill="#143850">
+            <path d="M90 612 Q130 572 180 586 Q215 560 262 590 Q300 596 320 612 Z"/>
+            <path d="M640 612 Q680 590 712 596 Q740 578 770 600 L786 612 Z"/>
+          </g>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.3" data-mouse="22" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <g class="nuvens nuvens--perto">
+            <g class="nuvem" fill="#eaf1f4" opacity=".14">
+              <circle cx="1160" cy="300" r="34"/><circle cx="1210" cy="280" r="48"/><circle cx="1272" cy="298" r="38"/><circle cx="1320" cy="312" r="26"/><rect x="1130" y="305" width="215" height="32" rx="16"/>
+            </g>
+            <g class="gaivotas" fill="none" stroke="#eaf1f4" stroke-width="2.4" stroke-linecap="round" opacity=".7">
+              <path d="M820 330 q8 -8 16 0 q8 -8 16 0"/>
+              <path d="M862 356 q6 -6 12 0 q6 -6 12 0"/>
+              <path d="M610 250 q7 -7 14 0 q7 -7 14 0"/>
+            </g>
+          </g>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.36" data-mouse="18" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <g class="onda onda--1"><path d="M0 612 Q60 606 120 612 Q180 618 240 612 Q300 606 360 612 Q420 618 480 612 Q540 606 600 612 Q660 618 720 612 Q780 606 840 612 Q900 618 960 612 Q1020 606 1080 612 Q1140 618 1200 612 Q1260 606 1320 612 Q1380 618 1440 612 Q1500 606 1560 612 Q1620 618 1680 612 Q1740 606 1800 612 Q1860 618 1920 612 Q1980 606 2040 612 Q2100 618 2160 612 Q2220 606 2280 612 Q2340 618 2400 612 Q2460 606 2520 612 Q2580 618 2640 612 Q2700 606 2760 612 Q2820 618 2880 612 V800 H0 Z" fill="#1f4d6b"/></g>
+          <g class="reflexo" fill="#ffd27a"><rect x="650" y="618" width="140" height="3" rx="1.5" opacity=".55"/><rect x="672" y="630" width="96" height="3" rx="1.5" opacity=".45"/><rect x="690" y="644" width="60" height="2.5" rx="1.25" opacity=".35"/></g>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.42" data-mouse="28" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <!-- navio desenhado para o site (não é nenhum navio da obra) -->
+          <g transform="translate(520 494)">
+            <g class="navio">
+              <path d="M18 120 L206 120 Q200 146 180 158 L44 158 Q24 146 18 120 Z" fill="#4a2c18"/>
+              <path d="M24 128 H200" stroke="#f0c24b" stroke-width="3" opacity=".7"/>
+              <path d="M206 120 L238 104" stroke="#4a2c18" stroke-width="4" stroke-linecap="round"/>
+              <rect x="78" y="34" width="5" height="88" fill="#3a2416"/>
+              <rect x="140" y="12" width="6" height="110" fill="#3a2416"/>
+              <path d="M48 46 Q82 58 114 46 L109 96 Q80 106 52 96 Z" fill="#e6cf98"/>
+              <path d="M104 26 Q143 42 182 26 L176 108 Q143 120 110 108 Z" fill="#f3e2b4"/>
+              <path d="M143 26 V112" stroke="#c9ad6f" stroke-width="2"/>
+              <g class="bandeira">
+                <path d="M146 0 H178 Q174 9 178 18 H146 Z" fill="#141414"/>
+                <circle cx="160" cy="7.5" r="3.6" fill="#eaf1f4"/>
+                <path d="M154 13 L166 16 M166 13 L154 16" stroke="#eaf1f4" stroke-width="1.6" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+          <g class="onda onda--2"><path d="M0 668 Q90 656 180 668 Q270 680 360 668 Q450 656 540 668 Q630 680 720 668 Q810 656 900 668 Q990 680 1080 668 Q1170 656 1260 668 Q1350 680 1440 668 Q1530 656 1620 668 Q1710 680 1800 668 Q1890 656 1980 668 Q2070 680 2160 668 Q2250 656 2340 668 Q2430 680 2520 668 Q2610 656 2700 668 Q2790 680 2880 668 V800 H0 Z" fill="#18405b"/><path d="M0 668 Q90 656 180 668 Q270 680 360 668 Q450 656 540 668 Q630 680 720 668 Q810 656 900 668 Q990 680 1080 668 Q1170 656 1260 668 Q1350 680 1440 668 Q1530 656 1620 668 Q1710 680 1800 668 Q1890 656 1980 668 Q2070 680 2160 668 Q2250 656 2340 668 Q2430 680 2520 668 Q2610 656 2700 668 Q2790 680 2880 668" fill="none" stroke="#eaf1f4" stroke-opacity=".18" stroke-width="2"/></g>
+        </svg>
+
+        <svg class="camada" data-paralaxe="0.5" data-mouse="36" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <g class="onda onda--3"><path d="M0 735 Q120 719 240 735 Q360 751 480 735 Q600 719 720 735 Q840 751 960 735 Q1080 719 1200 735 Q1320 751 1440 735 Q1560 719 1680 735 Q1800 751 1920 735 Q2040 719 2160 735 Q2280 751 2400 735 Q2520 719 2640 735 Q2760 751 2880 735 V800 H0 Z" fill="#0f2c40"/><path d="M0 735 Q120 719 240 735 Q360 751 480 735 Q600 719 720 735 Q840 751 960 735 Q1080 719 1200 735 Q1320 751 1440 735 Q1560 719 1680 735 Q1800 751 1920 735 Q2040 719 2160 735 Q2280 751 2400 735 Q2520 719 2640 735 Q2760 751 2880 735" fill="none" stroke="#eaf1f4" stroke-opacity=".22" stroke-width="2.5"/></g>
+        </svg>
+      </div>
+
       <div class="envelope abertura">
-        <div class="abertura__texto">
+        <div class="abertura__texto" data-paralaxe="-0.12">
+          <p class="abertura__selo" data-i18n="inicio.selo">Enciclopédia de fã · East Blue → Elbaf</p>
           <h1 class="abertura__titulo"><span class="abertura__grito" data-i18n="inicio.grito">Procura-se:</span> <span class="abertura__sub" data-i18n="inicio.sub">informação sobre One Piece.</span></h1>
           <p data-i18n="inicio.texto">Comecei este site como trabalho de Introdução à Tecnologia Web, no curso de Sistemas de Informação da UNIRIOS, e acabei virando o caderno onde anoto tudo sobre a obra. Os dados vêm da API One Piece, então a lista cresce sozinha.</p>
-          <p class="abertura__numeros" id="numeros" data-i18n="inicio.contando">Contando os personagens, tripulações, frutas e espadas da API…</p>
           <p class="abertura__acoes">
             <a class="botao" href="pages/personagens.html" data-i18n="inicio.verProcurados">Ver os procurados</a>
             <a class="botao botao--claro" href="pages/cartaz.html" data-i18n="inicio.fazerCartaz">Fazer meu cartaz</a>
           </p>
         </div>
-        <div class="colagem" id="colagem" aria-label="Cartazes de Luffy, Zoro e Sanji" data-i18n-aria="inicio.colagem">
+        <div class="colagem" id="colagem" data-mouse="-14" aria-label="Cartazes de Luffy, Zoro e Sanji" data-i18n-aria="inicio.colagem">
           <!-- preenchido pelo inicio.js; o Luffy fica aqui caso a API não responda -->
           <div class="cartaz colagem__frente">
             <span class="cartaz__titulo" aria-hidden="true">Procurado</span>
@@ -66,7 +165,28 @@
           </div>
         </div>
       </div>
-      <svg class="onda" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 180 80 360 0 540 30 S 900 80 1080 40 S 1320 10 1440 40 V80 H0 Z"/></svg>
+
+      <a class="cena__descer" href="#t-ranking" data-i18n-aria="inicio.descer" aria-label="Descer para o conteúdo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14m-6-6 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- Jornal Econômico Mundial: manchetes passando -->
+    <div class="jornal" aria-label="Manchetes do Jornal Econômico Mundial" data-i18n-aria="inicio.jornalRotulo">
+      <span class="jornal__selo" data-i18n="inicio.jornal">Jornal Econômico Mundial</span>
+      <div class="jornal__trilho"><ul class="jornal__lista" id="manchetes"></ul></div>
+    </div>
+
+    <section class="estatisticas" aria-label="O site em números" data-i18n-aria="inicio.numerosRotulo">
+      <div class="envelope">
+        <dl class="estatisticas__lista" id="numeros">
+          <div><dt data-i18n="stat.p">personagens</dt><dd data-contar="personagens">—</dd></div>
+          <div><dt data-i18n="stat.t">tripulações</dt><dd data-contar="tripulacoes">—</dd></div>
+          <div><dt data-i18n="stat.f">Frutas do Diabo</dt><dd data-contar="frutas">—</dd></div>
+          <div><dt data-i18n="stat.e">espadas lendárias</dt><dd data-contar="espadas">—</dd></div>
+        </dl>
+        <p class="estatisticas__aviso" id="numeros-aviso" hidden></p>
+      </div>
     </section>
 
     <section class="secao secao--fundo" aria-labelledby="t-ranking">
@@ -79,15 +199,38 @@
       </div>
     </section>
 
-    <section class="secao" aria-labelledby="t-rota">
+    <section class="secao carta-secao" aria-labelledby="t-rota">
       <div class="envelope">
         <div class="secao__cabeca">
           <h2 id="t-rota" data-i18n="inicio.rota">A rota do bando</h2>
-          <p data-i18n="inicio.rotaTexto">As sagas na ordem em que o Chapéu de Palha passou por elas. Arraste para o lado.</p>
+          <p data-i18n="inicio.rotaTexto">As sagas na ordem em que o Chapéu de Palha passou por elas. Role a página e acompanhe o navio.</p>
         </div>
-      </div>
-      <div class="rota" id="rota" tabindex="0" aria-label="Rota do bando, role para o lado" data-i18n-aria="inicio.rotaRotulo">
-        <ol class="rota__lista" id="rota-lista"></ol>
+        <div class="carta" id="carta">
+          <svg class="carta__rosa" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6"/>
+            <path d="M100 6 L112 100 L100 194 L88 100 Z" fill="currentColor" opacity=".8"/>
+            <path d="M6 100 L100 88 L194 100 L100 112 Z" fill="currentColor" opacity=".5"/>
+            <path d="M34 34 L104 96 L166 166 L96 104 Z" fill="currentColor" opacity=".25"/>
+            <path d="M166 34 L104 104 L34 166 L96 96 Z" fill="currentColor" opacity=".25"/>
+            <text x="100" y="-2" text-anchor="middle" font-size="18" fill="currentColor" font-family="Rye, serif">N</text>
+          </svg>
+          <svg class="carta__trilha" id="carta-trilha" aria-hidden="true">
+            <path class="carta__rastro carta__rastro--fundo"/>
+            <path class="carta__rastro carta__rastro--feito"/>
+          </svg>
+          <ol class="carta__lista" id="rota-lista"></ol>
+          <svg class="carta__trilha carta__trilha--barco" id="carta-barco" aria-hidden="true">
+            <g class="carta__navio">
+              <g class="carta__navio-corpo">
+                <path d="M-16 4 H16 Q13 12 8 14 H-8 Q-13 12 -16 4 Z" fill="#2b1d10"/>
+                <rect x="-1" y="-20" width="2.4" height="24" fill="#2b1d10"/>
+                <path d="M-12 -16 Q0 -12 12 -16 L10 0 Q0 3 -10 0 Z" fill="#fff6dc" stroke="#2b1d10" stroke-width="1.5"/>
+                <path d="M1 -26 H12 L10 -22 L12 -18 H1 Z" fill="#b3202a"/>
+              </g>
+            </g>
+          </svg>
+        </div>
       </div>
     </section>
 
@@ -101,7 +244,7 @@
       </div>
     </section>
 
-    <section class="secao" aria-labelledby="t-yonko">
+    <section class="secao secao--yonko" aria-labelledby="t-yonko">
       <div class="envelope">
         <div class="secao__cabeca">
           <h2 id="t-yonko" data-i18n="inicio.yonko">Os Quatro Imperadores hoje</h2>
@@ -140,6 +283,7 @@
   </main>
 
   <footer class="rodape">
+    <svg class="rodape__onda" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 Q180 0 360 30 T720 30 T1080 30 T1440 30 V60 H0 Z"/></svg>
     <div class="envelope">
       <p data-i18n="rodape.autor">Feito por Victor Hugo Sousa Oliveira, Sistemas de Informação, UNIRIOS.</p>
       <p data-i18n="rodape.dados">Dados da <a href="https://api-onepiece.com/">API One Piece</a>. One Piece pertence a Eiichiro Oda, Shueisha e Toei Animation. Este é um projeto de fã, sem fins lucrativos.</p>

@@ -35,24 +35,60 @@
     gigante: '<path d="M60 54 v-26" stroke="#6b4a2b" stroke-width="8"/><circle cx="60" cy="22" r="20" fill="#3f8f5a"/>',
   };
 
+  // Carta náutica: as ilhas alternam de lado e o caminho é desenhado por efeitos.js
   function desenharRota() {
-    $('rota-lista').innerHTML = SAGAS.map((s) => {
+    $('rota-lista').innerHTML = SAGAS.map((s, i) => {
       const [nome, texto] = s[OP.idioma];
       const caps = s.caps[1]
         ? OP.idioma === 'en' ? `${s.caps[0]} to ${s.caps[1]}` : `${s.caps[0]} a ${s.caps[1]}`
         : OP.idioma === 'en' ? `${s.caps[0]} onward` : `${s.caps[0]} em diante`;
+      const atual = !s.caps[1];
       return `
-      <li class="parada">
-        <svg class="parada__ilha" viewBox="0 0 120 70" aria-hidden="true">
-          <ellipse cx="60" cy="58" rx="46" ry="10" fill="#e6cf98"/>
-          <ellipse cx="60" cy="62" rx="54" ry="7" fill="rgba(255,255,255,.18)"/>
-          ${DETALHE[s.ilha]}
-        </svg>
-        <h3 class="parada__nome">${nome}</h3>
-        <p class="parada__caps">${OP.t('capitulos', { c: caps })}</p>
-        <p class="parada__texto">${texto}</p>
+      <li class="parada${atual ? ' parada--atual' : ''}">
+        <span class="parada__medalha">
+          <svg class="parada__ilha" viewBox="0 0 120 70" aria-hidden="true">
+            <ellipse cx="60" cy="58" rx="46" ry="10" fill="#e6cf98"/>
+            <ellipse cx="60" cy="62" rx="54" ry="7" fill="rgba(255,255,255,.18)"/>
+            ${DETALHE[s.ilha]}
+          </svg>
+          <span class="parada__numero" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+        </span>
+        <span class="parada__texto-caixa">
+          <h3 class="parada__nome">${nome}</h3>
+          <p class="parada__caps">${OP.t('capitulos', { c: caps })}${atual ? ` · <strong>${OP.t('arcoAtual')}</strong>` : ''}</p>
+          <p class="parada__texto">${texto}</p>
+        </span>
       </li>`;
     }).join('');
+    document.dispatchEvent(new CustomEvent('op:rota'));
+  }
+
+  /* ---------- Jornal: manchetes que passam ---------- */
+
+  const MANCHETES = {
+    pt: [
+      'Recompensa de Monkey D. Luffy chega a 3 bilhões de berries',
+      'Cross Guild põe preço na cabeça dos almirantes',
+      'Mensagem do Dr. Vegapunk é ouvida no mundo inteiro',
+      'Bando do Chapéu de Palha é visto a caminho de Elbaf',
+      'Buggy, o Palhaço, é reconhecido como Imperador',
+      'Marinha reforça a vigilância em Mary Geoise',
+    ],
+    en: [
+      'Monkey D. Luffy’s bounty reaches 3 billion berries',
+      'Cross Guild puts a price on the admirals’ heads',
+      'Dr. Vegapunk’s message is heard around the world',
+      'Straw Hat Pirates spotted heading for Elbaf',
+      'Buggy the Clown recognized as an Emperor',
+      'Marines tighten security at Mary Geoise',
+    ],
+  };
+
+  function montarJornal() {
+    const lista = $('manchetes');
+    const itens = MANCHETES[OP.idioma].map((m) => `<li>${OP.esc(m)}</li>`).join('');
+    // a lista vai duas vezes para o laço da animação não ter emenda; a cópia fica escondida do leitor de tela
+    lista.innerHTML = itens + itens.replaceAll('<li>', '<li aria-hidden="true">');
   }
 
   /* ---------- Colagem do topo ---------- */
@@ -129,11 +165,15 @@
       const [p, t, f, e] = await Promise.all([
         OP.api.personagens(), OP.api.tripulacoes(), OP.api.frutas(), OP.api.espadas(),
       ]);
-      $('numeros').innerHTML = OP.t('numeros', {
-        p: OP.numero(p.length), t: OP.numero(t.length), f: OP.numero(f.length), e: OP.numero(e.length),
+      const total = { personagens: p.length, tripulacoes: t.length, frutas: f.length, espadas: e.length };
+      document.querySelectorAll('[data-contar]').forEach((dd) => {
+        dd.dataset.alvo = total[dd.dataset.contar];
+        OP.contar?.(dd);
       });
     } catch (erro) {
-      $('numeros').textContent = OP.t('semNumeros');
+      const aviso = $('numeros-aviso');
+      aviso.textContent = OP.t('semNumeros');
+      aviso.hidden = false;
     }
   }
 
@@ -155,6 +195,7 @@
   );
 
   desenharRota();
+  montarJornal();
   carregarPersonagens();
   carregarNumeros();
   carregarFrutas();
