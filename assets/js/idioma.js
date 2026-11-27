@@ -62,6 +62,9 @@ window.OP = window.OP || {};
       buscandoFaccao: 'Buscando os cartazes…', oqFaccoes: 'os cartazes das facções',
       // oficina
       oficial: 'Oficial', agente: 'Agente', semNome: 'Sem nome', erroImagem: ' Não deu para gerar a imagem com essa foto. Tente outra.',
+      'cartaz.heic': 'Fotos HEIC do iPhone não abrem neste navegador. Tire um print da foto ou escolha uma em JPG ou PNG.',
+      'cartaz.fotoRuim': 'Não deu para abrir essa imagem. Tente outra, em JPG ou PNG.',
+      'cartaz.baixado': 'Pronto! O cartaz foi salvo como {arquivo}.',
     },
     en: {
       procurado: 'Wanted', vivoOuMorto: 'Dead or alive', marinha: 'Marine',
@@ -72,7 +75,7 @@ window.OP = window.OP || {};
       tripulacao: 'Crew', funcao: 'Role', fruta: 'Devil Fruit', recompensa: 'Bounty',
       idade: 'Age', altura: 'Height', situacao: 'Status', nenhuma: 'None',
       naoComeu: 'Has not eaten one', conhecidoComo: 'Known as {apelido}', semTripulacao: 'No crew',
-      fechar: 'Close', detalhes: 'Details',
+      fechar: 'Close', 'cartaz.amostra': 'Wanted', detalhes: 'Details',
       erroCarregar: 'Could not load {oque}.', confiraConexao: 'Check your internet connection and try again.',
       tentarDeNovo: 'Try again',
       semImagemDe: 'No image of {nome}', semDescricaoFruta: 'The API has no description for this fruit.',
@@ -101,6 +104,9 @@ window.OP = window.OP || {};
       quebrada: 'Broken', inteira: 'Intact', quebradaMin: 'broken', semDescricaoEspada: 'The API has no description for this sword.',
       buscandoFaccao: 'Fetching the posters…', oqFaccoes: 'the faction posters',
       oficial: 'Officer', agente: 'Agent', semNome: 'No name', erroImagem: ' Could not create the image with this photo. Try another one.',
+      'cartaz.heic': 'iPhone HEIC photos do not open in this browser. Take a screenshot of the photo or pick a JPG or PNG.',
+      'cartaz.fotoRuim': 'Could not open this image. Try another one, as JPG or PNG.',
+      'cartaz.baixado': 'Done! The poster was saved as {arquivo}.',
     },
   };
 
@@ -200,10 +206,19 @@ window.OP = window.OP || {};
 
     // seu cartaz
     'cartaz.titulo': 'Make your poster',
-    'cartaz.texto': 'Type a name, pick a bounty and a photo. When you like it, download the image. The photo stays in your browser and is never sent anywhere.',
+    'cartaz.texto': 'Type a name, pick a bounty and a photo, place it the way you like and download the poster. The photo stays in your browser and is never sent anywhere.',
     'cartaz.nome': 'Name on the poster', 'cartaz.valor': 'Bounty in berries', 'cartaz.foto': 'Photo', 'cartaz.modelo': 'Poster type',
     'cartaz.m.procurado': 'Wanted, dead or alive', 'cartaz.m.marinha': 'Marine record', 'cartaz.m.governo': 'Classified dossier',
-    'cartaz.dica': 'Tip: photos with the face in the center work best. The photo is cropped to 4 by 3.',
+    'cartaz.g.texto': 'Text', 'cartaz.g.foto': 'Photo', 'cartaz.g.estilo': 'Style',
+    'cartaz.escolherFoto': 'Choose a photo',
+    'cartaz.arraste': 'Drag the photo on the poster to place it. Use the mouse wheel or two fingers to zoom.',
+    'cartaz.zoom': 'Zoom', 'cartaz.horizontal': 'Horizontal', 'cartaz.vertical': 'Vertical',
+    'cartaz.tom': 'Photo color', 'cartaz.tom.sepia': 'Sepia', 'cartaz.tom.pb': 'Black and white', 'cartaz.tom.cor': 'Color',
+    'cartaz.centralizar': 'Center photo', 'cartaz.fonte': 'Font', 'cartaz.papel': 'Paper',
+    'cartaz.papel.novo': 'Freshly nailed', 'cartaz.papel.velho': 'Aged', 'cartaz.papel.gasto': 'Beaten by the sea',
+    'cartaz.desgaste': 'Shuffle stains and tears', 'cartaz.compartilhar': 'Share',
+    'cartaz.salvarTitulo': 'Your poster is ready', 'cartaz.salvarTexto': 'If the download did not start, tap and hold the image and choose save.',
+    fechar: 'Close', 'cartaz.amostra': 'Wanted',
     'cartaz.baixar': 'Download as image',
   };
 

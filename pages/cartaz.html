@@ -6,23 +6,23 @@
   <title>Seu cartaz · Diário da Grand Line</title>
   <meta name="description" content="Faça o seu próprio cartaz de procurado de One Piece.">
   <meta name="titulo-en" content="Your poster · Diário da Grand Line">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.api-onepiece.com https://s4.anilist.co; connect-src https://api.api-onepiece.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://images.api-onepiece.com https://s4.anilist.co; connect-src https://api.api-onepiece.com; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" href="../assets/img/icone.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.api-onepiece.com" crossorigin>
   <link rel="preconnect" href="https://s4.anilist.co">
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=5">
-  <script src="../assets/js/idioma.js?v=5" defer></script>
-  <script src="../assets/js/fotos.js?v=5" defer></script>
-  <script src="../assets/js/fotos-anilist.js?v=5" defer></script>
-  <script src="../assets/js/descricoes-pt.js?v=5" defer></script>
-  <script src="../assets/js/api.js?v=5" defer></script>
-  <script src="../assets/js/ui.js?v=5" defer></script>
-  <script src="../assets/js/efeitos.js?v=5" defer></script>
-  <script src="../assets/js/pages/cartaz.js?v=5" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&family=Pirata+One&family=IM+Fell+English+SC&family=IM+Fell+DW+Pica&family=Uncial+Antiqua&family=Grenze+Gotisch:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css?v=6">
+  <script src="../assets/js/idioma.js?v=6" defer></script>
+  <script src="../assets/js/fotos.js?v=6" defer></script>
+  <script src="../assets/js/fotos-anilist.js?v=6" defer></script>
+  <script src="../assets/js/descricoes-pt.js?v=6" defer></script>
+  <script src="../assets/js/api.js?v=6" defer></script>
+  <script src="../assets/js/ui.js?v=6" defer></script>
+  <script src="../assets/js/efeitos.js?v=6" defer></script>
+  <script src="../assets/js/pages/cartaz.js?v=6" defer></script>
 </head>
 <body data-raiz="..">
   <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>
@@ -49,36 +49,103 @@
     <div class="envelope">
       <header class="titulo-pagina">
         <h1 data-i18n="cartaz.titulo">Faça seu cartaz</h1>
-        <p data-i18n="cartaz.texto">Escreva o nome, escolha a recompensa e uma foto. Quando gostar, baixe a imagem. A foto fica só no seu navegador, nada é enviado para lugar nenhum.</p>
+        <p data-i18n="cartaz.texto">Escreva o nome, escolha a recompensa e uma foto, posicione do jeito que quiser e baixe o cartaz. A foto fica só no seu navegador, nada é enviado para lugar nenhum.</p>
       </header>
 
       <div class="oficina">
         <form class="oficina__form" id="form-cartaz">
-          <div class="campo">
-            <label for="c-nome" data-i18n="cartaz.nome">Nome no cartaz</label>
-            <input id="c-nome" maxlength="28" value="Victor Hugo" autocomplete="name">
+          <fieldset class="grupo">
+            <legend data-i18n="cartaz.g.texto">Texto</legend>
+            <div class="campo">
+              <label for="c-modelo" data-i18n="cartaz.modelo">Tipo de cartaz</label>
+              <select id="c-modelo">
+                <option value="procurado" data-i18n="cartaz.m.procurado">Procurado, vivo ou morto</option>
+                <option value="marinha" data-i18n="cartaz.m.marinha">Ficha da Marinha</option>
+                <option value="governo" data-i18n="cartaz.m.governo">Dossiê sigiloso</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="c-nome" data-i18n="cartaz.nome">Nome no cartaz</label>
+              <input id="c-nome" maxlength="28" value="Victor Hugo" autocomplete="off">
+            </div>
+            <div class="campo" id="campo-valor">
+              <label for="c-valor" data-i18n="cartaz.valor">Recompensa em berries</label>
+              <input id="c-valor" inputmode="numeric" value="1.500.000.000">
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo">
+            <legend data-i18n="cartaz.g.foto">Foto</legend>
+            <label class="botao botao--claro arquivo" for="c-foto"><span data-i18n="cartaz.escolherFoto">Escolher foto</span></label>
+            <input id="c-foto" class="arquivo__input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif">
+            <p class="oficina__aviso" id="aviso-foto" role="status" hidden></p>
+            <div class="ajustes" id="ajustes" hidden>
+              <p class="oficina__dica" data-i18n="cartaz.arraste">Arraste a foto no cartaz para posicionar. Use a roda do mouse ou dois dedos para o zoom.</p>
+              <div class="campo campo--faixa">
+                <label for="c-zoom" data-i18n="cartaz.zoom">Zoom</label>
+                <input id="c-zoom" type="range" min="1" max="4" step="0.01" value="1">
+              </div>
+              <div class="campo campo--faixa">
+                <label for="c-x" data-i18n="cartaz.horizontal">Horizontal</label>
+                <input id="c-x" type="range" min="-1" max="1" step="0.005" value="0">
+              </div>
+              <div class="campo campo--faixa">
+                <label for="c-y" data-i18n="cartaz.vertical">Vertical</label>
+                <input id="c-y" type="range" min="-1" max="1" step="0.005" value="0">
+              </div>
+              <div class="campo">
+                <span class="campo__rotulo" id="r-tom" data-i18n="cartaz.tom">Cor da foto</span>
+                <div class="pilulas" role="radiogroup" aria-labelledby="r-tom">
+                  <label><input type="radio" name="tom" value="sepia" checked><span data-i18n="cartaz.tom.sepia">Sépia</span></label>
+                  <label><input type="radio" name="tom" value="pb"><span data-i18n="cartaz.tom.pb">Preto e branco</span></label>
+                  <label><input type="radio" name="tom" value="cor"><span data-i18n="cartaz.tom.cor">Colorida</span></label>
+                </div>
+              </div>
+              <p><button class="botao botao--claro botao--pequeno" type="button" id="centralizar" data-i18n="cartaz.centralizar">Centralizar foto</button></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="grupo">
+            <legend data-i18n="cartaz.g.estilo">Estilo</legend>
+            <div class="campo">
+              <span class="campo__rotulo" id="r-fonte" data-i18n="cartaz.fonte">Fonte</span>
+              <div class="fontes" role="radiogroup" aria-labelledby="r-fonte">
+                <label><input type="radio" name="fonte" value="Rye" checked><span class="fonte-amostra fonte--rye" data-i18n="cartaz.amostra">Procurado</span></label>
+                <label><input type="radio" name="fonte" value="Pirata One"><span class="fonte-amostra fonte--pirata" data-i18n="cartaz.amostra">Procurado</span></label>
+                <label><input type="radio" name="fonte" value="IM Fell English SC"><span class="fonte-amostra fonte--fell" data-i18n="cartaz.amostra">Procurado</span></label>
+                <label><input type="radio" name="fonte" value="Uncial Antiqua"><span class="fonte-amostra fonte--uncial" data-i18n="cartaz.amostra">Procurado</span></label>
+                <label><input type="radio" name="fonte" value="Grenze Gotisch"><span class="fonte-amostra fonte--gotica" data-i18n="cartaz.amostra">Procurado</span></label>
+              </div>
+            </div>
+            <div class="campo">
+              <span class="campo__rotulo" id="r-papel" data-i18n="cartaz.papel">Papel</span>
+              <div class="pilulas" role="radiogroup" aria-labelledby="r-papel">
+                <label><input type="radio" name="papel" value="1"><span data-i18n="cartaz.papel.novo">Recém-pregado</span></label>
+                <label><input type="radio" name="papel" value="2" checked><span data-i18n="cartaz.papel.velho">Envelhecido</span></label>
+                <label><input type="radio" name="papel" value="3"><span data-i18n="cartaz.papel.gasto">Castigado pelo mar</span></label>
+              </div>
+            </div>
+            <p><button class="botao botao--claro botao--pequeno" type="button" id="desgaste" data-i18n="cartaz.desgaste">Sortear manchas e rasgos</button></p>
+          </fieldset>
+
+          <div class="oficina__acoes">
+            <button class="botao" type="button" id="baixar" data-i18n="cartaz.baixar">Baixar como imagem</button>
+            <button class="botao botao--claro" type="button" id="compartilhar" hidden data-i18n="cartaz.compartilhar">Compartilhar</button>
           </div>
-          <div class="campo">
-            <label for="c-valor" data-i18n="cartaz.valor">Recompensa em berries</label>
-            <input id="c-valor" inputmode="numeric" value="1.500.000.000">
-          </div>
-          <div class="campo">
-            <label for="c-foto" data-i18n="cartaz.foto">Foto</label>
-            <input id="c-foto" type="file" accept="image/*">
-          </div>
-          <div class="campo">
-            <label for="c-modelo" data-i18n="cartaz.modelo">Tipo de cartaz</label>
-            <select id="c-modelo">
-              <option value="procurado" data-i18n="cartaz.m.procurado">Procurado, vivo ou morto</option>
-              <option value="marinha" data-i18n="cartaz.m.marinha">Ficha da Marinha</option>
-              <option value="governo" data-i18n="cartaz.m.governo">Dossiê sigiloso</option>
-            </select>
-          </div>
-          <p class="oficina__dica" data-i18n="cartaz.dica">Dica: fotos com o rosto no centro ficam melhores. A foto é cortada no formato 4 por 3.</p>
-          <p><button class="botao" type="button" id="baixar" data-i18n="cartaz.baixar">Baixar como imagem</button></p>
+          <p class="oficina__aviso" id="aviso-baixar" role="status" hidden></p>
         </form>
-        <div class="oficina__previa" id="previa" aria-live="polite"></div>
+
+        <div class="oficina__previa">
+          <canvas class="oficina__tela" id="tela" width="1200" height="1700" role="img" aria-label="Prévia do cartaz"></canvas>
+        </div>
       </div>
+
+      <dialog class="salvar" id="salvar" aria-labelledby="salvar-titulo">
+        <h2 id="salvar-titulo" data-i18n="cartaz.salvarTitulo">Seu cartaz está pronto</h2>
+        <p data-i18n="cartaz.salvarTexto">Se o download não começou, toque e segure na imagem e escolha salvar.</p>
+        <img id="salvar-img" alt="Cartaz pronto para salvar">
+        <p><button class="botao" type="button" id="salvar-fechar" data-i18n="fechar">Fechar</button></p>
+      </dialog>
     </div>
 
   </main>
