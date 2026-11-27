@@ -62,11 +62,11 @@ As fotos da AniList têm enquadramentos bem diferentes (rosto no topo, corpo int
 
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=9` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=10` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 
-Todo o movimento fica em `assets/js/efeitos.js` e roda num único `requestAnimationFrame` por quadro. Quem liga "reduzir movimento" no sistema vê o site parado, com todo o conteúdo já visível. Os desenhos são SVG feitos para o site, sem imagens externas, então a política de segurança (CSP) continua a mesma.
+Todo o movimento fica em `assets/js/efeitos.js` e roda num único `requestAnimationFrame` por quadro. No celular e no tablet, o cenário da abertura fica parado no fundo enquanto o texto e os cartazes passam por cima, e no fim da abertura sobra uma tela livre para ver a cena inteira. Quem liga "reduzir movimento" no sistema vê o site parado, com todo o conteúdo já visível. Os desenhos são SVG feitos para o site, sem imagens externas, então a política de segurança (CSP) continua a mesma.
 
 ### Fotos de personagens
 

@@ -465,9 +465,29 @@ main { padding-bottom: 4rem; }
 }
 
 @media (max-width: 52rem) {
-  .abertura { grid-template-columns: 1fr; gap: 1rem; padding-block: 2rem 13rem; }
-  /* no celular o cenário fica mais baixo, para o sol não ficar atrás do texto */
-  .camada { inset: auto -3% 0; height: 46%; }
+  /* No celular a abertura é mais alta que a tela: o cenário vira um palco fixo
+     no fundo, o texto e os cartazes passam por cima, e no fim sobra um trecho
+     livre para ver o pôr do sol, o navio e a Red Line. */
+  .cena { display: block; min-height: 0; overflow: clip; }
+  .cena__fundo {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    margin-bottom: -100svh;
+  }
+  .camada { inset: auto -3% 0; height: 72%; }
+  .abertura { grid-template-columns: 1fr; gap: 1rem; padding-block: 2rem 0; opacity: 1; }
+  .abertura::after { content: ''; display: block; height: 96svh; }
+  /* o texto ganha um fundo suave para ler bem quando passa sobre o sol */
+  .abertura__texto { position: relative; }
+  .abertura__texto::before {
+    content: '';
+    position: absolute;
+    inset: -1.5rem -1rem;
+    z-index: -1;
+    border-radius: 16px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(8, 28, 42, 0.72), rgba(8, 28, 42, 0.35) 70%, transparent);
+  }
   .sol__raios { display: none; }
   .colagem { order: -1; height: 20rem; max-width: 19rem; }
   .colagem .cartaz { width: 10.5rem; }
