@@ -17,7 +17,7 @@ Uma enciclopédia de One Piece feita por fã: personagens, tripulações, Frutas
 - **Frutas do Diabo:** as 213 frutas por tipo, com descrição em português e quem comeu cada uma.
 - **Espadas:** as espadas famosas separadas por grau (Saijo O Wazamono, O Wazamono, Ryo Wazamono).
 - **Facções:** Imperadores, Pior Geração, Marinha, Exército Revolucionário e Governo Mundial, com os principais nomes de cada grupo.
-- **Seu cartaz:** você escreve seu nome, escolhe a recompensa e uma foto, e baixa o seu próprio cartaz de procurado. A foto não sai do navegador.
+- **Seu cartaz:** você escreve seu nome, escolhe a recompensa e uma foto, arrasta e dá zoom na foto direto no cartaz e baixa um PNG de 1200×1700. O cartaz é desenhado num canvas com papel envelhecido (fibras, manchas, dobras, borda rasgada e queimada), tinta com falhas de impressão, carimbo e prego. Dá para escolher entre cinco fontes antigas, três níveis de desgaste, foto em sépia, preto e branco ou colorida, e três tipos de cartaz. No iPhone o download abre o menu de compartilhar. A foto não sai do navegador.
 - **Português e inglês:** o botão PT | EN no topo troca o site inteiro.
 
 | | |
@@ -52,7 +52,7 @@ Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não s
 
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=5` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=6` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 
