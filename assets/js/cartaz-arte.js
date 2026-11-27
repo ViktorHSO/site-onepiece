@@ -19,7 +19,7 @@ window.OP = window.OP || {};
 
 (function (OP) {
   const W = 1200, H = 1700;
-  const PADRAO = { tipo: 'procurado', nome: '', recompensa: null, foto: null, zoom: 1, px: 0, py: 0, fonte: 'Rye', papel: 2, semente: 7 };
+  const PADRAO = { soPapel: false, tipo: 'procurado', nome: '', recompensa: null, foto: null, zoom: 1, px: 0, py: 0, fonte: 'Rye', papel: 2, semente: 7 };
   let atual = PADRAO;
 
   /* ---------- Sorteio com semente: o mesmo número dá o mesmo desgaste ---------- */
@@ -303,6 +303,8 @@ window.OP = window.OP || {};
     g.scale(k, k);
     const fonte = FONTES[atual.fonte] || FONTES.Rye;
     const [titulo, meio] = TEXTO[tipoNome];
+    // soPapel: só o que não depende de idioma nem de personagem (vira imagem estática do site)
+    const so = !!atual.soPapel;
     g.fillStyle = cor; g.strokeStyle = cor;
     g.textBaseline = 'alphabetic';
 
@@ -315,12 +317,12 @@ window.OP = window.OP || {};
     enfeiteCanto(g, c1, H - c1, 1, -1); enfeiteCanto(g, W - c1, H - c1, -1, -1);
 
     // título
-    texto(g, titulo, W / 2, 312, W - 2 * M - 120, 210 * fonte.escala, fonte.css, { peso: fonte.peso || 400, espaco: 0.04 });
+    if (!so) texto(g, titulo, W / 2, 312, W - 2 * M - 120, 210 * fonte.escala, fonte.css, { peso: fonte.peso || 400, espaco: 0.04 });
 
     // moldura da foto
     g.lineWidth = 12; g.strokeRect(FOTO.x - 6, FOTO.y - 6, FOTO.w + 12, FOTO.h + 12);
     g.lineWidth = 3; g.strokeRect(FOTO.x - 22, FOTO.y - 22, FOTO.w + 44, FOTO.h + 44);
-    if (!atual.foto) {
+    if (!atual.foto && !so) {
       g.globalAlpha = 0.18;
       texto(g, OP.iniciais(atual.nome || '?') || '?', W / 2, FOTO.y + FOTO.h / 2 + 110, FOTO.w - 80, 320, fonte.css);
       g.globalAlpha = 1;
@@ -328,14 +330,33 @@ window.OP = window.OP || {};
 
     // "vivo ou morto" entre fios e estrelas
     const ym = FOTO.y + FOTO.h + 108;
-    const tm = texto(g, meio, W / 2, ym, 640, 76 * fonte.escala, fonte.css, { peso: fonte.peso || 400, espaco: 0.06 });
-    const meia = Math.min(320, g.measureText(meio).width / 2) + 40;
+    const tm = so ? 70 : texto(g, meio, W / 2, ym, 640, 76 * fonte.escala, fonte.css, { peso: fonte.peso || 400, espaco: 0.06 });
+    const meia = so ? 310 : Math.min(320, g.measureText(meio).width / 2) + 40;
     g.lineWidth = 3;
     [[M + 60, W / 2 - meia], [W / 2 + meia, W - M - 60]].forEach(([a, b]) => {
       g.beginPath(); g.moveTo(a, ym - tm * 0.32); g.lineTo(b, ym - tm * 0.32); g.stroke();
       g.beginPath(); g.moveTo(a + 20, ym - tm * 0.32 + 10); g.lineTo(b - 20, ym - tm * 0.32 + 10); g.stroke();
     });
     estrela(g, M + 46, ym - tm * 0.28, 12); estrela(g, W - M - 46, ym - tm * 0.28, 12);
+
+    if (so) { // letras miúdas viram rabiscos ilegíveis, que servem para qualquer idioma
+      const r = sorteio(atual.semente + 9);
+      const yl = ym + 282 + 46;
+      g.globalAlpha = 0.55; g.lineWidth = 3; g.lineCap = 'round';
+      for (let i = 0; i < 3; i++) {
+        const larg = (i === 2 ? 520 : 760) - r() * 60;
+        let x = W / 2 - larg / 2;
+        while (x < W / 2 + larg / 2) {
+          const pal = 12 + r() * 40;
+          g.beginPath(); g.moveTo(x, yl + i * 30 + 6); g.lineTo(Math.min(x + pal, W / 2 + larg / 2), yl + i * 30 + 6); g.stroke();
+          x += pal + 9;
+        }
+      }
+      g.globalAlpha = 1;
+      g.font = `26px ${NUMEROS}`; g.textAlign = 'left';
+      g.fillText(`Nº ${String(1000 + (atual.semente * 7919) % 9000)}`, M + 92, H - M - 40);
+      return c;
+    }
 
     // nome
     const nome = (atual.nome.trim() || OP.t('semNome')).toUpperCase();
@@ -389,6 +410,14 @@ window.OP = window.OP || {};
     g.beginPath(); g.moveTo(-r * 0.22, -r * 0.22); g.lineTo(r * 0.22, -r * 0.22); g.stroke();
     g.beginPath(); g.arc(0, -r * 0.5, r * 0.09, 0, Math.PI * 2); g.stroke();
     g.beginPath(); g.arc(0, r * 0.02, r * 0.36, Math.PI * 0.15, Math.PI * 0.85); g.stroke();
+    if (!palavra) { // sem palavra: estrelinhas em volta (serve para qualquer idioma)
+      for (let i = 0; i < 7; i++) {
+        const a = -Math.PI * 0.55 + (i * Math.PI * 1.1) / 6 - Math.PI / 2 + Math.PI / 2;
+        estrela(g, Math.sin(a) * (r - 30), -Math.cos(a) * (r - 30), 7);
+      }
+      g.restore();
+      return;
+    }
     // palavra em volta
     g.font = `${r * 0.2}px ${NUMEROS}`; g.textAlign = 'center'; g.textBaseline = 'middle';
     const letras = palavra.split('');
@@ -484,8 +513,8 @@ window.OP = window.OP || {};
 
     // carimbos
     const r = sorteio(atual.semente + 3);
-    if (tipoNome === 'governo') carimboRetangular(ctx, W / 2, FOTO.y + FOTO.h * 0.7, tipo.carimbo, TEXTO.carimbo.governo, -0.22 + r() * 0.1);
-    else carimbo(ctx, FOTO.x + FOTO.w - 80, FOTO.y + FOTO.h - 40, 100, tipo.carimbo, TEXTO.carimbo[tipoNome], -0.3 + r() * 0.5);
+    if (tipoNome === 'governo' && !atual.soPapel) carimboRetangular(ctx, W / 2, FOTO.y + FOTO.h * 0.7, tipo.carimbo, TEXTO.carimbo.governo, -0.22 + r() * 0.1);
+    else if (tipoNome !== 'governo') carimbo(ctx, FOTO.x + FOTO.w - 80, FOTO.y + FOTO.h - 40, 100, tipo.carimbo, atual.soPapel ? '' : TEXTO.carimbo[tipoNome], -0.3 + r() * 0.5);
     ctx.restore();
 
     // prego ou clipe
