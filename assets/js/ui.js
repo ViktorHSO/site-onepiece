@@ -39,6 +39,9 @@ window.OP = window.OP || {};
 
   /* ---------- Cartaz de procurado ---------- */
 
+  // cartazes que já vêm escritos no HTML (o do Luffy na abertura)
+  document.querySelectorAll('.cartaz').forEach((el) => OP.ajustarCartaz?.(el));
+
   // variante: "procurado" (padrão), "marinha" (ficha de oficial) ou "governo" (dossiê secreto)
   const VARIANTE = {
     procurado: { titulo: OP.t('procurado'), meio: OP.t('vivoOuMorto'), rodape: OP.t('marinha') },
@@ -46,8 +49,41 @@ window.OP = window.OP || {};
     governo: { titulo: OP.t('dossie'), meio: OP.t('governoMundial'), rodape: OP.t('maryGeoise') },
   };
 
+  // Papel envelhecido já pronto (gerado com o cartaz-arte.js no modo "só papel"):
+  // o texto e a foto vão por cima em HTML, então o cartaz aparece na hora
+  const PAPEIS = { procurado: 4, marinha: 2, governo: 2 };
+
+  // Largura de cada letra da fonte Rye (em milésimos do tamanho da fonte), para
+  // calcular o tamanho que faz cada texto caber sem precisar esperar a fonte carregar
+  const RYE_LETRAS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÇÈÉÊËÍÎÏÑÒÓÔÕÖÚÛÜ .,-'&!?:()/";
+  const RYE_LARG = [714,451,634,608,695,628,713,610,687,713,712,743,645,776,704,660,719,840,438,602,752,660,1022,810,769,695,769,758,613,737,756,692,1055,672,663,697,712,712,712,712,712,645,704,704,704,704,438,438,438,810,769,769,769,769,769,756,756,756,244,331,342,420,284,833,414,573,331,386,386,399];
+  const larguraRye = (texto, espaco) => [...texto.toUpperCase()].reduce((soma, ch) => {
+    const i = RYE_LETRAS.indexOf(ch);
+    return soma + (i < 0 ? 0.72 : RYE_LARG[i] / 1000) + espaco;
+  }, 0);
+
+  // Tamanho (em % da largura do cartaz) para o texto caber em `cabe`, sem passar de `max`
+  const TEXTOS_DO_CARTAZ = [
+    ['.cartaz__titulo', 0.04, 76, 15],
+    ['.cartaz__vivo', 0.07, 66, 5.6],
+    ['.cartaz__nome', 0.03, 78, 10.5],
+    ['.cartaz__valor', 0.02, 76, 9.2],
+    ['.cartaz__marinha', 0.08, 40, 3.6],
+  ];
+  OP.ajustarCartaz = (el) => {
+    TEXTOS_DO_CARTAZ.forEach(([sel, espaco, cabe, max]) => {
+      const span = el.querySelector(sel);
+      if (!span) return;
+      // o ฿ da recompensa vem da Georgia e tem uma folguinha depois
+      const extra = span.classList.contains('cartaz__valor') && !span.classList.contains('cartaz__valor--vazio') ? 0.82 : 0;
+      const w = larguraRye(span.textContent.trim(), espaco) + extra;
+      span.style.setProperty('--tam', Math.min(max, cabe / Math.max(w, 0.1)).toFixed(2) + 'cqi');
+    });
+  };
+
   OP.cartaz = function (p, { tag = 'button', variante = 'procurado' } = {}) {
     const v = VARIANTE[variante] || VARIANTE.procurado;
+    if (!VARIANTE[variante]) variante = 'procurado';
     const el = document.createElement(tag);
     el.className = `cartaz cartaz--${variante}`;
     if (variante === 'governo') el.dataset.carimbo = OP.t('sigiloso');
@@ -56,26 +92,32 @@ window.OP = window.OP || {};
       el.type = 'button';
       el.setAttribute('aria-label', OP.t('verDetalhes', { nome: p.nome }));
     }
+    const papel = OP.caminho(`assets/img/cartaz/${variante}-${(Math.abs(p.id || 0) % PAPEIS[variante]) + 1}.webp`);
     const foto = p.foto
-      ? `<img src="${OP.esc(OP.srcFoto(p.foto))}" alt="" loading="lazy" width="260" height="190" data-nome="${OP.esc(p.nome)}" referrerpolicy="no-referrer">`
+      ? `<img src="${OP.esc(OP.srcFoto(p.foto))}" alt="" loading="lazy" decoding="async" width="260" height="190" data-nome="${OP.esc(p.nome)}" referrerpolicy="no-referrer">`
       : `<span class="cartaz__sem-foto" aria-hidden="true">${OP.esc(OP.iniciais(p.nome))}</span>`;
     let valor;
     if (variante !== 'procurado') {
       valor = p.cargo ? `<span class="cartaz__valor cartaz__valor--vazio">${OP.esc(p.cargo)}</span>` : '';
     } else if (p.recompensa != null) {
-      valor = `<span class="cartaz__valor">${OP.esc(OP.numero(p.recompensa))} –</span>`;
+      valor = `<span class="cartaz__valor">${OP.esc(OP.numero(p.recompensa))}-</span>`;
     } else {
       valor = `<span class="cartaz__valor cartaz__valor--vazio">${OP.t('semRecompensa')}</span>`;
     }
     el.innerHTML = `
-      <span class="cartaz__titulo" aria-hidden="true">${v.titulo}</span>
+      <img class="cartaz__papel" src="${papel}" alt="" width="720" height="1020" decoding="async">
       <span class="cartaz__foto">${foto}</span>
-      <span class="cartaz__vivo" aria-hidden="true">${v.meio}</span>
-      <span class="cartaz__nome">${OP.esc(p.nome)}</span>
-      ${valor}
-      <span class="cartaz__marinha" aria-hidden="true">${v.rodape}</span>`;
+      <span class="cartaz__tinta">
+        <span class="cartaz__titulo" aria-hidden="true">${v.titulo}</span>
+        <span class="cartaz__vivo" aria-hidden="true">${v.meio}</span>
+        <span class="cartaz__nome">${OP.esc(p.nome)}</span>
+        ${valor}
+        <span class="cartaz__marinha" aria-hidden="true">${v.rodape}</span>
+      </span>`;
+    OP.ajustarCartaz(el);
     return el;
   };
+
 
   OP.iniciais = function (nome) {
     return String(nome).split(/\s+/).filter((p) => /^[A-Za-zÀ-ú]/.test(p)).slice(0, 2).map((p) => p[0]).join('').toUpperCase();

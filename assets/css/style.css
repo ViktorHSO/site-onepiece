@@ -428,10 +428,10 @@ main { padding-bottom: 4rem; }
   z-index: 2;
   animation: pregar 0.7s cubic-bezier(.2, .9, .3, 1.2) 0.15s backwards;
 }
-.colagem .cartaz { box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 30px 50px -18px rgba(0, 0, 0, 0.8); }
-.colagem__esq, .colagem__dir { filter: brightness(0.82); }
+.colagem .cartaz { filter: drop-shadow(0 22px 20px rgba(0, 0, 0, 0.6)); }
+.colagem .colagem__esq, .colagem .colagem__dir { filter: brightness(0.82) drop-shadow(0 18px 18px rgba(0, 0, 0, 0.6)); }
 .colagem .colagem__esq:hover, .colagem .colagem__dir:hover,
-.colagem .colagem__esq:focus-visible, .colagem .colagem__dir:focus-visible { filter: none; z-index: 5; }
+.colagem .colagem__esq:focus-visible, .colagem .colagem__dir:focus-visible { filter: drop-shadow(0 24px 20px rgba(0, 0, 0, 0.6)); z-index: 5; }
 
 @keyframes pregar {
   from { transform: translateY(-2.5rem) rotate(-6deg); opacity: 0; }
@@ -477,120 +477,97 @@ main { padding-bottom: 4rem; }
 
 /* ---------- Cartaz de procurado ---------- */
 
+/* Cartaz de procurado: papel envelhecido em imagem (assets/img/cartaz) e, por cima,
+   a foto e o texto em HTML. As medidas seguem o desenho de 1200 x 1700 do cartaz-arte.js
+   e usam cqi (porcentagem da largura do cartaz), então o cartaz escala inteiro. */
 .cartaz {
   --giro: 0deg;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  --tinta-cartaz: #2a1a0c;
+  position: relative;
+  display: block;
   width: 100%;
-  padding: 0.9rem 0.9rem 0.7rem;
-  background:
-    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.25), transparent 60%),
-    radial-gradient(ellipse at 80% 90%, rgba(120, 80, 20, 0.25), transparent 55%),
-    var(--papel);
-  color: var(--tinta);
+  aspect-ratio: 1200 / 1700;
+  padding: 0;
   border: 0;
+  background: none;
+  color: var(--tinta-cartaz);
   font: inherit;
   text-align: center;
   transform: rotate(var(--giro));
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 10px 18px -8px rgba(0, 0, 0, 0.55);
-  position: relative;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
   container-type: inline-size;
 }
-
-/* tachinha */
-.cartaz::before {
-  content: '';
-  position: absolute;
-  top: 0.35rem;
-  left: 50%;
-  width: 0.6rem;
-  height: 0.6rem;
-  margin-left: -0.3rem;
-  border-radius: 50%;
-  background: var(--vermelho);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-button.cartaz { cursor: pointer; transition: transform 0.15s ease; }
-button.cartaz:hover,
-button.cartaz:focus-visible { transform: rotate(0deg) scale(1.03); }
-
-.cartaz__titulo {
-  font-family: var(--fonte-cartaz);
-  font-size: 15cqi;
-  line-height: 1;
-  margin-top: 0.35rem;
-  text-transform: uppercase;
-}
+.cartaz__papel { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
 .cartaz__foto {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  margin: 0.5rem 0 0.4rem;
-  border: 2px solid var(--tinta);
-  background: var(--papel-escuro);
+  position: absolute;
+  left: 13.33%;
+  top: 21.88%;
+  width: 73.33%;
+  height: 37.65%;
   overflow: hidden;
+  /* a foto fica "impressa" no papel: as manchas e as dobras aparecem através dela */
+  mix-blend-mode: multiply;
 }
-
 .cartaz__foto img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 22%; /* as fotos da AniList são em pé; o rosto fica no alto */
-  filter: sepia(0.25);
+  object-position: center 25%;
+  filter: sepia(0.55) contrast(1.08) brightness(1.04) saturate(0.85);
 }
-
 .cartaz__sem-foto {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
   font-family: var(--fonte-cartaz);
-  font-size: 2.6rem;
-  color: rgba(43, 29, 16, 0.35);
+  font-size: 26cqi;
+  color: rgba(42, 26, 12, 0.18);
 }
 
-.cartaz__vivo {
-  font-family: var(--fonte-cartaz);
-  font-size: max(0.7rem, 5.5cqi);
-  text-transform: uppercase;
+/* todo o texto é a "tinta": recebe as falhas de impressão */
+.cartaz__tinta {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: url('../img/cartaz/desgaste.webp');
+  mask-image: url('../img/cartaz/desgaste.webp');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  pointer-events: none;
 }
-
-.cartaz__nome {
-  font-family: var(--fonte-cartaz);
-  font-size: max(0.9rem, 8.5cqi);
-  line-height: 1.15;
-  text-transform: uppercase;
-  margin-top: 0.1rem;
-  overflow-wrap: anywhere;
-}
-
-.cartaz__valor {
-  font-family: Georgia, serif;
-  font-weight: 700;
-  font-size: max(0.9rem, 8cqi);
-  margin-top: 0.15rem;
-}
-.cartaz__valor::before { content: '฿ '; }
-.cartaz__valor--vazio {
-  font-weight: 400;
-  font-style: italic;
-  font-size: max(0.8rem, 6.5cqi);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.cartaz__tinta > span {
+  position: absolute;
+  left: 11%;
+  right: 11%;
+  line-height: 1;
+  white-space: nowrap;
   overflow: hidden;
-}
-.cartaz__valor--vazio::before { content: none; }
-
-.cartaz__marinha {
-  align-self: flex-end;
   font-family: var(--fonte-cartaz);
-  font-size: 0.65rem;
   text-transform: uppercase;
-  margin-top: 0.15rem;
+  color: var(--tinta-cartaz);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.cartaz__titulo { top: 7.2%; height: 11%; font-size: var(--tam, 10.8cqi); letter-spacing: 0.04em; }
+.cartaz__vivo { top: 61.8%; height: 4.6%; font-size: var(--tam, 5.6cqi); letter-spacing: 0.07em; }
+.cartaz__nome { top: 68.4%; height: 7.5%; font-size: var(--tam, 8cqi); letter-spacing: 0.03em; }
+.cartaz__valor { top: 76.4%; height: 7%; font-size: var(--tam, 8cqi); letter-spacing: 0.02em; font-variant-numeric: lining-nums; }
+.cartaz__valor::before { content: '฿'; font-family: Georgia, serif; margin-right: 0.12em; }
+.cartaz__valor--vazio { letter-spacing: 0.02em; }
+.cartaz__valor--vazio::before { content: none; }
+.cartaz__marinha { top: 89.6%; height: 3%; left: auto !important; right: 14% !important; font-size: var(--tam, 3.6cqi); letter-spacing: 0.08em; justify-content: flex-end !important; }
 
-/* mural: grade de cartazes */
+button.cartaz { cursor: pointer; transition: transform 0.3s cubic-bezier(.2, .9, .3, 1.3), filter 0.3s ease; }
+button.cartaz:hover,
+button.cartaz:focus-visible {
+  transform: rotate(0deg) translateY(-6px) scale(1.04);
+  filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.55));
+  z-index: 2;
+}
+button.cartaz:focus-visible { outline: 3px solid var(--palha); outline-offset: 4px; }
+
 .mural {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
@@ -903,33 +880,28 @@ tbody tr:hover { background: var(--mar-fundo); }
 
 /* ---------- Variantes do cartaz ---------- */
 
-.cartaz--marinha {
-  background:
-    linear-gradient(var(--marinha-azul) 0 0) top / 100% 0.55rem no-repeat,
-    #e8eef2;
-  color: #183a56;
-}
-.cartaz--marinha .cartaz__foto { border-color: #183a56; background: #c9d6df; }
-.cartaz--marinha .cartaz__sem-foto { color: rgba(24, 58, 86, 0.3); }
-.cartaz--marinha::before { background: #183a56; }
-
-.cartaz--governo {
-  background: #d8c7a4;
-  color: var(--tinta);
-}
+.cartaz--marinha { --tinta-cartaz: #15304a; }
+.cartaz--marinha .cartaz__sem-foto { color: rgba(21, 48, 74, 0.2); }
+.cartaz--governo { --tinta-cartaz: #1b1712; }
+/* carimbo SIGILOSO no idioma da página */
 .cartaz--governo::after {
   content: attr(data-carimbo);
   position: absolute;
-  top: 45%;
+  top: 46%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-18deg);
+  transform: translate(-50%, -50%) rotate(-14deg);
   font-family: var(--fonte-cartaz);
-  font-size: 15cqi;
-  color: rgba(179, 32, 42, 0.75);
-  border: 3px solid rgba(179, 32, 42, 0.75);
-  padding: 0 0.4em;
+  font-size: 11cqi;
+  line-height: 1.1;
+  color: rgba(163, 22, 31, 0.78);
+  border: 0.9cqi solid rgba(163, 22, 31, 0.78);
+  outline: 0.35cqi solid rgba(163, 22, 31, 0.6);
+  outline-offset: 0.8cqi;
+  padding: 0.1em 0.4em;
   text-transform: uppercase;
+  white-space: nowrap;
   pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 :root { --marinha-azul: #2b6a96; }
@@ -1450,15 +1422,7 @@ body::after {
 
 /* ---------- Cartazes: levantam do mural ---------- */
 
-button.cartaz { transition: transform 0.3s cubic-bezier(.2, .9, .3, 1.3), box-shadow 0.3s ease; }
-button.cartaz:hover,
-button.cartaz:focus-visible {
-  transform: rotate(0deg) translateY(-6px) scale(1.04);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 26px 36px -16px rgba(0, 0, 0, 0.75);
-  z-index: 2;
-}
-.cartaz__foto img { transition: filter 0.3s ease, transform 0.5s ease; }
-button.cartaz:hover .cartaz__foto img { filter: sepia(0); transform: scale(1.05); }
+
 
 /* ---------- Imperadores ---------- */
 
@@ -1577,28 +1541,3 @@ button.cartaz:hover .cartaz__foto img { filter: sepia(0); transform: scale(1.05)
   .camada { transform: none !important; }
   .abertura { opacity: 1; }
 }
-
-/* ---------- Cartazes desenhados no canvas (página inicial) ---------- */
-
-.cartaz--arte {
-  padding: 0;
-  background: none;
-  box-shadow: none !important;
-  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.55));
-}
-.cartaz--arte::before { display: none; }
-.cartaz-arte__tela { display: block; width: 100%; height: auto; animation: aparecer-cartaz 0.5s ease both; }
-@keyframes aparecer-cartaz { from { opacity: 0; } }
-/* o texto do cartaz simples continua lá para leitores de tela */
-.cartaz__simples {
-  position: absolute !important;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-.colagem .cartaz--arte { box-shadow: none; }
-.colagem .cartaz--arte.colagem__esq, .colagem .cartaz--arte.colagem__dir { filter: brightness(0.82) drop-shadow(0 16px 16px rgba(0, 0, 0, 0.55)); }
-.colagem .cartaz--arte.colagem__esq:hover, .colagem .cartaz--arte.colagem__dir:hover,
-.colagem .cartaz--arte.colagem__esq:focus-visible, .colagem .cartaz--arte.colagem__dir:focus-visible { filter: drop-shadow(0 22px 20px rgba(0, 0, 0, 0.6)); }
-@media (prefers-reduced-motion: reduce) { .cartaz-arte__tela { animation: none; } }

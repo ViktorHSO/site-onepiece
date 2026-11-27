@@ -13,17 +13,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.api-onepiece.com" crossorigin>
   <link rel="preconnect" href="https://s4.anilist.co">
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&family=IM+Fell+DW+Pica&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/style.css?v=7">
-  <script src="./assets/js/idioma.js?v=7" defer></script>
-  <script src="./assets/js/fotos.js?v=7" defer></script>
-  <script src="./assets/js/fotos-anilist.js?v=7" defer></script>
-  <script src="./assets/js/descricoes-pt.js?v=7" defer></script>
-  <script src="./assets/js/api.js?v=7" defer></script>
-  <script src="./assets/js/ui.js?v=7" defer></script>
-  <script src="./assets/js/efeitos.js?v=7" defer></script>
-  <script src="./assets/js/cartaz-arte.js?v=7" defer></script>
-  <script src="./assets/js/pages/inicio.js?v=7" defer></script>
+  <link rel="preload" as="image" href="assets/img/cartaz/procurado-2.webp" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css?v=8">
+  <script src="./assets/js/idioma.js?v=8" defer></script>
+  <script src="./assets/js/fotos.js?v=8" defer></script>
+  <script src="./assets/js/fotos-anilist.js?v=8" defer></script>
+  <script src="./assets/js/descricoes-pt.js?v=8" defer></script>
+  <script src="./assets/js/api.js?v=8" defer></script>
+  <script src="./assets/js/ui.js?v=8" defer></script>
+  <script src="./assets/js/efeitos.js?v=8" defer></script>
+  <script src="./assets/js/pages/inicio.js?v=8" defer></script>
 </head>
 <body data-raiz=".">
   <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>
@@ -313,13 +313,16 @@
         </div>
         <div class="colagem" id="colagem" data-mouse="-14" aria-label="Cartazes de Luffy, Zoro e Sanji" data-i18n-aria="inicio.colagem">
           <!-- preenchido pelo inicio.js; o Luffy fica aqui caso a API não responda -->
-          <div class="cartaz colagem__frente">
-            <span class="cartaz__titulo" aria-hidden="true">Procurado</span>
+          <div class="cartaz cartaz--procurado colagem__frente">
+            <img class="cartaz__papel" src="assets/img/cartaz/procurado-2.webp" alt="" width="720" height="1020" fetchpriority="high">
             <span class="cartaz__foto"><img src="assets/img/personagens/1.webp" alt="" width="260" height="190" fetchpriority="high"></span>
-            <span class="cartaz__vivo" aria-hidden="true">Vivo ou morto</span>
-            <span class="cartaz__nome">Monkey D. Luffy</span>
-            <span class="cartaz__valor">3.000.000.000 –</span>
-            <span class="cartaz__marinha" aria-hidden="true">Marinha</span>
+            <span class="cartaz__tinta">
+              <span class="cartaz__titulo" aria-hidden="true">Procurado</span>
+              <span class="cartaz__vivo" aria-hidden="true">Vivo ou morto</span>
+              <span class="cartaz__nome">Monkey D. Luffy</span>
+              <span class="cartaz__valor">3.000.000.000-</span>
+              <span class="cartaz__marinha" aria-hidden="true">Marinha</span>
+            </span>
           </div>
         </div>
       </div>

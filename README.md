@@ -38,7 +38,8 @@ pages/                         personagens, tripulações, frutas, espadas, fac�
 assets/css/style.css           todo o visual
 assets/js/api.js               busca os dados na API e deixa tudo num formato simples
 assets/js/ui.js                peças usadas em todas as páginas: menu, cartaz, janela de detalhes
-assets/js/cartaz-arte.js       desenho dos cartazes no canvas (oficina e página inicial)
+assets/js/cartaz-arte.js       desenho dos cartazes no canvas (oficina)
+assets/img/cartaz/             papéis envelhecidos prontos, usados por todos os cartazes do site
 assets/js/efeitos.js           movimento: parallax, barra de progresso, revelar ao rolar, carta náutica, voltar ao topo
 assets/js/idioma.js            troca de idioma e todas as frases do site
 assets/js/descricoes-pt.js     descrições das frutas e espadas em português
@@ -51,9 +52,13 @@ docs/                          imagens deste README
 
 Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não sobrescrever as funções da outra.
 
+### Cartazes
+
+Todos os cartazes do site usam o mesmo papel envelhecido da oficina. Para aparecerem na hora, o papel é uma imagem pronta (`assets/img/cartaz/`), gerada com o `cartaz-arte.js` no modo `soPapel`, sem textos. O nome, a foto e a recompensa vão por cima em HTML, com o tamanho de cada texto calculado pela largura das letras da fonte Rye para caber numa linha.
+
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=7` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=8` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 
