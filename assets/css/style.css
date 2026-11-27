@@ -1577,3 +1577,28 @@ button.cartaz:hover .cartaz__foto img { filter: sepia(0); transform: scale(1.05)
   .camada { transform: none !important; }
   .abertura { opacity: 1; }
 }
+
+/* ---------- Cartazes desenhados no canvas (página inicial) ---------- */
+
+.cartaz--arte {
+  padding: 0;
+  background: none;
+  box-shadow: none !important;
+  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.55));
+}
+.cartaz--arte::before { display: none; }
+.cartaz-arte__tela { display: block; width: 100%; height: auto; animation: aparecer-cartaz 0.5s ease both; }
+@keyframes aparecer-cartaz { from { opacity: 0; } }
+/* o texto do cartaz simples continua lá para leitores de tela */
+.cartaz__simples {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.colagem .cartaz--arte { box-shadow: none; }
+.colagem .cartaz--arte.colagem__esq, .colagem .cartaz--arte.colagem__dir { filter: brightness(0.82) drop-shadow(0 16px 16px rgba(0, 0, 0, 0.55)); }
+.colagem .cartaz--arte.colagem__esq:hover, .colagem .cartaz--arte.colagem__dir:hover,
+.colagem .cartaz--arte.colagem__esq:focus-visible, .colagem .cartaz--arte.colagem__dir:focus-visible { filter: drop-shadow(0 22px 20px rgba(0, 0, 0, 0.6)); }
+@media (prefers-reduced-motion: reduce) { .cartaz-arte__tela { animation: none; } }

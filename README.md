@@ -38,6 +38,7 @@ pages/                         personagens, tripulações, frutas, espadas, fac�
 assets/css/style.css           todo o visual
 assets/js/api.js               busca os dados na API e deixa tudo num formato simples
 assets/js/ui.js                peças usadas em todas as páginas: menu, cartaz, janela de detalhes
+assets/js/cartaz-arte.js       desenho dos cartazes no canvas (oficina e página inicial)
 assets/js/efeitos.js           movimento: parallax, barra de progresso, revelar ao rolar, carta náutica, voltar ao topo
 assets/js/idioma.js            troca de idioma e todas as frases do site
 assets/js/descricoes-pt.js     descrições das frutas e espadas em português
@@ -52,7 +53,7 @@ Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não s
 
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=6` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=7` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 
@@ -72,12 +73,10 @@ Os textos fixos do HTML têm o atributo `data-i18n="chave"`, e a versão em ingl
 
 - Dados: [API One Piece](https://api-onepiece.com/)
 - Fotos dos personagens: [AniList](https://anilist.co)
-- Fontes: [Rye](https://fonts.google.com/specimen/Rye) e [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque), do Google Fonts
+- Fontes do Google Fonts: [Rye](https://fonts.google.com/specimen/Rye), [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque), [Pirata One](https://fonts.google.com/specimen/Pirata+One), [IM Fell English SC](https://fonts.google.com/specimen/IM+Fell+English+SC), [IM Fell DW Pica](https://fonts.google.com/specimen/IM+Fell+DW+Pica), [Uncial Antiqua](https://fonts.google.com/specimen/Uncial+Antiqua) e [Grenze Gotisch](https://fonts.google.com/specimen/Grenze+Gotisch)
 
 One Piece pertence a Eiichiro Oda, Shueisha e Toei Animation. Este é um projeto de fã, sem fins lucrativos.
 
-## Sobre o projeto
+## Autor
 
-Feito na disciplina de Introdução à Tecnologia Web, no 1º período de Sistemas de Informação do Centro Universitário do Rio São Francisco (UNIRIOS).
-
-**Aluno:** Victor Hugo Sousa Oliveira
+Feito por Victor Hugo Sousa Oliveira.
