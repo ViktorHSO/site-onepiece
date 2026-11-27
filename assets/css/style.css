@@ -516,15 +516,23 @@ main { padding-bottom: 4rem; }
   object-position: center 25%;
   filter: sepia(0.55) contrast(1.08) brightness(1.04) saturate(0.85);
 }
+/* foto da AniList com o rosto centralizado (posição calculada no OP.enquadrar) */
+.cartaz__foto img.cartaz__foto--enquadrada {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  object-fit: fill;
+}
 .cartaz__sem-foto {
   display: grid;
-  place-items: center;
+  place-items: end center;
   width: 100%;
   height: 100%;
-  font-family: var(--fonte-cartaz);
-  font-size: 26cqi;
-  color: rgba(42, 26, 12, 0.18);
+  color: var(--tinta-cartaz);
 }
+.cartaz__sem-foto svg { width: 82%; height: auto; display: block; }
+.cartaz__sem-foto path { fill: currentColor; opacity: 0.55; }
+.cartaz__sem-foto text { font-family: var(--fonte-cartaz); font-size: 48px; fill: #e8d4a2; opacity: 0.85; }
 
 /* todo o texto é a "tinta": recebe as falhas de impressão */
 .cartaz__tinta {
@@ -881,7 +889,7 @@ tbody tr:hover { background: var(--mar-fundo); }
 /* ---------- Variantes do cartaz ---------- */
 
 .cartaz--marinha { --tinta-cartaz: #15304a; }
-.cartaz--marinha .cartaz__sem-foto { color: rgba(21, 48, 74, 0.2); }
+.cartaz--marinha .cartaz__sem-foto text { fill: #e6ebe7; }
 .cartaz--governo { --tinta-cartaz: #1b1712; }
 /* carimbo SIGILOSO no idioma da página */
 .cartaz--governo::after {

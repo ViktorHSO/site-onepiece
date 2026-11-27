@@ -56,9 +56,13 @@ Todo o JavaScript fica dentro de um único objeto, `OP`, para uma página não s
 
 Todos os cartazes do site usam o mesmo papel envelhecido da oficina. Para aparecerem na hora, o papel é uma imagem pronta (`assets/img/cartaz/`), gerada com o `cartaz-arte.js` no modo `soPapel`, sem textos. O nome, a foto e a recompensa vão por cima em HTML, com o tamanho de cada texto calculado pela largura das letras da fonte Rye para caber numa linha.
 
+### Rosto no centro do cartaz
+
+As fotos da AniList têm enquadramentos bem diferentes (rosto no topo, corpo inteiro, close). Em `assets/js/fotos-anilist.js`, o `OP.ROSTO_ANILIST` guarda onde fica o rosto em cada foto, conferido à mão. Com isso o `OP.enquadrar` calcula o zoom e a posição que deixam o rosto no centro do quadro do cartaz. Quem não tem foto aparece com uma silhueta e uma interrogação.
+
 ### Cache do navegador
 
-Os arquivos de CSS e JS são carregados com `?v=8` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
+Os arquivos de CSS e JS são carregados com `?v=9` no fim do endereço. Quando mudar algum deles, aumente esse número em todos os HTML: assim o navegador baixa a versão nova em vez de misturar o HTML novo com o CSS antigo guardado.
 
 ### Movimento e acessibilidade
 

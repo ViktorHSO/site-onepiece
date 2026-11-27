@@ -12,10 +12,19 @@ window.OP = window.OP || {};
   // Endereço de uma foto: links completos (AniList, upload) ficam como estão
   OP.srcFoto = (foto) => (/^(https?:|data:)/.test(foto) ? foto : OP.caminho(foto));
 
-  // Se a foto não carregar, o cartaz volta a mostrar as iniciais
+  // Retrato de quem não tem foto: uma silhueta com interrogação, como nos cartazes antigos
+  const SILHUETA = '<svg viewBox="0 0 220 160" aria-hidden="true"><path d="M110 22c-21 0-36 16-36 38 0 15 7 27 17 34-27 6-49 22-57 46h152c-8-24-30-40-57-46 10-7 17-19 17-34 0-22-15-38-36-38z"/><text x="110" y="76" text-anchor="middle">?</text></svg>';
+  const semFotoCartaz = () => `<span class="cartaz__sem-foto" aria-hidden="true">${SILHUETA}</span>`;
+
+  // Se a foto não carregar, o cartaz mostra a silhueta (e as outras listas, as iniciais)
   document.addEventListener('error', (e) => {
     const img = e.target;
     if (!(img instanceof HTMLImageElement) || !img.dataset.nome) return;
+    if (img.closest('.cartaz__foto')) {
+      img.insertAdjacentHTML('afterend', semFotoCartaz());
+      img.remove();
+      return;
+    }
     const span = document.createElement('span');
     span.className = img.dataset.classe ?? 'cartaz__sem-foto';
     span.setAttribute('aria-hidden', 'true');
@@ -81,6 +90,30 @@ window.OP = window.OP || {};
     });
   };
 
+  // Enquadra a foto da AniList no quadro do cartaz com o rosto no centro.
+  // O quadro tem 880 x 640 (proporção 1,375) no desenho de 1200 x 1700.
+  // Fotos de corpo inteiro ganham zoom até o rosto ocupar cerca de metade da altura.
+  const QUADRO = 880 / 640;
+  OP.enquadrar = (img, id) => {
+    const [fy, fh, fx = 0.5] = (OP.ROSTO_ANILIST && OP.ROSTO_ANILIST[id]) || [0.3, 0.38, 0.5];
+    const aplicar = () => {
+      const prop = img.naturalWidth ? img.naturalHeight / img.naturalWidth : 1.5;
+      const cobre = Math.max(1, (1 / QUADRO) / prop); // largura mínima para cobrir o quadro
+      const zoom = Math.min(2.6, Math.max(cobre, 0.55 / (QUADRO * fh * prop)));
+      const larg = zoom;                 // em larguras do quadro
+      const alt = zoom * prop;           // em larguras do quadro
+      const altQuadro = 1 / QUADRO;
+      const esq = Math.min(0, Math.max(1 - larg, 0.5 - fx * larg));
+      const topo = Math.min(0, Math.max(altQuadro - alt, 0.44 * altQuadro - fy * alt));
+      img.classList.add('cartaz__foto--enquadrada');
+      img.style.setProperty('width', `${(larg * 100).toFixed(2)}%`);
+      img.style.setProperty('left', `${(esq * 100).toFixed(2)}%`);
+      img.style.setProperty('top', `${((topo / altQuadro) * 100).toFixed(2)}%`);
+    };
+    aplicar();
+    if (!img.complete) img.addEventListener('load', aplicar, { once: true });
+  };
+
   OP.cartaz = function (p, { tag = 'button', variante = 'procurado' } = {}) {
     const v = VARIANTE[variante] || VARIANTE.procurado;
     if (!VARIANTE[variante]) variante = 'procurado';
@@ -95,7 +128,7 @@ window.OP = window.OP || {};
     const papel = OP.caminho(`assets/img/cartaz/${variante}-${(Math.abs(p.id || 0) % PAPEIS[variante]) + 1}.webp`);
     const foto = p.foto
       ? `<img src="${OP.esc(OP.srcFoto(p.foto))}" alt="" loading="lazy" decoding="async" width="260" height="190" data-nome="${OP.esc(p.nome)}" referrerpolicy="no-referrer">`
-      : `<span class="cartaz__sem-foto" aria-hidden="true">${OP.esc(OP.iniciais(p.nome))}</span>`;
+      : semFotoCartaz();
     let valor;
     if (variante !== 'procurado') {
       valor = p.cargo ? `<span class="cartaz__valor cartaz__valor--vazio">${OP.esc(p.cargo)}</span>` : '';
@@ -115,6 +148,8 @@ window.OP = window.OP || {};
         <span class="cartaz__marinha" aria-hidden="true">${v.rodape}</span>
       </span>`;
     OP.ajustarCartaz(el);
+    const img = el.querySelector('.cartaz__foto img');
+    if (img && /anilist/.test(img.src)) OP.enquadrar(img, p.id);
     return el;
   };
 
@@ -160,13 +195,25 @@ window.OP = window.OP || {};
       janela.addEventListener('click', (e) => { if (e.target === janela) janela.close(); });
       janela.addEventListener('close', () => document.body.classList.remove('sem-rolagem'));
     }
-    janela.querySelector('.janela__conteudo').innerHTML = html;
+    const conteudo = janela.querySelector('.janela__conteudo');
+    conteudo.innerHTML = html;
+    // cartazes entram como elementos (não como texto), para manter o enquadramento da foto
+    conteudo.querySelectorAll('[data-cartaz]').forEach((vaga) => {
+      const p = cartazesPendentes.get(vaga.dataset.cartaz);
+      cartazesPendentes.delete(vaga.dataset.cartaz);
+      if (p) vaga.appendChild(OP.cartaz(p, { tag: 'div' }));
+    });
     janela.setAttribute('aria-label', titulo || OP.t('detalhes'));
     document.body.classList.add('sem-rolagem');
     janela.showModal();
   };
 
+  const cartazesPendentes = new Map();
+  let proximaVaga = 0;
+
   OP.fichaPersonagem = function (p) {
+    const vaga = `c${++proximaVaga}`;
+    cartazesPendentes.set(vaga, p);
     const linhas = [
       [OP.t('tripulacao'), p.tripulacao ? p.tripulacao.nome : OP.t('nenhuma')],
       [OP.t('funcao'), p.cargo || '—'],
@@ -178,7 +225,7 @@ window.OP = window.OP || {};
     ];
     return `
       <div class="ficha">
-        <div class="ficha__cartaz">${OP.cartaz(p, { tag: 'div' }).outerHTML}</div>
+        <div class="ficha__cartaz" data-cartaz="${vaga}"></div>
         <div>
           <h2 class="ficha__nome">${OP.esc(p.nome)}</h2>
           ${p.apelido ? `<p class="ficha__apelido">${OP.esc(OP.t('conhecidoComo', { apelido: p.apelido }))}</p>` : ''}
