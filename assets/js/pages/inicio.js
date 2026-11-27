@@ -91,12 +91,64 @@
     lista.innerHTML = itens + itens.replaceAll('<li>', '<li aria-hidden="true">');
   }
 
+  /* ---------- Cartazes desenhados (o mesmo papel da oficina) ---------- */
+
+  // Carrega a foto; se for de outro site sem permissão, usa colorida (sem mexer nos pixels)
+  function carregarFoto(src) {
+    return new Promise((ok) => {
+      if (!src) { ok(null); return; }
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.referrerPolicy = 'no-referrer';
+      img.onload = () => ok(img);
+      img.onerror = () => ok(null);
+      img.src = OP.srcFoto(src);
+    });
+  }
+
+  async function telaDoCartaz(p, extra = {}) {
+    const A = OP.arteCartaz;
+    const tela = A.novaTela(Math.round(A.W * 0.5), Math.round(A.H * 0.5));
+    tela.className = 'cartaz-arte__tela';
+    tela.setAttribute('aria-hidden', 'true');
+    const img = await carregarFoto(p.foto);
+    let foto = null;
+    if (img) {
+      const reduzida = A.reduzir(img, 900);
+      try { foto = A.tom(reduzida, 'sepia'); } catch (e) { foto = reduzida; }
+    }
+    await A.fontesProntas();
+    A.desenhar(tela.getContext('2d'), {
+      tipo: 'procurado', nome: p.nome, recompensa: p.recompensa ?? null, foto, papel: 2, ...extra,
+    });
+    return tela;
+  }
+
+  // troca um cartaz simples pelo desenhado, sem travar a página (um por vez, no tempo livre)
+  const quandoLivre = (f) => (window.requestIdleCallback ? requestIdleCallback(f, { timeout: 1200 }) : setTimeout(f, 60));
+  let fila = Promise.resolve();
+  function trocarPorDesenho(el, p, extra) {
+    if (!OP.arteCartaz) return;
+    fila = fila.then(() => new Promise((ok) => quandoLivre(async () => {
+      try {
+        const tela = await telaDoCartaz(p, extra);
+        el.classList.add('cartaz--arte');
+        el.querySelectorAll(':scope > :not(.cartaz-arte__tela)').forEach((filho) => filho.classList.add('cartaz__simples'));
+        el.prepend(tela);
+      } catch (e) { /* fica o cartaz simples */ }
+      ok();
+    })));
+  }
+
   /* ---------- Colagem do topo ---------- */
 
   function montarColagem(todos) {
     const ids = [2, 5, 1]; // Zoro e Sanji atrás, Luffy na frente
+    const sementes = { 1: 11, 2: 23, 5: 5 };
     const colagem = $('colagem');
     colagem.innerHTML = '';
+    // o Luffy, que fica na frente, é desenhado primeiro
+    const ordem = [];
     ids.forEach((id, i) => {
       const p = todos.find((x) => x.id === id);
       if (!p) return;
@@ -104,7 +156,9 @@
       c.classList.add(['colagem__esq', 'colagem__dir', 'colagem__frente'][i]);
       c.addEventListener('click', () => OP.abrirJanela(OP.fichaPersonagem(p), p.nome));
       colagem.appendChild(c);
+      ordem.unshift([c, p, { semente: sementes[id] }]);
     });
+    ordem.forEach(([c, p, extra]) => trocarPorDesenho(c, p, extra));
   }
 
   /* ---------- Ranking ---------- */
@@ -190,9 +244,19 @@
   }
 
   // Cartaz de exemplo no convite
-  $('convite-cartaz').appendChild(
-    OP.cartaz({ id: 3, nome: OP.t('seuNome'), recompensa: 100000000, foto: null }, { tag: 'div' })
-  );
+  const convite = OP.cartaz({ id: 3, nome: OP.t('seuNome'), recompensa: 100000000, foto: null }, { tag: 'div' });
+  $('convite-cartaz').appendChild(convite);
+  // o convite fica mais abaixo: só desenha quando estiver perto de aparecer
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      trocarPorDesenho(convite, { nome: OP.t('seuNome'), recompensa: 100000000, foto: null }, { semente: 42, papel: 3 });
+    }, { rootMargin: '400px 0px' });
+    io.observe(convite);
+  } else {
+    trocarPorDesenho(convite, { nome: OP.t('seuNome'), recompensa: 100000000, foto: null }, { semente: 42, papel: 3 });
+  }
 
   desenharRota();
   montarJornal();

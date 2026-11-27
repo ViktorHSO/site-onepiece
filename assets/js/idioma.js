@@ -125,7 +125,7 @@ window.OP = window.OP || {};
     'nav.inicio': 'Home', 'nav.personagens': 'Characters', 'nav.tripulacoes': 'Crews', 'nav.frutas': 'Fruits',
     'nav.espadas': 'Swords', 'nav.faccoes': 'Factions', 'nav.cartaz': 'Your poster',
     'nav.rotulo': 'Main',
-    'rodape.autor': 'Made by Victor Hugo Sousa Oliveira, Information Systems, UNIRIOS.',
+    'rodape.autor': 'Made by Victor Hugo Sousa Oliveira.',
     'rodape.dados': 'Data from the <a href="https://api-onepiece.com/">One Piece API</a>. One Piece belongs to Eiichiro Oda, Shueisha and Toei Animation. This is a non-profit fan project.',
     'rodape.codigo': 'Source code on GitHub',
     'rodape.fotos': 'Character pictures: <a href="https://anilist.co/anime/21/ONE-PIECE/characters">AniList</a>.',
@@ -133,7 +133,7 @@ window.OP = window.OP || {};
     // início
     'inicio.grito': 'Wanted:',
     'inicio.sub': 'information about One Piece.',
-    'inicio.texto': 'I started this site as an assignment for Introduction to Web Technology, in the Information Systems course at UNIRIOS, and it turned into the notebook where I write down everything about the series. The data comes from the One Piece API, so the lists grow on their own.',
+    'inicio.texto': 'A One Piece encyclopedia with the characters, crews, Devil Fruits, swords and factions of the series, each on its own wanted poster. The data comes from the One Piece API, so the site keeps up with the story as it moves forward.',
     'inicio.contando': 'Counting the characters, crews, fruits and swords in the API…',
     'inicio.verProcurados': 'See the wanted', 'inicio.fazerCartaz': 'Make my poster',
     'inicio.colagem': 'Posters of Luffy, Zoro and Sanji',
