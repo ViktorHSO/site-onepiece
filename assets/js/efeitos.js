@@ -60,6 +60,8 @@ window.OP = window.OP || {};
   if (cena) {
     const camadas = [...cena.querySelectorAll('[data-paralaxe], [data-mouse]')];
     let mx = 0, my = 0, alvoX = 0, alvoY = 0, girando = false, altura = cena.offsetHeight;
+    const celular = window.matchMedia('(max-width: 52rem)');
+    celular.addEventListener?.('change', () => { cena.style.setProperty('--sumir', '0'); agendar(); });
 
     // Escala do cenário: a mesma conta do preserveAspectRatio="xMidYMax slice",
     // para as ondas e os raios (que são <svg> à parte) ficarem alinhados com o resto.
@@ -88,12 +90,15 @@ window.OP = window.OP || {};
         return;
       }
       fora = false;
+      // no celular o cenário fica parado no fundo: o parallax é só uma leve profundidade
+      const fator = celular.matches ? 0.18 : 1;
       camadas.forEach((el) => {
         const v = parseFloat(el.dataset.paralaxe || 0);
+        if (celular.matches && v < 0) { el.style.transform = ''; return; } // o texto segue o fluxo normal
         const m = parseFloat(el.dataset.mouse || 0);
-        el.style.transform = `translate3d(${(mx * m).toFixed(2)}px, ${(y * v + my * m * 0.5).toFixed(2)}px, 0)`;
+        el.style.transform = `translate3d(${(mx * m).toFixed(2)}px, ${(y * v * fator + my * m * 0.5).toFixed(2)}px, 0)`;
       });
-      cena.style.setProperty('--sumir', Math.min(1, y / (altura * 0.8)).toFixed(3));
+      if (!celular.matches) cena.style.setProperty('--sumir', Math.min(1, y / (altura * 0.8)).toFixed(3));
     }
 
     // o mouse puxa as camadas devagar, com uma suavização simples
